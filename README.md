@@ -1,0 +1,2 @@
+# saratings
+Sovereign Africa Rating
