@@ -11,7 +11,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'assets/img/favicon.png'%}" rel="icon">
+  {% comment %} <link href="{% static 'assets/img/favicon.png'%}" rel="icon"> {% endcomment %}
   <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -35,7 +35,7 @@
     <div class="container d-flex justify-content-between">
 
       <div class="logo">
-        <h1><a href="{%url 'sar_home'%}"><span>Sovereign</span>Africa Ratings</a></h1>
+        <h1><a href="{%url 'sar_home'%}"><span>Sovereign</span>&nbsp;Africa Ratings</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!--a href="index.html"><img src="{% static 'assets/img/about/sar_logo.png" alt="" class="img-fluid"></!--a-->
       </div>
@@ -123,27 +123,41 @@
         </div>
         <div class="row">
           <!-- single-well start-->
-          <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="well-left">
               <div class="single-well">
-                <a href="#">
-                  <img src="{% static 'assets/img/hero-carousel/1.jpg'%}" alt="">
-              
-                </a>
+                <p>
+                  Sovereign Africa Ratings (SAR) is a licensed service provider of sovereign and sub-sovereign rating services. It is driven by the principles of efficient operations and technical competencies that are world class.
+
+                  SAR was formed in order to satisfy a developmental and investment need in Africa and in emerging markets in general. SAR is an organisation that is committed to excellence in the provision of sovereign ratings to all of its clients throughout the continent and the developing world.
+
+                  SAR asserts that it is clear that the needs of emerging markets are unique, and that the length of time it is taking for economic transformation to be realised on a large scale indicates the need for more plurality in the provision of economic credit worthiness and linked market insights.
+
+                  SAR’s mission is to offer such insights with unerring market relevance, statistical and economic accuracy.
+                </p>
               </div>
             </div>
           </div>
           <!-- single-well end-->
+
+          <h6><strong>Distinguishing Characteristics Include:</strong></h6>
+               
           <div class="col-md-6 col-sm-6 col-xs-12">
+            
             <div class="well-middle">
               <div class="single-well">
-                <a href="#">
-                  <h4 class="sec-head">First African-owned ratings agency</h4>
-                </a>
-                <p>
-                  Sovereign Africa Ratings was founded in 2018 by a group innovative...with the objective of providing objective and scientific sovereign ratings to the world.
-                </p>
+                
+                 
+               
                 <ul>
+
+                  <li>
+                    <i class="bi bi-check"></i> Market relevance
+                  </li>
+
+                  <li>
+                    <i class="bi bi-check"></i> Balanced approach to investor and sovereign interests
+                  </li>
                   <li>
                     <i class="bi bi-check"></i> Scientific and objective ratings
                   </li>
@@ -883,7 +897,7 @@
             <!-- End Google Map -->
 
             <!-- Start  contact -->
-            <div class="col-md-6">
+            {% comment %} <div class="col-md-6">
               <div class="form contact-form">
                 <form action="forms/contact.php" method="post" role="form" class="php-email-form">
                   <div class="form-group">
@@ -911,7 +925,7 @@
           </div>
         </div>
       </div>
-    </div><!-- End Contact Section -->
+    </div><!-- End Contact Section --> {% endcomment %}
 
   </main><!-- End #main -->
 
