@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'saratingsdb',
         'USER': 'root',
-        'PASSWORD': 'password',
+        'PASSWORD': 'login@db',
     }
 }
 
