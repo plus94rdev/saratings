@@ -21,7 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 if 'F16' in os.uname()[1]:
     print("Running in Dev Environment")
@@ -29,6 +28,8 @@ if 'F16' in os.uname()[1]:
         config = json.load(config_file)
         
     ALLOWED_HOSTS = ["*"]
+    DEBUG = True
+
         
 if 'aws' in os.uname()[2]:
     print("Running in Prod Environment")
@@ -37,6 +38,7 @@ if 'aws' in os.uname()[2]:
         
   
     ALLOWED_HOSTS = ["ec2-13-244-129-140.af-south-1.compute.amazonaws.com","13.244.129.140","www.saratings.com","saratings.com"]
+    DEBUG = False
 
         
 SECRET_KEY = config.get('SECRET_KEY') 
