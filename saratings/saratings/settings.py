@@ -11,25 +11,37 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os,json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+    
+    
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w%)w^i*80n2*l4_$4v+88(o5#6kp5eib$-z=!g*n*ejfx8g3!('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+if 'F16' in os.uname()[1]:
+    print("Running in Dev Environment")
+    with open("/etc/saratings_dev_config.json") as config_file:
+        config = json.load(config_file)
+        
+    ALLOWED_HOSTS = ["*"]
+        
+if 'aws' in os.uname()[2]:
+    print("Running in Prod Environment")
+    with open("/etc/saratings_config.json") as config_file:
+        config = json.load(config_file)
+        
+  
+    ALLOWED_HOSTS = ["ec2-13-244-129-140.af-south-1.compute.amazonaws.com","13.244.129.140","www.saratings.com","saratings.com"]
+
+        
+SECRET_KEY = config.get('SECRET_KEY') 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,14 +86,32 @@ WSGI_APPLICATION = 'saratings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'saratingsdb',
-        'USER': 'root',
-        'PASSWORD': 'login@db',
+if 'F16' in os.uname()[1]:
+    print("Running DB Dev")  
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': config.get('DB_NAME'),
+            'USER': config.get('DB_USER'),
+            'PASSWORD': config.get('DB_PASSWORD'),
+        }
     }
-}
+
+if 'aws' in os.uname()[2]:
+    print("Running DB in Prod") 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': config.get('DB_NAME'),
+            'USER': config.get('DB_USER'),
+            'PASSWORD': config.get('DB_PASSWORD'),
+            'HOST': config.get('DB_HOST'),
+            'PORT': '3306',
+            'OPTIONS': {
+                'sql_mode': 'traditional',
+                },
+        }
+    }
 
 
 # Password validation
@@ -112,20 +142,37 @@ TIME_ZONE = 'Africa/Johannesburg'
 
 USE_I18N = True
 
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
+USE_TZ = False
 
 """
 Useful for loading static files in templates
 {% load static %} and href="{% static 'path/to/file' %}"
 """
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+#Only in dev
+if 'F16' in os.uname()[1]:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+        ]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR,'/static')
+
+if 'F16' in os.uname()[1]:
+    #For server path to store files locally
+    STATIC_URL = '/static/'
+    MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
+
+#For server path to store files locally
+if 'aws' in os.uname()[2]:
+    STATIC_URL = '/static/'
+    MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bootstrap/assets/file/')
+
+#For browser to access the files over http.
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

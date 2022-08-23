@@ -6,3 +6,4 @@ urlpatterns = [
     path("", sar_home, name="sar_home"),
     
 ]
+

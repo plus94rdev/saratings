@@ -64,13 +64,17 @@
       
     }
 
-    #news,#testimonials,#insights,#research,#social_media_links,#footer_document_links{
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
       display:none;
     }
     .team-modal{
 
       cursor:pointer;
     }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
   </style>
 
   <!-- ======= Header ======= -->
@@ -826,14 +830,14 @@
             </div>
           </div>
           <!-- end single footer -->
-          <div class="col-md-4">
+          <div class="col-md-4" id="articles">
             <div class="footer-content">
               <div class="footer-head">
                 <h4>Articles</h4>
                
                 <div class="footer-contacts">
                   <p><span></span></p>
-                
+            
                   
                 </div>
               </div>
@@ -845,9 +849,7 @@
               <div class="footer-head">
                 <h4>Documents</h4>
                 <div class="flicker-img">
-                  <a><img src="{% static 'assets/img/logo/sar_text.png'%}" alt=""></a>
-                  <a><img src="{% static 'assets/img/logo/sar_text.png'%}" alt=""></a>
-                  <a><img src="{% static 'assets/img/logo/sar_text.png'%}" alt=""></a>
+                  <h6><a href="{% static 'assets/file/Sovereign_Africa_Ratings_Certificate_18032022.pdf'%}" target="blank">SAR Licence</a></h6>
                   
                 </div>
               </div>
