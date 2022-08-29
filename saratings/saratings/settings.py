@@ -162,6 +162,7 @@ if 'F16' in os.uname()[1]:
 
 STATIC_ROOT = os.path.join(BASE_DIR,'/static')
 
+
 if 'F16' in os.uname()[1]:
     #For server path to store files locally
     STATIC_URL = '/static/'
