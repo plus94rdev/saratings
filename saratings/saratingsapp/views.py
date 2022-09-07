@@ -1,3 +1,4 @@
+from email import message
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.mail import EmailMessage
 from django.contrib import messages
@@ -61,7 +62,7 @@ def event_rsvp(request,event_id):
             """
             
             subject = 'Sovereign Africa Ratings Launch'
-    
+            
             html_message = (
                 f"Dear " + str(user_first_name) +","+ "\n \n"
                 
@@ -88,8 +89,9 @@ def event_rsvp(request,event_id):
             from_email,
             recipient_list,
             bcc_recipient_list,
-            )  
+            )
             
+            messages.success(request,"Confirmation Received!")
             email.send(fail_silently=False)
          
             return redirect('eventsHomepage')
@@ -101,7 +103,7 @@ def event_rsvp(request,event_id):
             print("rsvp_form_errors:",rsvp_form.errors)
             for field in rsvp_form.errors:
                 rsvp_form[field].field.widget.attrs['class'] += 'form-group textinput textInput form-control form-control is-invalid'
-            messages.error(request, "Submission Error: Please recheck the form and submit.")
+            
 
     template = "events/event_rsvp.html"
     

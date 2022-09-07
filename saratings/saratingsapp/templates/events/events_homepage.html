@@ -139,9 +139,17 @@
           </div>
         </div>
       </div>
+
+      {% if messages %}
+      {% for message in messages %}  
+      <p style="display:none" id="rsvp-message"></p>
+      {% endfor %}
+      {% endif %}
+      
       {% for event in get_all_events %}
 
       <div class="col-xxl-4 col-md-6">
+      
         <div class="card info-card sales-card" style="padding-bottom:0px!important;">
   
           <div class="card-body pt-0">
@@ -219,8 +227,6 @@
   
         </div>
       </div>
-
-
       
         <!-- End card -->
       
@@ -230,358 +236,7 @@
       </div>
     </div>
   </div><!-- End Team Section -->
-    
-    <!-- ======= Services Section ======= -->
-    <div id="research" class="services-area area-padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="section-headline services-head text-center">
-              <h2>Research</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row text-center">
-          <!-- Start Left services -->
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="about-move">
-              <div class="services-details">
-                <div class="single-services">
-                  <a class="services-icon" href="#">
-                    <i class="bi bi-briefcase"></i>
-                  </a>
-                  <h4>Expert Ratings</h4>
-                  <p>
-                    We provide...
-                  </p>
-                </div>
-              </div>
-              <!-- end about-details -->
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="about-move">
-              <div class="services-details">
-                <div class="single-services">
-                  <a class="services-icon" href="#">
-                    <i class="bi bi-card-checklist"></i>
-                  </a>
-                  <h4>Research</h4>
-                  <p>
-                    We provide...
-                </div>
-              </div>
-              <!-- end about-details -->
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <!-- end col-md-4 -->
-            <div class=" about-move">
-              <div class="services-details">
-                <div class="single-services">
-                  <a class="services-icon" href="#">
-                    <i class="bi bi-bar-chart"></i>
-                  </a>
-                  <h4>Insights</h4>
-                  <p>
-                    We provide...
-                  </p>
-                </div>
-              </div>
-              <!-- end about-details -->
-            </div>
-          </div>
-          
-          <!-- End Left services -->
 
-          
-          
-              <!-- end about-details -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!-- End Services Section -->
-    
-    <br><br><br><br>
-
-    
-
-    <!-- ======= Reviews Section =======>
-    <div class="reviews-area">
-      <div class="row g-0">
-        <div class="col-lg-6">
-          <img src="{% static 'assets/img/about/2.jpg'%}" alt="" class="img-fluid">
-        </div>
-        <div class="col-lg-6 work-right-text d-flex align-items-center">
-          <div class="px-5 py-5 py-lg-0">
-            <h2>...</h2>
-            <h5>..</h5>
-            <a href="#contact" class="ready-btn scrollto">..</a>
-          </div>
-        </div>
-      </div>
-    </div><End Rviews Section -->
-
-    <!-- ======= Insights Section ======= -->
-    <div id="insights" class="pricing-area area-padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="section-headline text-center">
-              <h2>Insights</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="pri_table_list">
-              <h3>Economy <br /> <span>.</span></h3>
-              <ol>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
-                
-              </ol>
-              <button>Subscribe</button>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="pri_table_list">
-          
-              <h3>Trade Insights <br /><span>.</span></h3>
-              <ol>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
-                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
-              </ol>
-              <button>Subscribe</button>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="pri_table_list">
-              <h3>Capital Markets <br /><span>.</span></h3>
-              <ol>
-                
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
-              </ol>
-              <button>Subscribe</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!-- End Pricing Section -->
-
-    <!-- ======= Testimonials Section ======= -->
-    <div id="testimonials" class="testimonials">
-      <div class="container">
-
-        <div class="testimonials-slider swiper">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
-                <h3>Dr Sifiso Falala</h3>
-                <h4>CEO &amp; Founder</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Applying a scientific approach to ratings is the key..
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
-                
-                <h3>Person...</h3>
-                <h4>Economist</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Innovative approach to...
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                
-                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
-                <h3>Person 3</h3>
-                <h4>Trade</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Advancing the African continent...
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
-                <h3>Person 4</h3>
-                <h4>Market Intelligence</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Refined methods are the key...
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
-                <h3>Person 5</h3>
-                <h4>Risk</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  The key factors in determining the...
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </div><!-- End Testimonials Section -->
-
-    <!-- ======= Blog Section ======= -->
-    <div id="news" class="blog-area">
-      <div class="blog-inner area-padding">
-        <div class="blog-overly"></div>
-        <div class="container ">
-          <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="section-headline text-center">
-                <h2>Latest News</h2>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- Start Left Blog -->
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="blog.html">
-                    <img src="{% static 'assets/img/blog/news_1.jpeg'%}" alt="">
-                  </a>
-                </div>
-                <div class="blog-meta">
-                  <span class="comments-type">
-                    <i class="fa fa-comment-o"></i>
-                    <a href="#">13 comments</a>
-                  </span>
-                  <span class="date-type">
-                    <i class="fa fa-calendar"></i>2022-04-02 / 09:10:16
-                  </span>
-                </div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="blog.html">Innovation</a>
-                  </h4>
-                  <p>
-                   The current year started with...
-                  </p>
-                </div>
-                <span>
-                  <a href="blog.html" class="ready-btn">Read more</a>
-                </span>
-              </div>
-              <!-- Start single blog -->
-            </div>
-            <!-- End Left Blog-->
-            <!-- Start Left Blog -->
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="blog.html">
-                    <img src="{% static 'assets/img/blog/news_2.jpeg'%}" alt="">
-                  </a>
-                </div>
-                <div class="blog-meta">
-                  <span class="comments-type">
-                    <i class="fa fa-comment-o"></i>
-                    <a href="#">130 comments</a>
-                  </span>
-                  <span class="date-type">
-                    <i class="fa fa-calendar"></i>2016-04-01 / 09:10:16
-                  </span>
-                </div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="blog.html">Infrastructure Invesment</a>
-                  </h4>
-                  <p>
-                    More capital invesment...
-                  </p>
-                </div>
-                <span>
-                  <a href="blog.html" class="ready-btn">Read more</a>
-                </span>
-              </div>
-              <!-- Start single blog -->
-            </div>
-            <!-- End Left Blog-->
-            <!-- Start Right Blog-->
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="blog.html">
-                    <img src="{% static 'assets/img/blog/news_1.jpeg'%}" alt="">
-                  </a>
-                </div>
-                <div class="blog-meta">
-                  <span class="comments-type">
-                    <i class="fa fa-comment-o"></i>
-                    <a href="#">10 comments</a>
-                  </span>
-                  <span class="date-type">
-                    <i class="fa fa-calendar"></i>2023-04-05 / 09:10:16
-                  </span>
-                </div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="blog.html">Political landscape</a>
-                  </h4>
-                  <p>
-                    The current elections..
-                  </p>
-                </div>
-                <span>
-                  <a href="blog.html" class="ready-btn">Read more</a>
-                </span>
-              </div>
-            </div>
-            <!-- End Right Blog-->
-          </div>
-        </div>
-      </div>
-    </div><!-- End Blog Section -->
 
     <br><br><br><br><br><br><br><br><br>
     <!-- ======= Contact Section ======= -->
@@ -704,6 +359,34 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+  <script>
+
+    if(document.querySelector("#rsvp-message")){
+
+    Swal.fire({
+      html:`<div class="text-white">
+        <div><h4>Confirmation Received</h4></div>
+        <div class="alert-body">
+          <p class="alert-text" style="color:#25c0eb!important"><h6>An email notification was sent to the email address provided.</h6></p>
+       </div>
+      </div>`,
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#3aaf85',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Close',
+      allowOutsideClick:false,
+      background: '#f9fafb',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href =  "{% url 'eventsHomepage' %}";
+        
+      }
+    })
+  }
+    
+  </script>
 
 </body>
 
