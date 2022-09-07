@@ -1,0 +1,201 @@
+{% load static %}
+{%load crispy_forms_tags%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SAR|Events</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:10%!important" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/css/form.css'%}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+  <style>
+
+header#header{
+      background: #212529!important;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    }
+   
+
+    footer.col-md-12 {
+      bottom: 0;
+  }
+ 
+  .footer-area {
+    padding: 0;
+  }
+
+  label {
+    color: #000000!important;
+    font-size: 15px!important;
+  }
+
+  </style>
+
+  <!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff">Sovereign&nbsp;<span>Africa Ratings</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>
+        
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <section id="cover" class="min-vh-0">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row text-white">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto mt-5 form p-4">
+                    <h5 class="display-8 py-2 text-truncate">RSVP:&nbsp;{{event_instance}}</h5>
+                    <p class="display-8 py-2 text-truncate"><strong>{{event_instance.event_date|date:"d/m/Y"}},{{event_instance.event_time|time:"H:i"}},&nbsp;{{event_instance.event_venue}}</strong></p>
+                    <div class="col-md-12">
+                        
+                        <form class="justify-content-center lh-3" method="post" novalidate enctype="multipart/form-data" >
+                          {% csrf_token %}
+                  
+                          <div class="form-group p-8">
+                 
+                              <div class="form-group col-md-12">
+                                  {{ rsvp_form.first_name|as_crispy_field}}
+                                  {}
+                              </div>
+                              <div class="form-group col-md-12 mb-4">
+                                  {{ rsvp_form.last_name|as_crispy_field}}
+                              </div>
+                                <div class="form-group col-md-12 mb-4">
+                                  {{ rsvp_form.contact_number|as_crispy_field}}
+                              </div>
+                                <div class="form-group col-md-12 mb-4">
+                                  {{ rsvp_form.email_address|as_crispy_field}}
+                              </div>
+                              <div class="form-group col-md-12 mb-2">
+                                {{ rsvp_form.confirm_attendance|as_crispy_field}}
+                            </div> 
+
+                              </div>
+                  
+                        
+                          
+                            
+                          <div style="text-align: -webkit-center">
+                            <button type="submit" class="btn btn-primary" style="background-color:#214a72;border-color:#214a72">Submit</button>
+                            <a href="{%url 'eventsHomepage'%}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                             </div>
+                        </form>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  <!-- ======= Footer ======= -->
+  <footer class="col-md-12">
+    <div class="footer-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="footer-content">
+              <div class="footer-head">
+                <div class="footer-logo">
+                 For more information, contact <strong>info@saratings.com</strong>
+                </div>
+                <div class="footer-icons" id="social_media_links">
+                  <ul>
+                    <li>
+                      <a href="#"><i class="bi bi-twitter"></i></a>
+                    </li>
+
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+         
+        
+         
+        </div>
+      </div>
+    </div>
+    <div class="footer-area-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="copyright text-center">
+              <p>
+                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

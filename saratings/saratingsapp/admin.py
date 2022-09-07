@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import FileUpload
+from .models import *
 
 class FileUploadAdmin(admin.ModelAdmin):
     list_display = ('file_name','uploaded_by','upload_date')
@@ -11,4 +11,14 @@ class FileUploadAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
+class SAREventAdmin(admin.ModelAdmin):
+    list_display = ('event_title','event_date','event_venue','event_image')
+
+    
+class EventRSVPAdmin(admin.ModelAdmin):
+    list_display = ['event','first_name', 'last_name', 'email_address', 'contact_number','confirm_attendance']
+
 admin.site.register(FileUpload, FileUploadAdmin)
+admin.site.register(SAREvent, SAREventAdmin)
+admin.site.register(EventRSVP, EventRSVPAdmin)
+
