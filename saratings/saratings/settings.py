@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'saratingsapp',
+    'celery',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -185,6 +187,26 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+"""
+Redis Broker also works in production
+But RabbitMQ is the preferred broker
+Run redis on port 6381 to prevent conflicts with celery running on another projects
+run: 
+echo "port 6381" | redis-server -
+      or
+redis-server --port 6381
+redis-server --port 6381 --daemonize yes
+on terminal
+"""
+CELERY_BROKER_URL = 'redis://localhost:6383'
+
+#Allows results to be saved in the db
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Johannesburg'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = config['EMAIL_HOST']

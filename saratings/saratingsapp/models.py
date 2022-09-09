@@ -78,8 +78,10 @@ class SAREvent(models.Model):
         
 class EventRSVP(models.Model):
     event = models.ForeignKey(SAREvent, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=False)
     first_name = models.CharField(max_length=100, null=True, blank=False)
     last_name = models.CharField(max_length=100, null=True, blank=False)
+    company =  models.CharField(max_length=100, null=True, blank=True)
     email_address = models.EmailField(max_length=100, null=True, blank=False)
     contact_number = models.CharField(max_length=100, null=True, blank=False)
     confirm_attendance = models.CharField(max_length=5, null=True, blank=False)

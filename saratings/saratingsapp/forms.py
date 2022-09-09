@@ -18,7 +18,7 @@ class DivErrorList(ErrorList):
 
 
 class EventRSVPForm(forms.ModelForm):
-        
+    
     confirm_attendance = forms.ChoiceField(
         choices=[('', 'Select...'), ('yes', 'Yes')], required=True)
     

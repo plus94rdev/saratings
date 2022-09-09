@@ -1,11 +1,12 @@
 from email import message
 from django.shortcuts import render,redirect,get_object_or_404
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage,send_mail
 from django.contrib import messages
 from django.conf import settings
 import os
 from .models import *
 from .forms import *
+from .tasks import *
 
 if 'F16' in os.uname()[1]:
     url_home = "http://localhost:8000/"
@@ -47,7 +48,7 @@ def event_rsvp(request,event_id):
         rsvp_form = EventRSVPForm(request.POST)
         if rsvp_form.is_valid():
             
-            user_first_name = rsvp_form.cleaned_data.get('first_name')
+            user_title = rsvp_form.cleaned_data['title']
             user_last_name = rsvp_form.cleaned_data.get('last_name')
             user_email_address = rsvp_form.cleaned_data.get('email_address')
             
@@ -64,7 +65,7 @@ def event_rsvp(request,event_id):
             subject = 'Sovereign Africa Ratings Launch'
             
             html_message = (
-                f"Dear " + str(user_first_name) +","+ "\n \n"
+                f"Dear " + str(user_title) +" "+ str(user_last_name)+","+ "\n \n"
                 
                 f"Thank you for confirming your attendance for the upcoming event.\n \n" 
                 f"Event Details: \n \n"
@@ -81,8 +82,8 @@ def event_rsvp(request,event_id):
                 )
 
             from_email = settings.EMAIL_HOST_USER
-            recipient_list = [user_email_address]
-            bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za']
+            recipient_list = [user_email_address,'jason@saratings.com']
+            bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za','jason@saratings.com']
             email = EmailMessage(
             subject,
             html_message,
@@ -93,6 +94,9 @@ def event_rsvp(request,event_id):
             
             messages.success(request,"Confirmation Received!")
             email.send(fail_silently=False)
+            #svp_confirmation_email.delay(user_first_name,user_email_address)
+            #send_mail(subject, html_message, settings.EMAIL_HOST_USER, [
+             #         'jasonm@plus94.co.za'], fail_silently=True)
          
             return redirect('eventsHomepage')
 
