@@ -16,7 +16,7 @@ class SAREventAdmin(admin.ModelAdmin):
 
     
 class EventRSVPAdmin(admin.ModelAdmin):
-    list_display = ['event','first_name', 'last_name', 'email_address', 'contact_number','confirm_attendance']
+    list_display = ['event','title','first_name', 'last_name', 'email_address', 'contact_number','company','confirm_attendance','rsvp_date','rsvp_updated']
 
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)

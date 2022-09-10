@@ -169,12 +169,17 @@ STATIC_ROOT = os.path.join(BASE_DIR,'/static')
 
 
 if 'F16' in os.uname()[1]:
+    IS_DEV = True
+    IS_PROD = False
+    print("IS_DEV",IS_DEV) 
     #For server path to store files locally
     STATIC_URL = '/static/'
     MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
 
 #For server path to store files locally
 if 'aws' in os.uname()[2]:
+    IS_DEV = False
+    IS_PROD = True
     STATIC_URL = '/static/'
     MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
     # MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bootstrap/assets/file/')

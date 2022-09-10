@@ -1,5 +1,8 @@
-from django.urls import path, include
+from django.urls import path
+from django.conf.urls.static import static
 from saratingsapp.views import *
+from django.conf import settings
+
 
 urlpatterns = [
     
@@ -9,3 +12,7 @@ urlpatterns = [
     
 ]
 
+#Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD
+if IS_PROD:
+    urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)

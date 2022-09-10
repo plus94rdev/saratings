@@ -1,18 +1,36 @@
-from email import message
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.mail import EmailMessage,send_mail
 from django.contrib import messages
 from django.conf import settings
-import os
+import random, string
+from saratings.settings import IS_DEV,IS_PROD
 from .models import *
 from .forms import *
 from .tasks import *
 
-if 'F16' in os.uname()[1]:
+# if 'F16' in os.uname()[1]:
+if IS_DEV:
     url_home = "http://localhost:8000/"
     
-if 'aws' in os.uname()[2]:
+# if 'aws' in os.uname()[2]:
+if IS_PROD:
     url_home = "http://saratings.com/"
+
+# Generate a modal ref string
+def get_string(letters_count, digits_count):
+    
+    letters = ''.join((random.choice(string.ascii_letters) for i in range(letters_count)))
+    
+    digits = ''.join((random.choice(string.digits) for i in range(digits_count)))
+
+    # Convert resultant string to list and shuffle it to mix letters and digits
+    sample_list = list(letters + digits)
+    random.shuffle(sample_list)
+    # convert list to string
+    final_string = ''.join(sample_list)
+
+    return final_string
+
 
 def sar_home(request):
     
@@ -44,6 +62,8 @@ def event_rsvp(request,event_id):
         
     rsvp_form = EventRSVPForm(request.POST or None, instance=event_instance)
     
+    is_DEV = False
+    
     if request.method == 'POST':
         rsvp_form = EventRSVPForm(request.POST)
         if rsvp_form.is_valid():
@@ -55,14 +75,8 @@ def event_rsvp(request,event_id):
             rsvp_instance = rsvp_form.save(commit=False)
             rsvp_instance.event = event_instance
             rsvp_instance.save()
-        
             
-            """
-            Using Celery for the notication email
-            Send sms if user updated their cell number
-            """
-            
-            subject = 'Sovereign Africa Ratings Launch'
+            subject = 'RSVP Notification: Sovereign Africa Ratings Launch'
             
             html_message = (
                 f"Dear " + str(user_title) +" "+ str(user_last_name)+","+ "\n \n"
@@ -75,15 +89,22 @@ def event_rsvp(request,event_id):
                 f"Venue: "+str(event_instance.event_venue)+"\n \n"
                 f"To view our events, please click on the link below: \n \n"
                 f"https://saratings.com/events/" + "\n \n"
-                f"For any queries regarding this event, kindly contact info@saratings.com. \n \n"
+                f"For any queries regarding this event, kindly contact info@saratings.com \n \n"
                 
                 f"Yours sincerely, \n"
                 f"Sovereign Africa Ratings \n"
                 )
 
             from_email = settings.EMAIL_HOST_USER
-            recipient_list = [user_email_address,'jason@saratings.com']
-            bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za','jason@saratings.com']
+            recipient_list = [user_email_address]
+            
+            if IS_DEV:
+                bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za','jasemudau@gmail.com']
+                print("Sent an email Dev")
+            if IS_PROD:
+                bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za','jason@saratings.com','nqobilez@papashamedia.co.za'] 
+                print("Sent an email Prod")
+            
             email = EmailMessage(
             subject,
             html_message,
@@ -93,11 +114,9 @@ def event_rsvp(request,event_id):
             )
             
             messages.success(request,"Confirmation Received!")
+            
             email.send(fail_silently=False)
-            #svp_confirmation_email.delay(user_first_name,user_email_address)
-            #send_mail(subject, html_message, settings.EMAIL_HOST_USER, [
-             #         'jasonm@plus94.co.za'], fail_silently=True)
-         
+            
             return redirect('eventsHomepage')
 
         else:
@@ -114,6 +133,3 @@ def event_rsvp(request,event_id):
     context = {"event_instance":event_instance,"event_id":event_id,"rsvp_form":rsvp_form}
     
     return render(request, template,context)
-
-
-
