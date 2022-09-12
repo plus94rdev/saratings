@@ -95,4 +95,29 @@ class EventRSVP(models.Model):
     class Meta:
         db_table = "event_rsvp"
         verbose_name_plural = "Events RSVP"
+
+class MediaPage(models.Model):
     
+    file_name = models.CharField(max_length=100, null=True, blank=True,unique=True)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    
+    #Youtube, audio streaming
+    file_source = models.CharField(max_length=100, null=True, blank=True)
+    #Youtube,TV, Radio, Newspaper, Magazine, Social Media, Website, Other
+    interview_platform = models.CharField(max_length=100, null=True, blank=True)
+    
+    interview_date = models.DateField(null=True, blank=False)
+    
+    upload_file = models.FileField(upload_to='media_page/', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    
+    def __str__(self):
+        return self.file_name
+    
+    class Meta:
+        db_table = "media_page"
+        verbose_name_plural = "Media Page Files"

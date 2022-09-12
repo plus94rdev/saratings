@@ -1,0 +1,191 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  {% block title %}
+  <title>SAR|Home</title>
+  {% endblock title %}
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    }
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+
+  </style>
+
+
+  {%block landing_section%}
+  <!-- ======= hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <ol id="hero-carousel-indicators" class="carousel-indicators"></ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active" style="background-image: url(/static/assets/img/hero-carousel/1.jpg)">
+            <div class="carousel-container" 
+              style="display:block!important;
+              top:110px!important;left:0px!important;right:0px!important">
+              <div class="container">
+            
+                {% for event in get_all_events %}
+
+                <div class="col-xxl-4 col-md-6">
+                
+                  <div class="card info-card sales-card" style="padding-bottom:0px!important;">
+            
+                    <div class="card-body pt-0">
+                      <h5 class="card-title">
+                        <a>
+                          <span style="color:#012970!important;cursor:pointer;">
+                            <!-- Default Accordion -->
+                            </span></a><div class="accordion" id="voluntary"><a>
+                                <div class="accordion-item" style="border:none">
+                                  <h2 class="accordion-header" id="headingVoluntary">
+                                    <button class="accordion-button collapsed" type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#collapseVoluntary" 
+                                        aria-expanded="false" aria-controls="collapseVoluntary" 
+                                        style="font-weight:bold;border-color:#242e4c;">
+                                        {{event.event_title}}&nbsp;<i class="bi bi-info-circle" style="color:#dc3545"></i>
+                                  </button>
+                                  </h2>
+                            
+                                  <div id="collapseVoluntary" class="accordion-collapse collapse" data-bs-target="#collapseVoluntary" aria-expanded="false" aria-controls="collapseVoluntary" style="">
+                                    <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;font-weight:bold">
+                                      Agenda
+                                     </div>
+                                  <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                   {{event.agenda_item_1}}
+                                  </div>
+                                  <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_2}}
+                                  </div>
+                                  <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_3}}
+                                  </div>
+                                  <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_4}}
+                                  </div> <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_5}}
+                                  </div> <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_6}}
+                                  </div> <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_7}}
+                                  </div> <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_8}}
+                                  </div> <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_9}}
+                                  </div>
+                                  <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
+                                    {{event.agenda_item_10}}
+                                  </div>
+                                </div>
+                              </div>
+                           
+                        </a>
+                      </div></h5>
+                    
+                      <div class="align-items-center">
+                        <div class="ps-0">
+                          <a href="">
+                            <p style="font-weight:600;font-size:1rem;color:#000000">{{event.introduction}}</p>
+                          </a>
+                          <span class="text ps-0 fw-bold" id="footer-text">
+                            {{event.event_date|date:"d/m/Y"}},</span>
+                            <span class="text pt-1 fw-bold" id="footer-text">
+                           {{event.event_time|time:"H:i"}},</span>
+                           <span class="text pt-1 fw-bold" id="footer-text">{{event.event_venue}}</span>
+                        
+                          <a href="{%url 'eventRSVP' event.event_id%}">
+                          <span class="text fw-bold" style="color:#dc3545!important;float:right;cursor:pointer;">
+                            RSVP
+                          </span>
+                          </a>
+                        
+                        </div>
+                      </div>
+                    </div>
+            
+                  </div>
+                </div>
+               
+                  <!-- End card -->
+                
+                  {%endfor%}
+          
+     
+        <!-- End card -->
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+
+  {%endblock landing_section%}
+
+  {%block main_section%}
+  {%endblock main_section%}
+
+  {%block footer_main%}
+  {%endblock footer_main%}
+
+  {%block footer%}
+  {%endblock footer%}
+  
+</body>
+
+</html>

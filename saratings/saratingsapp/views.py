@@ -1,3 +1,4 @@
+from re import template
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.mail import EmailMessage,send_mail
 from django.contrib import messages
@@ -6,7 +7,6 @@ import random, string
 from saratings.settings import IS_DEV,IS_PROD
 from .models import *
 from .forms import *
-from .tasks import *
 
 # if 'F16' in os.uname()[1]:
 if IS_DEV:
@@ -38,9 +38,11 @@ def sar_home(request):
     APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
     Sections are hidden using style attribute in html
     """
-    
+   #current homepage
     template = "sar_home.html"
     
+    #inheritance homepage
+    #template = "home/sar_home.html"
     return render(request, template)
 
 def event_homepage(request):
@@ -133,3 +135,15 @@ def event_rsvp(request,event_id):
     context = {"event_instance":event_instance,"event_id":event_id,"rsvp_form":rsvp_form}
     
     return render(request, template,context)
+
+def media_homepage(request):
+    
+    radio_interviews = MediaPage.objects.filter(interview_platform="radio").order_by('-interview_date')
+    tv_interviews = MediaPage.objects.filter(interview_platform="tv").order_by('-interview_date') 
+        
+    template = "media_page/media_homepage.html"
+    
+    context = {"radio_interviews":radio_interviews,"tv_interviews":tv_interviews}
+    
+    return render(request, template,context)
+    

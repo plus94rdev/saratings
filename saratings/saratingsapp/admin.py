@@ -18,7 +18,17 @@ class SAREventAdmin(admin.ModelAdmin):
 class EventRSVPAdmin(admin.ModelAdmin):
     list_display = ['event','title','first_name', 'last_name', 'email_address', 'contact_number','company','confirm_attendance','rsvp_date','rsvp_updated']
 
+class MediaPageFileAdmin(admin.ModelAdmin):
+    list_display = ('file_name','added_by','added_on_date','file_type','upload_file','file_link','file_description','interview_date','interview_platform')
+    search_fields = ('file_name', 'added_by','added_on_date','interview_date')
+    list_filter = ('file_name','added_on_date', 'added_by')
+    date_hierarchy = 'added_on_date'
+    ordering = ('-added_on_date',)
+    # fields = ('file_name','file_description', 'upload_file', 'uploaded_by','file_type')    
+    list_per_page = 10
+
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
 admin.site.register(EventRSVP, EventRSVPAdmin)
+admin.site.register(MediaPage, MediaPageFileAdmin)
 

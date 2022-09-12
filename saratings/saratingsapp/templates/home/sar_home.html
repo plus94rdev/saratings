@@ -1,0 +1,827 @@
+{% extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SAR|Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:10%!important" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    } {% endcomment %}
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+  </style>
+
+  {%block landing_section%}
+  <!-- ======= hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+        <ol id="hero-carousel-indicators" class="carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+          <div class="carousel-item active" style="background-image: url(static/assets/img/hero-carousel/1.jpg)">
+            <div class="carousel-container">
+              <div class="container">
+                <h2 class="animate__animated animate__fadeInDown">Sovereign Rating Services</h2>
+                <p class="animate__animated animate__fadeInUp">Offering objective and scientific sovereign ratings to the world</p>
+                <a href="#about" class="btn-get-started scrollto animate__animated animate__fadeInUp">Info</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+
+  {% endblock landing_section%}
+
+  <main id="main">
+  {%block about_section%}
+
+    <!-- ======= About Section ======= -->
+    <div id="about" class="about-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>About Sovereign Africa Ratings</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single-well start-->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <div class="single-well">
+                <h6 style="font-family: "Open Sans", sans-serif!important;">
+                  Sovereign Africa Ratings (SAR) is a licensed service provider of sovereign and sub-sovereign rating 
+                  services. It is driven by the principles of efficient operations and technical competencies that are 
+                  world class. SAR was formed in order to satisfy a developmental and investment need in Africa and in 
+                  emerging markets in general. SAR is an organisation that is committed to excellence in the provision
+                  of sovereign ratings to all of its clients throughout the continent and the developing world. 
+                  SAR asserts that it is clear that the needs of emerging markets are unique, and that the length of 
+                  time it has taken for economic transformation to be realised on a large scale indicates the need for 
+                  more plurality in the provision of quality economic research, creditworthiness opinion and linked 
+                  market insights. SAR’s mission is to offer such insights with unerring market relevance, 
+                  statistical and economic accuracy.
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!-- single-well end-->
+
+          <h6><strong>Distinguishing Characteristics Include:</strong></h6>
+               
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            
+            <div class="well-middle">
+              <div class="single-well">
+                <ul>
+
+                  <li>
+                    <i class="bi bi-check"></i> Market relevance
+                  </li>
+
+                  <li>
+                    <i class="bi bi-check"></i> Balanced approach to investor and sovereign interests
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> Scientific and objective ratings
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> Quality research
+                  </li>
+                 
+                  <li>
+                    <i class="bi bi-check"></i> Innovative approach
+                  </li>
+            
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End col-->
+        </div>
+      </div>
+    
+    </div><!-- End About Section -->
+    
+    {% endblock about_section%}
+
+    <br><br><br><br><br><br><br><br><br>
+
+    {%block team_section%}
+   <!-- ======= Team Section ======= -->
+   <div id="team" class="our-team-area area-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Our Team</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-3 col-xs-12 team-modal" data-bs-toggle="modal" data-bs-target="#ceo_modal">
+          <div class="single-team-member">
+            <div class="team-img">
+            <img src="{% static 'assets/img/team/dr_sifiso_falala.JPG'%}" alt="" id="profile_image">
+            </div>
+            <div class="team-content">
+              <h5 id="sar_profile">Dr Sifiso Falala</h5>
+              <p id="sar_title">Chief Executive Officer</p>
+
+              <!-- Modal -->
+              <div class="modal fade" id="ceo_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-center">Chief Executive Officer</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Dr Sifiso Falala is the founder and Chief Executive Officer of Sovereign Africa Ratings. 
+                      Furthermore, he is the CEO of Plus 94 Research, one of the largest independent market research companies in South Africa. 
+                      He is the current President of Pan African Media Research Organisation (PAMRO),
+                      a former Chairman of Southern African Marketing Research Association (SAMRA) and 
+                      is currently a member of European Society for Opinion and Marketing Research (ESOMAR). 
+                      He holds a Doctor of Philosophy (PhD) degree from the Da Vinci Institute, 
+                      Master of Science in Population Studies, and Bachelor of Business Studies with Honours.
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End column -->
+
+
+        <div class="col-md-3 col-sm-3 col-xs-12 team-modal" data-bs-toggle="modal" data-bs-target="#cfo_modal">
+          <div class="single-team-member">
+            <div class="team-img">
+                <img src="{% static 'assets/img/team/takalani_mudau.png'%}" alt="" id="profile_image" 
+                width="370">
+        </div>
+
+            <div class="team-content">
+              <h5 id="sar_profile" >Ms Takalani Mudau</h5>
+              <p id="sar_title">Chief Financial Officer</p>
+
+              <!-- Modal -->
+              <div class="modal fade" id="cfo_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Chief Financial Officer</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Ms Takalani Mudau is the Chief Financial Officer of Sovereign Africa Ratings. 
+                      She is a member of the South African Institute of Professional Accountants and 
+                      serves as the Executive Director (Finance) at Plus 94 Research. 
+                      She received an Advanced Diploma in Accounting Services and
+                      a Certificate programme in Taxation when she graduated from UNISA.
+                      She also holds an Accounting Bachelor of Commerce degree.
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- End column -->
+        <div class="col-md-3 col-sm-3 col-xs-12 team-modal" data-bs-toggle="modal" data-bs-target="#coo_modal">
+          <div class="single-team-member">
+            <div class="team-img">
+              <img src="{% static 'assets/img/team/zweli_maziya.jpg'%}" alt="" id="profile_image" width="366">  
+            </div>
+            <div class="team-content">
+              <h5 id="sar_profile" data-bs-toggle="modal" data-bs-target="#coo_modal">Mr Zwelibanzi Maziya</h5>
+              <p id="sar_title">Chief Operations Officer</p>
+               <!-- Modal -->
+               <div class="modal fade" id="coo_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Chief Operations Officer</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Mr Zwelibanzi Maziya serves as Chief Operations Officer at 
+                      Sovereign Africa Ratings. His main duties as COO include designing and putting into practice business 
+                      operations, plans, and processes, creating policies that support company culture, 
+                      and supervising executive activities. He is also responsible for establishing detailed objectives 
+                      for performance and growth and assists the CEO and the business in preserving and fostering 
+                      relationships with important stakeholders. Zweli is professionally interested in business development, 
+                      governance, business risk management and financial regulation. 
+                      He graduated from the University of Pretoria with a Bachelor of Commerce in Economics.
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End column -->
+        <div class="col-md-3 col-sm-3 col-xs-12 team-modal" data-bs-toggle="modal" data-bs-target="#cro_modal">
+          <div class="single-team-member">
+            <div class="team-img">
+                <img src="{% static 'assets/img/team/david_mosaka.JPG'%}" alt="" id="profile_image" width="366">
+            </div>
+            <div class="team-content">
+              <h5 id="sar_profile" data-bs-toggle="modal" data-bs-target="#cro_modal">Mr David Mosaka</h5>
+              <p id="sar_title">Chief Ratings Officer</p>
+              <!-- Modal -->
+              <div class="modal fade" id="cro_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Chief Ratings Officer</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Mr David Mosaka is the Chief Ratings Officer at Sovereign Africa Ratings. 
+                      He is proficient in both theory and quantitative economics. 
+                      He has researched topics in international economics, development economics, 
+                      resource economics, public finance, monetary economics, and transport 
+                      economics using his expertise in economic modelling. 
+                      His research interests include the environment, energy studies, 
+                      international aid, tourism, commerce, investment, and model the entire economy. 
+                      He is recognised as one of the region's up-and-coming authorities in input-output and 
+                      social accounting matrix (SAM) modelling. 
+                      He is a co-author of the South African Cost Benefit Analysis Manual. 
+                      Additionally, he has worked as a Cost Benefit Analysis (CBA) practitioner on 
+                      numerous multidisciplinary projects where CBA concepts and modelling tools were 
+                      used to assess the projects' financial and economic sustainability. 
+                      David was on the board of Export Credit Insurance Corporation previously (ECIC). 
+                      Mr Mosaka belongs to the South African Economic Society (ESSA). 
+                      David graduated from UNISA with a Bachelor of Commerce with Honours in Economics and Econometrics.
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End column -->
+      </div>
+    </div>
+  </div><!-- End Team Section -->
+    
+{% endblock team_section%}
+
+{%block research_section%}
+    <!-- ======= Research Section ======= -->
+    <div id="research" class="services-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline services-head text-center">
+              <h2>Research</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <!-- Start Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-briefcase"></i>
+                  </a>
+                  <h4>Expert Ratings</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-card-checklist"></i>
+                  </a>
+                  <h4>Research</h4>
+                  <p>
+                    We provide...
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-bar-chart"></i>
+                  </a>
+                  <h4>Insights</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          
+          <!-- End Left services -->
+
+          
+          
+              <!-- end about-details -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Services Section -->
+{% endblock research_section%}
+    
+<br><br><br><br>    
+
+
+{%block insights_section%}
+    <!-- ======= Insights Section ======= -->
+    <div id="insights" class="pricing-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Insights</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Economy <br /> <span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+          
+              <h3>Trade Insights <br /><span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Capital Markets <br /><span>.</span></h3>
+              <ol>
+                
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Pricing Section -->
+
+    {% endblock insights_section%}
+
+    {%block quotes_section%}
+    <!-- ======= Quotes Section ======= -->
+    <div id="testimonials" class="testimonials">
+      <div class="container">
+
+        <div class="testimonials-slider swiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
+                <h3>Dr Sifiso Falala</h3>
+                <h4>CEO &amp; Founder</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Applying a scientific approach to ratings is the key..
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
+                
+                <h3>Person...</h3>
+                <h4>Economist</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Innovative approach to...
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                
+                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
+                <h3>Person 3</h3>
+                <h4>Trade</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Advancing the African continent...
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
+                <h3>Person 4</h3>
+                <h4>Market Intelligence</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Refined methods are the key...
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'assets/img/team/sf_image.png'%}" class="testimonial-img" alt="">
+                <h3>Person 5</h3>
+                <h4>Risk</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  The key factors in determining the...
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </div><!-- End Quotes Section -->
+
+    {%endblock quotes_section%}
+
+    {%block news_section%}
+    <!-- ======= Blog Section ======= -->
+    <div id="news" class="blog-area">
+      <div class="blog-inner area-padding">
+        <div class="blog-overly"></div>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>Latest News</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Start Left Blog -->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src="{% static 'assets/img/blog/news_1.jpeg'%}" alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">13 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2022-04-02 / 09:10:16
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">Innovation</a>
+                  </h4>
+                  <p>
+                   The current year started with...
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">Read more</a>
+                </span>
+              </div>
+              <!-- Start single blog -->
+            </div>
+            <!-- End Left Blog-->
+            <!-- Start Left Blog -->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src="{% static 'assets/img/blog/news_2.jpeg'%}" alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">130 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2016-04-01 / 09:10:16
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">Infrastructure Invesment</a>
+                  </h4>
+                  <p>
+                    More capital invesment...
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">Read more</a>
+                </span>
+              </div>
+              <!-- Start single blog -->
+            </div>
+            <!-- End Left Blog-->
+            <!-- Start Right Blog-->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src="{% static 'assets/img/blog/news_1.jpeg'%}" alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">10 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2023-04-05 / 09:10:16
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">Political landscape</a>
+                  </h4>
+                  <p>
+                    The current elections..
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">Read more</a>
+                </span>
+              </div>
+            </div>
+            <!-- End Right Blog-->
+          </div>
+        </div>
+      </div>
+    </div><!-- End News Section -->
+  {%endblock news_section%}
+
+
+    <br><br><br><br><br><br><br><br><br>
+    {%block contact_section%}
+    <!-- ======= Contact Section ======= -->
+    <div id="contact" class="contact-area">
+      <div class="contact-inner area-padding">
+        <div class="contact-overly"></div>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>Contact us</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-phone"></i>
+                  <p>
+                    Call: +27 11 327 2020
+                    <br>
+                    <span>Monday-Friday 9:00-17:00</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-envelope"></i>
+                  <p>
+                    Info:&nbsp;info@saratings.com<br>
+                    <span>Complaints:&nbsp;complaints@saratings.com</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <a href="https://goo.gl/maps/shpwPmY5TEkCWHr46" target="blank"><i class="bi bi-geo-alt"></i></a>
+                  <p>
+                    Thornhill Office Park
+                    Block 13, Ground Floor
+                    94 Bekker Road,
+                    Midrand,&nbsp;Johannesburg,&nbsp;South Africa
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div><!-- End Contact Section -->
+    {%endblock contact_section%}
+
+  </main><!-- End #main -->
+
+
+{%block footer_main%}
+  <!-- ======= Footer ======= -->
+  <footert>
+    <div class="footer-area" id="footer_document_links">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="footer-content">
+              <div class="footer-head">
+                <div class="footer-logo">
+                  <h5><span>Sovereign&nbsp;</span>Africa&nbsp;Ratings</h5>
+                </div>
+                <div class="footer-icons" id="social_media_links">
+                  <ul>
+                    <li>
+                      <a href="#"><i class="bi bi-twitter"></i></a>
+                    </li>
+
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+          <div class="col-md-4" id="articles">
+            <div class="footer-content">
+              <div class="footer-head">
+                <h4>Articles</h4>
+               
+                <div class="footer-contacts">
+                  <p><span></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+          <div class="col-md-4">
+            <div class="footer-content">
+              <div class="footer-head">
+                <h4>Documents</h4>
+                <div class="flicker-img">
+                  <h6><a href="{% static 'assets/file/Sovereign_Africa_Ratings_Certificate_18032022.pdf'%}" target="blank">SAR Licence</a></h6>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{%endblock footer_main%}
+
+</body>
+
+</html>
