@@ -14,7 +14,7 @@
 
   <!-- Favicons -->
   <link href="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:10%!important" rel="icon">
-  <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+  <link href="{% static 'assets/img/logo/sar_logo.svg'%}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
@@ -28,6 +28,9 @@
   <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+  {% block data_table_style %}
+  {% endblock data_table_style %}
+  
 </head>
 
 <body>
@@ -77,8 +80,23 @@
     .footer-head h4 {
       padding-bottom:0px
   }
+
+  .navbar .dropdown:hover>ul {
+  
+    border-radius: 5px!important;
+}
+
+.footer-area-bottom{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
   </style>
 
+
+  {%block nav_header%}
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex justify-content-between">
@@ -91,7 +109,13 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#team">Our Team</a></li> 
+          <li><a class="nav-link scrollto" href="#team">Our Team</a></li>
+          <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="{%url 'publicCommentaryArticleList'%}">Public Commentary</a></li>
+                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions-2022-07-02.pdf'%}" target="_blank">Rating Definitions</a></li>
+            </ul>
+          </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
           <li><a class="nav-link scrollto" href="{%url 'eventsHomepage'%}">Events</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
@@ -101,6 +125,9 @@
 
     </div>
   </header><!-- End Header -->
+
+  {%endblock nav_header%}
+
 
   {%block landing_section%}
   <!-- ======= hero Section ======= -->
@@ -136,7 +163,7 @@
   {%block about_section%} 
   {%endblock about_section%}
 
-    <br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br>
 
   {%block team_section%}
   {%endblock team_section%}
@@ -323,7 +350,7 @@
 
   {%block footer_main%}
   <!-- ======= Footer ======= -->
-  <footer>
+  <footer class="footer">
     <div class="footer-area" id="footer_document_links">
       <div class="container">
         <div class="row">
@@ -356,8 +383,6 @@
                
                 <div class="footer-contacts">
                   <p><span></span></p>
-            
-                  
                 </div>
               </div>
             </div>
@@ -368,7 +393,7 @@
               <div class="footer-head">
                 <h4>Documents</h4>
                 <div class="flicker-img">
-                  <h6><a href="{% static 'assets/file/Sovereign_Africa_Ratings_Certificate_18032022.pdf'%}" target="blank">SAR Licence</a></h6>
+                  <h6><a href="{% static 'assets/file/Sovereign_Africa_Ratings_Certificate_18032022.pdf'%}" target="_blank">SAR Licence</a></h6>
                   
                 </div>
               </div>
@@ -377,6 +402,7 @@
         </div>
       </div>
     </div>
+
 {%endblock footer_main%}
 
 {%block footer%}
@@ -408,6 +434,9 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js'%}"></script>
+
+{%block data_table_js%}
+{%endblock data_table_js%}
 </body>
 
 </html>

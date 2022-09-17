@@ -10,7 +10,9 @@ urlpatterns = [
     path('events/',event_homepage, name="eventsHomepage"),
     path('event-rsvp/<str:event_id>',event_rsvp, name="eventRSVP"),
     path('media-page/',media_homepage, name="mediaHomepage"),
-    
+    path('regulatory/public-commentary/articles',public_commentary_article_list, name="publicCommentaryArticleList"),
+    path('regulatory/public-commentary/article/<str:unique_id>',view_commentary_article, name="viewCommentaryArticle"),
+    path('regulatory/public-commentary/article/<str:unique_id>/comment',comment_commentary_article, name="commentCommentaryArticle")
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD

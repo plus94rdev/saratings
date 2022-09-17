@@ -121,3 +121,50 @@ class MediaPage(models.Model):
     class Meta:
         db_table = "media_page"
         verbose_name_plural = "Media Page Files"
+
+
+class RegulatoryArticle(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    overview = models.TextField(null=True, blank=False)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=False)
+    submission_deadline = models.DateField(null=True, blank=False)
+    is_submission_overdue = models.BooleanField(default=False)
+    upload_file = models.FileField(upload_to='regulatory_articles/', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+   
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(RegulatoryArticle,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "regulatory_article"
+        verbose_name_plural = "Regulatory Articles"  
+        
+        
+class RegulatoryArticleComment(models.Model):
+    title = models.ForeignKey(RegulatoryArticle, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=100, null=True, blank=False)
+    last_name = models.CharField(max_length=100, null=True, blank=False)
+    email_address = models.EmailField(max_length=100, null=True, blank=False)
+    company = models.CharField(max_length=100, null=True, blank=False)
+    file_upload = models.FileField(upload_to='regulatory_articles_comment/', blank=False,null=True)
+    submission_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    
+    def __str__(self):
+        return str(self.title)
+    
+    class Meta:
+        db_table = "regulatory_article_comment"
+        verbose_name_plural = "Regulatory Article Comments"

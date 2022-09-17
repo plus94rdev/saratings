@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'saratingsapp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,7 @@ Useful for loading static files in templates
 
 #Only in dev
 if 'F16' in os.uname()[1]:
+    
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static')
         ]
@@ -169,21 +171,22 @@ STATIC_ROOT = os.path.join(BASE_DIR,'/static')
 if 'F16' in os.uname()[1]:
     IS_DEV = True
     IS_PROD = False
-    print("IS_DEV",IS_DEV) 
+    
+    print("Running settings in DEV") 
     #For server path to store files locally
     STATIC_URL = '/static/'
     MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
 
 #For server path to store files locally
 if 'aws' in os.uname()[2]:
+    print("Running settings in PROD")
     IS_DEV = False
     IS_PROD = True
     STATIC_URL = '/static/'
-    MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
-    # MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bootstrap/assets/file/')
-
+    
 #For browser to access the files over http.
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -191,10 +194,48 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# EMAIL_USE_TLS = True
-EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
 EMAIL_HOST = config['EMAIL_HOST']
 EMAIL_HOST_USER = config['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+
+
+"""
+AWS S3
+
+user:aws_s3_user
+# In prod.py
+#AKIAUVHHCZOVCUAXKRKR
+AWS_ACCESS_KEY_ID = 'AKIAUVHHCZOVCUAXKRKR'
+
+#gTzNY+BqxM/yeXo+I6bAt9uOtOYSPMewNey9Ekf2
+AWS_SECRET_ACCESS_KEY = 'gTzNY+BqxM/yeXo+I6bAt9uOtOYSPMewNey9Ekf2'
+
+AWS_STORAGE_BUCKET_NAME = 'main-s3-amazon'
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+#For uploading publicly visible files
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+AWS_LOCATION = 'static'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {'Access-Control-Allow-Origin': '*'}
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+"""

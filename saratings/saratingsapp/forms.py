@@ -37,3 +37,26 @@ class EventRSVPForm(forms.ModelForm):
     class Meta:
         model = EventRSVP
         fields = '__all__'
+
+        
+
+class RegulatoryArticleCommentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RegulatoryArticleCommentForm, self).__init__(*args, **kwargs)
+
+        self.label_suffix = ""
+        self.error_class = DivErrorList
+
+        # Add class to format the input fields
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-group textinput textInputt form-control', }
+            self.label_suffix = ""
+
+    class Meta:
+        model = RegulatoryArticleComment
+        fields = '__all__'
+
+
+

@@ -1,0 +1,158 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+{% load crispy_forms_tags%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  {% block title %}
+  <title>SAR|Regulatory</title>
+  {% endblock title%} 
+
+  {% block data_table_style %}
+
+  <link href="{% static 'assets/simple-datatables/style.css'%}" rel="stylesheet">
+  {% endblock data_table_style %}
+
+</head>
+
+<body>
+
+{%block nav_header%}
+
+  <style>
+
+  header#header{
+    background: #0d1822!important;
+  }
+    
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-area-bottom{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .help-block {
+    color: #dc3545!important;
+}
+  
+  </style>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff">Sovereign&nbsp;<span>Africa Ratings</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>    
+          <li><a class="nav-link scrollto active" href="#radiointerviews">Radio Interviews</a></li>    
+          <li><a class="nav-link scrollto" href="#tvinterviews">TV Interviews</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  {%endblock nav_header%}
+
+
+{%block landing_section%}
+{%endblock landing_section%}
+{%block main_section%}
+
+<main id="main" style="margin-top:-69px" class="col-12">
+
+  <div class="our-team-area area-padding col-12">
+    <div class="container">
+
+<section id="cover" class="min-vh-0">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row text-black">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto mt-5 form p-4">
+                    <h5 class="display-8 py-2 text">Commentary Submissions</h5>
+                    <h5 class="display-8 py-2 text">Document Title:&nbsp;{{regulatory_article.title}}</h5>
+                    <div class="col-md-12">
+                        
+                        <form class="justify-content-center lh-3" method="post" novalidate enctype="multipart/form-data" >
+                          {% csrf_token %}
+                  
+                          <div class="form-group p-8">
+                 
+                              <div class="form-group col-md-12 mb-4">
+                                  {{ regulatory_article_comment_form.first_name|as_crispy_field}}
+                              </div>
+                              <div class="form-group col-md-12 mb-4">
+                                  {{ regulatory_article_comment_form.last_name|as_crispy_field}}
+                              </div>
+
+                              <div class="form-group col-md-12 mb-4">
+                                {{ regulatory_article_comment_form.company|as_crispy_field}}
+                              </div>
+
+                              
+                                <div class="form-group col-md-12 mb-4">
+                                  {{ regulatory_article_comment_form.email_address|as_crispy_field}}
+                              </div>
+                             
+                              </div>
+
+                              <div class="form-group col-md-12 mb-4">
+                                {{ regulatory_article_comment_form.file_upload|as_crispy_field}}
+                  
+                              </div>
+                          
+                            
+                          <div style="text-align: -webkit-center">
+                            <button type="submit" class="btn btn-primary" style="background-color:#214a72;border-color:#214a72">Submit</button>
+                            <a href="{%url 'publicCommentaryArticleList'%}">
+                              <button type="button" class="btn btn-danger">Cancel</button>
+                            </a>
+                          </div>
+                        </form>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+      </div>
+      <!-- End row -->
+    </div>
+
+  </main><!-- End #main -->
+
+  <script>
+    document.querySelector("#id_company").placeholder = "Name:Company/Institution/Organisation...";
+  </script>
+
+
+{% endblock main_section%}
+  
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+{%block footer_main%}
+
+{%endblock footer_main%}
+</body>  
+
+
+</html>

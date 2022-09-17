@@ -1,0 +1,165 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  {% block title %}
+  <title>SAR|Regulatory</title>
+  {% endblock title%} 
+
+  {% block data_table_style %}
+
+  <link href="{% static 'assets/simple-datatables/style.css'%}" rel="stylesheet">
+  {% endblock data_table_style %}
+
+</head>
+
+<body>
+
+{%block nav_header%}
+
+  <style>
+
+  header#header{
+    background: #0d1822!important;
+  }
+    
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  } 
+
+  @media (max-width: 767px) {
+    .row{
+      width: fit-content;
+    }
+
+  }
+  
+  </style>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff">Sovereign&nbsp;<span>Africa Ratings</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{%url 'sar_home'%}">About</a></li>
+          <li><a class="nav-link scrollto "href="{%url 'sar_home'%}">Our Team</a></li>
+          <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="{%url 'publicCommentaryArticleList'%}">Public Commentary</a></li>
+                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions-2022-07-02.pdf'%}" target="_blank">Rating Definitions</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
+          <li><a class="nav-link scrollto" href="{%url 'eventsHomepage'%}">Events</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  {%endblock nav_header%}
+
+
+{%block landing_section%}
+{%endblock landing_section%}
+{%block main_section%}
+
+<main id="main" style="margin-top:16px" class="col-12">
+
+  <div class="area-padding col-12">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <h5><a href="{%url 'sar_home'%}">
+            <i class="bi bi-chevron-left fw-bold" style="color:#dc3545"></i>
+            </a></h5>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Public Commentary Documents</h5>
+            
+              <!-- Table with stripped rows -->
+              <table class="table datatable" id="data-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Publication Date</th>
+                    <th scope="col">Response Deadline</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Commentary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for article in get_regulatory_articles %}
+                  <tr>
+                   
+                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank">{{article.title}}</a></td>
+                    <td>{{article.publication_date|date:"d-m-Y"}}</td>
+                    <td>{{article.submission_deadline|date:"d-m-Y"}}</td>
+                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank">Read</a></td>
+                    {%if article.is_submission_overdue%}
+                    <td>Submit Comments</td>
+                    {%else%}
+                    <td><a href="{%url 'commentCommentaryArticle' article.unique_id%}">Submit Comments</a></td>
+      
+                    {%endif%}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End row -->
+    </div>
+
+  </main><!-- End #main -->
+
+{% endblock main_section%}
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+{%block data_table_js%}
+<script src="{%static 'assets/simple-datatables/simple-datatables.js' %}"></script>
+<script>
+
+  const dataTable = new simpleDatatables.DataTable("#data-table", {
+    searchable: true,
+    fixedHeight: true
+  })
+
+</script>
+
+{%endblock data_table_js%}
+
+{%block footer_main%}
+{%endblock footer_main%}
+
+</body>
+
+</html>
