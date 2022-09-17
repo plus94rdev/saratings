@@ -8,6 +8,7 @@ import random, string
 from saratings.settings import IS_DEV,IS_PROD
 from .models import *
 from .forms import *
+from .tasks import *
 import os
 import shutil
 from pathlib import Path
@@ -242,7 +243,7 @@ def comment_commentary_article(request,unique_id):
     can_submit = False
 
     """
-    List regulatory articles on a table
+    Submit a public commentary about a regulatory article
     """
     regulatory_article = get_object_or_404(RegulatoryArticle, unique_id=unique_id)
     
@@ -261,46 +262,19 @@ def comment_commentary_article(request,unique_id):
         regulatory_article_comment_form = RegulatoryArticleCommentForm(request.POST or None, request.FILES)
         if regulatory_article_comment_form.is_valid():
             
-            # user_title = regulatory_article_comment_form.cleaned_data['title']
-            user_first_name = regulatory_article_comment_form.cleaned_data.get('first_name')
-            user_last_name = regulatory_article_comment_form.cleaned_data.get('last_name')
-            user_email_address = regulatory_article_comment_form.cleaned_data.get('email_address')
+            first_name = regulatory_article_comment_form.cleaned_data.get('first_name')
+            last_name = regulatory_article_comment_form.cleaned_data.get('last_name')
+            email_address = regulatory_article_comment_form.cleaned_data.get('email_address')
             
+            #Save instance without commiting to db. Update fields and then save
             comment_instance = regulatory_article_comment_form.save(commit=False)
             comment_instance.title = regulatory_article
             comment_instance.save()
             
-            subject = 'SARatings:Comment Submission'
-            
-            html_message = (
-                f"Dear " + str(user_first_name) +" "+ str(user_last_name)+","+ "\n \n"
-                f"Thank you for the commentary submitted.\n \n" 
-                f"Yours sincerely, \n"
-                f"Sovereign Africa Ratings \n"
-                )
-
-            from_email = settings.EMAIL_HOST_USER
-            
-            recipient_list = [user_email_address]
-            if IS_DEV:
-                bcc_recipient_list = ['info@saratings.com','jasonm@plus94.co.za','jason@saratings.com']
-                print("Sent an email Dev") 
-                
-            if IS_PROD:
-                bcc_recipient_list = ['info@saratings.com','jason@saratings.com'] 
-                print("Sent an email Prod")
-            
-            email = EmailMessage(
-            subject,
-            html_message,
-            from_email,
-            recipient_list,
-            bcc_recipient_list,
-            )
-            
             messages.success(request,"Comment received!")
            
             # email.send(fail_silently=True)
+            article_commentary_email.delay(first_name,regulatory_article.title,email_address)
             
             print("Email sent")
             

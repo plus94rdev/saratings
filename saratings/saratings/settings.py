@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'saratingsapp',
-    'storages',
+    'django_celery_results',
+    'celery',
+
 ]
 
 MIDDLEWARE = [
@@ -183,6 +185,12 @@ if 'aws' in os.uname()[2]:
     IS_DEV = False
     IS_PROD = True
     STATIC_URL = '/static/'
+    MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bootstrap/assets/file/')
+
+#For browser to access the files over http.
+MEDIA_URL = '/media/'
+
     
 #For browser to access the files over http.
 # MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
@@ -202,6 +210,18 @@ EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
+#Running on a specified port
+CELERY_BROKER_URL = 'redis://localhost:6382'
+
+#With default, use it if connection times out on other ports 
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+#Allows results to be saved in the db
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Johannesburg'
 
 
 """
