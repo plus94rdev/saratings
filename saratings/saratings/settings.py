@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'saratingsapp',
     'django_celery_results',
     'celery',
+    'captcha',
 
 ]
 
@@ -259,3 +260,13 @@ STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 """
+
+
+with open('/etc/recaptcha_config.json') as rc_config_file:
+    recap_config = json.load(rc_config_file)
+    
+#SITE_KEY
+RECAPTCHA_PUBLIC_KEY = recap_config['RECAPTCHA_PUBLIC_KEY'] 
+
+#SECRET_KEY
+RECAPTCHA_PRIVATE_KEY= recap_config['RECAPTCHA_PRIVATE_KEY']

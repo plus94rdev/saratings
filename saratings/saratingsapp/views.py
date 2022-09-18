@@ -239,15 +239,16 @@ def view_commentary_article(request,unique_id):
 
 def comment_commentary_article(request,unique_id):
     
-    #Prevent user from submitting after the deadline
-    can_submit = False
+    
 
     """
     Submit a public commentary about a regulatory article
     """
     regulatory_article = get_object_or_404(RegulatoryArticle, unique_id=unique_id)
     
+    #Prevent user from submitting after the deadline
     can_submit_commentary = datetime.date.today() <= regulatory_article.submission_deadline
+    
     
     print("todays_date:",datetime.date.today())
     print("submission_deadline:",regulatory_article.submission_deadline)
@@ -255,6 +256,7 @@ def comment_commentary_article(request,unique_id):
     
     print("regulatory_article",regulatory_article)
     
+    recapcha_public_key = settings.RECAPTCHA_PUBLIC_KEY
     
     regulatory_article_comment_form = RegulatoryArticleCommentForm(request.POST or None)
         
@@ -293,8 +295,10 @@ def comment_commentary_article(request,unique_id):
         template = "articles/regulatory/comment_public_commentary_article.html"
     else:
         return redirect('publicCommentaryArticleList')
-    
-    context = {"regulatory_article":regulatory_article,"regulatory_article_comment_form":regulatory_article_comment_form} 
+   
+    context = {"regulatory_article":regulatory_article,
+               "regulatory_article_comment_form":regulatory_article_comment_form,
+               "recapcha_public_key":recapcha_public_key} 
     
     return render(request, template, context)
 

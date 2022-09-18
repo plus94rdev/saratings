@@ -85,6 +85,12 @@
 {%endblock landing_section%}
 {%block main_section%}
 
+{% if messages %}
+  {% for message in messages %}  
+  <p style="display:inline" id="rsvp-message"></p>
+{% endfor %}
+{% endif %}
+
 <main id="main" style="margin-top:16px" class="col-12">
 
   <div class="area-padding col-12">
@@ -140,10 +146,39 @@
 
   </main><!-- End #main -->
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+  <script>
+
+  if(document.querySelector("#rsvp-message")){
+
+    Swal.fire({
+      html:`<div class="text-white">
+        <div><h4>Thank You!</h4></div>
+        <div class="alert-body">
+          <p class="alert-text" style="color:#25c0eb!important"><h6>Commentary was successfully submitted.</h6></p>
+       </div>
+      </div>`,
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#3aaf85',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Close',
+      allowOutsideClick:false,
+      background: '#f9fafb',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href =  "{% url 'publicCommentaryArticleList' %}";
+       
+      }
+    })
+  }
+    
+  </script>
+
 {% endblock main_section%}
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-
+  
 {%block data_table_js%}
 <script src="{%static 'assets/simple-datatables/simple-datatables.js' %}"></script>
 <script>
@@ -152,7 +187,6 @@
     searchable: true,
     fixedHeight: true
   })
-
 </script>
 
 {%endblock data_table_js%}

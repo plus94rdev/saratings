@@ -2,6 +2,8 @@ from django import forms
 from .models import *
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 
 
 
@@ -41,7 +43,10 @@ class EventRSVPForm(forms.ModelForm):
         
 
 class RegulatoryArticleCommentForm(forms.ModelForm):
+    
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
+    
     def __init__(self, *args, **kwargs):
         super(RegulatoryArticleCommentForm, self).__init__(*args, **kwargs)
 
@@ -53,6 +58,8 @@ class RegulatoryArticleCommentForm(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 'class': 'form-group textinput textInputt form-control', }
             self.label_suffix = ""
+            
+        
 
     class Meta:
         model = RegulatoryArticleComment

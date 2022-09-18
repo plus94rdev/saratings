@@ -83,6 +83,6 @@ def article_commentary_email(first_name,document_title,email_address):
     bcc_recipient_list,
     )  
             
-    email.send(fail_silently=True) 
+    email.send(fail_silently=False) 
     
     return "Commentary confirmation email sent."

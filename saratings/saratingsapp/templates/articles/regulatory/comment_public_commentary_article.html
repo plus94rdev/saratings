@@ -116,6 +116,11 @@
                                 {{ regulatory_article_comment_form.file_upload|as_crispy_field}}
                   
                               </div>
+
+                              
+                              <div class="g-recaptcha" data-sitekey="{{recapcha_public_key}}"></div>
+                              
+                              <br/>
                           
                             
                           <div style="text-align: -webkit-center">
@@ -143,9 +148,9 @@
     document.querySelector("#id_company").placeholder = "Name:Company/Institution/Organisation...";
   </script>
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 {% endblock main_section%}
-  
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 
