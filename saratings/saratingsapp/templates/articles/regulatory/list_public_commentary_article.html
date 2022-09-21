@@ -18,7 +18,7 @@
 
 <body>
 
-{%block nav_header%}
+{%block nav_header_not_used%}
 
   <style>
 
@@ -27,7 +27,7 @@
   }
     
   .footer {
-    position: fixed;
+    position: fixed
     left: 0;
     bottom: 0;
     width: 100%;
@@ -65,7 +65,7 @@
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
             <ul>
                 <li><a href="{%url 'publicCommentaryArticleList'%}">Public Commentary</a></li>
-                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions-2022-07-02.pdf'%}" target="_blank">Rating Definitions</a></li>
+                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions_2022-07-03.pdf'%}" target="_blank">Rating Definitions</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
@@ -78,7 +78,7 @@
     </div>
   </header><!-- End Header -->
 
-  {%endblock nav_header%}
+  {%endblock nav_header_not_used%}
 
 
 {%block landing_section%}

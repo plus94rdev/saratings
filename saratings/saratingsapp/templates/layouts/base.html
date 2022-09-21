@@ -38,6 +38,11 @@
 
   <style>
 
+    header#header{
+      background: #0d1822!important;
+    }
+      
+
   .single-well ul li{
     display: flex!important;
     font-size: 16px;
@@ -93,6 +98,13 @@
   width: 100%;
   text-align: center;
 }
+
+@media (max-width: 767px) {
+  .row{
+    width: fit-content;
+  }
+
+}
   </style>
 
 
@@ -113,7 +125,7 @@
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
             <ul>
                 <li><a href="{%url 'publicCommentaryArticleList'%}">Public Commentary</a></li>
-                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions-2022-07-02.pdf'%}" target="_blank">Rating Definitions</a></li>
+                <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions_2022-07-03.pdf'%}" target="_blank">Rating Definitions</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
