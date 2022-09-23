@@ -103,7 +103,7 @@
               <p class="card-text"><a href="{{regulatory_article.file_link}}" target="_blank">Open Document</a></p>
               
               {%if regulatory_article.is_submission_overdue%}
-              <p class="card-text">Commentary Submission Overdue</p>
+              <p class="card-text">Commentary Submission Closed</p>
               {%else%}
               <p class="card-text"><a href="{%url 'commentCommentaryArticle' regulatory_article.unique_id%}">Submit Comments</a></p>
               
