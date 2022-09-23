@@ -168,3 +168,34 @@ class RegulatoryArticleComment(models.Model):
     class Meta:
         db_table = "regulatory_article_comment"
         verbose_name_plural = "Regulatory Article Comments"
+
+
+
+
+class RatingsPublication(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    overview = models.TextField(null=True, blank=True)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=False)
+    upload_file = models.FileField(upload_to='ratings_publication/', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+   
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(RatingsPublication,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "ratings_publication"
+        verbose_name_plural = "Ratings Publication"  
+          

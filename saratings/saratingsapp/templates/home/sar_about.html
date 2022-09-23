@@ -1,0 +1,190 @@
+{% extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SAR|Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:10%!important" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    } {% endcomment %}
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+</style>
+
+  {%block landing_section%}
+  {% endblock landing_section%}
+
+  <main id="main">
+
+  {%block about_section%}
+
+    <!-- ======= About Section ======= -->
+    <div id="about" class="about-area area-padding mt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>About Sovereign Africa Ratings</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single-well start-->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <div class="single-well">
+                <h6 style="font-family: "Open Sans", sans-serif!important;">
+                  Sovereign Africa Ratings (SAR) is a licensed service provider of sovereign and sub-sovereign rating 
+                  services. It is driven by the principles of efficient operations and technical competencies that are 
+                  world class. SAR was formed in order to satisfy a developmental and investment need in Africa and in 
+                  emerging markets in general. SAR is an organisation that is committed to excellence in the provision
+                  of sovereign ratings to all of its clients throughout the continent and the developing world. 
+                  SAR asserts that it is clear that the needs of emerging markets are unique, and that the length of 
+                  time it has taken for economic transformation to be realised on a large scale indicates the need for 
+                  more plurality in the provision of quality economic research, creditworthiness opinion and linked 
+                  market insights. SAR’s mission is to offer such insights with unerring market relevance, 
+                  statistical and economic accuracy.
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!-- single-well end-->
+
+          <h6><strong>Distinguishing Characteristics Include:</strong></h6>
+               
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            
+            <div class="well-middle">
+              <div class="single-well">
+                <ul>
+
+                  <li>
+                    <i class="bi bi-check"></i> Market relevance
+                  </li>
+
+                  <li>
+                    <i class="bi bi-check"></i> Balanced approach to investor and sovereign interests
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> Scientific and objective ratings
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> Quality research
+                  </li>
+                 
+                  <li>
+                    <i class="bi bi-check"></i> Innovative approach
+                  </li>
+            
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End col-->
+        </div>
+      </div>
+    
+    </div><!-- End About Section -->
+    
+    {% endblock about_section%}
+
+    <br><br><br><br><br><br><br><br><br>
+
+{%block team_section%}
+
+{% endblock team_section%}
+
+{%block research_section%}
+{% endblock research_section%}
+    
+<br><br><br><br>    
+
+
+{%block insights_section%}
+{% endblock insights_section%}
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block news_section%}
+    
+  {%endblock news_section%}
+
+
+    {%block contact_section%}
+  
+    {%endblock contact_section%}
+
+  </main><!-- End #main -->
+
+
+
+</body>
+
+</html>

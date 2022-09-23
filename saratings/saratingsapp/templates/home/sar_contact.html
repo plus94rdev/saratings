@@ -1,0 +1,153 @@
+{% extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  {% block title %}
+  <title>SAR|Contact Us</title>
+  {% endblock %}
+
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    } {% endcomment %}
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+</style>
+
+  {%block landing_section%}
+  {% endblock landing_section%}
+
+  <main id="main">
+
+    {%block about_section%}
+    {% endblock about_section%}
+
+    {%block team_section%}
+    {% endblock team_section%}
+
+    {%block research_section%}
+    {% endblock research_section%}
+    
+    {%block insights_section%}
+    {% endblock insights_section%}
+
+    {%block quotes_section%}
+    {%endblock quotes_section%}
+
+    {%block news_section%}
+    {%endblock news_section%}
+
+    {%block contact_section%}
+    <!-- ======= Contact Section ======= -->
+    <div id="contact" class="contact-area">
+      <div class="contact-inner area-padding">
+        <div class="contact-overly"></div>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>Contact us</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-phone"></i>
+                  <p>
+                    Call: +27 11 327 2020
+                    <br>
+                    <span>Monday-Friday 9:00-17:00</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-envelope"></i>
+                  <p>
+                    Info:&nbsp;info@saratings.com<br>
+                    <span>Complaints:&nbsp;complaints@saratings.com</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <a href="https://goo.gl/maps/shpwPmY5TEkCWHr46" target="blank"><i class="bi bi-geo-alt"></i></a>
+                  <p>
+                    Thornhill Office Park
+                    Block 13, Ground Floor
+                    94 Bekker Road,
+                    Midrand,&nbsp;Johannesburg,&nbsp;South Africa
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div><!-- End Contact Section -->
+    {%endblock contact_section%}
+
+  </main><!-- End #main -->
+
+
+
+</body>
+
+</html>

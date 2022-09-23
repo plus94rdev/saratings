@@ -54,6 +54,49 @@ def sar_home(request):
     template = "home/sar_home.html"
     return render(request, template)
 
+def sar_about(request):
+    
+    """
+    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+    Sections are hidden using style attribute in html
+    """
+   #current homepage
+    #template = "sar_home.html"
+    
+    #inheritance homepage
+    template = "home/sar_about.html"
+    return render(request, template)
+
+
+def sar_team(request):
+    
+    """
+    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+    Sections are hidden using style attribute in html
+    """
+   #current homepage
+    #template = "sar_home.html"
+    
+    #inheritance homepage
+    template = "home/sar_team.html"
+    
+    return render(request, template)
+
+
+def sar_contact(request):
+    
+    """
+    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+    Sections are hidden using style attribute in html
+    """
+   #current homepage
+    #template = "sar_home.html"
+    
+    #inheritance homepage
+    template = "home/sar_contact.html"
+    
+    return render(request, template)
+
 def event_homepage(request):
     
     get_all_events = SAREvent.objects.all()
@@ -303,5 +346,54 @@ def comment_commentary_article(request,unique_id):
     return render(request, template, context)
 
 
+ 
+def ratings_publication_list(request):
 
+    """
+    List regulatory articles on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    
+    get_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')
+     
+    todays_date = datetime.date.today()
+    
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_publication/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_rating_publications:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+        source = os.path.join(BASE_DIR,'media/ratings_publication/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/ratings_publication/')
+        
+        for publication in get_rating_publications:
+            
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+        
+    print("BASE_DIR:",BASE_DIR)
 
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "ratings/ratings_publication_list.html"
+    
+    context = {"get_rating_publications":get_rating_publications} 
+    
+    return render(request, template, context)
