@@ -220,12 +220,14 @@
                   <span class="text pt-1 fw-bold" id="footer-text">
                  {{event.event_time|time:"H:i"}},</span>
                  <span class="text pt-1 fw-bold" id="footer-text">{{event.event_venue}}</span>
-              
+                    
+                {%if todays_date <= event.event_date %}
                 <a href="{%url 'eventRSVP' event.event_id%}">
                 <span class="text fw-bold" style="color:#dc3545!important;float:right;cursor:pointer;">
                   RSVP
                 </span>
                 </a>
+                {%endif%}
               
               </div>
             </div>

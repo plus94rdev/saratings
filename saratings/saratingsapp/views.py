@@ -101,12 +101,11 @@ def event_homepage(request):
     
     get_all_events = SAREvent.objects.all()
     
-    for event in get_all_events:
-        print("event_id",event.event_id)
-    
     template = "events/events_homepage.html"
     
-    context = {"get_all_events":get_all_events}
+    todays_date = datetime.date.today()
+    
+    context = {"get_all_events":get_all_events,"todays_date":todays_date}
     
     return render(request, template,context)
 
@@ -185,15 +184,18 @@ def event_rsvp(request,event_id):
             print("rsvp_form_errors:",rsvp_form.errors)
             for field in rsvp_form.errors:
                 rsvp_form[field].field.widget.attrs['class'] += 'form-group textinput textInput form-control form-control is-invalid'
-            
-    if event_instance.event_date < datetime.date.today():
+    
+    can_rsvp = event_instance.event_date <= datetime.date.today()
+    
+    if can_rsvp:
+        template = "events/event_rsvp.html"
+    else:
         print("Event has passed")
         messages.error(request,"This event has passed")
         return redirect('eventsHomepage')
-    else:
-        template = "events/event_rsvp.html"
+       
     
-    context = {"event_instance":event_instance,"event_id":event_id,"rsvp_form":rsvp_form}
+    context = {"event_instance":event_instance,"event_id":event_id,"rsvp_form":rsvp_form,"can_rsvp":can_rsvp}
     
     return render(request, template,context)
 
