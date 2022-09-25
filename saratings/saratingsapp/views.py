@@ -186,8 +186,12 @@ def event_rsvp(request,event_id):
             for field in rsvp_form.errors:
                 rsvp_form[field].field.widget.attrs['class'] += 'form-group textinput textInput form-control form-control is-invalid'
             
-
-    template = "events/event_rsvp.html"
+    if event_instance.event_date < datetime.date.today():
+        print("Event has passed")
+        messages.error(request,"This event has passed")
+        return redirect('eventsHomepage')
+    else:
+        template = "events/event_rsvp.html"
     
     context = {"event_instance":event_instance,"event_id":event_id,"rsvp_form":rsvp_form}
     

@@ -9,7 +9,7 @@ admin.site.site_header = "SA Ratings Administration"
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('sar-adm/', admin.site.urls),
     path("", include("saratingsapp.urls")),
 ]
 

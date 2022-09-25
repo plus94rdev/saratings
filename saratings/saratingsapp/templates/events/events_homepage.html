@@ -140,12 +140,18 @@
         </div>
       </div>
 
+      <div>
       {% if messages %}
-      {% for message in messages %}  
-      <p style="display:none" id="rsvp-message"></p>
+      {% for message in messages %}
+      {%if message.level == 25%}
+      <p style="display:none" id="success-message">{{message.level}}</p>
+      {%elif message.level == 40%}
+      <p style="display:none" id="error-message">{{message.level}}</p>
+      {%endif%}
       {% endfor %}
       {% endif %}
       
+      </div>
       {% for event in get_all_events %}
 
       <div class="col-xxl-4 col-md-6">
@@ -362,7 +368,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
   <script>
 
-    if(document.querySelector("#rsvp-message")){
+    if(document.querySelector("#success-message")){
 
     Swal.fire({
       html:`<div class="text-white">
@@ -384,8 +390,34 @@
        
       }
     })
+  
   }
-    
+  
+  
+
+  if(document.querySelector("#error-message")){
+
+  Swal.fire({
+    html:`<div class="text-white">
+      <div><h4>Error</h4></div>
+      <div class="alert-body">
+        <p class="alert-text"><h6 style="color:#dc3545!important">This event has passed.</h6></p>
+     </div>
+    </div>`,
+    icon: 'error',
+    showCancelButton: false,
+    confirmButtonColor: '#3aaf85',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Close',
+    allowOutsideClick:false,
+    background: '#f9fafb',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href =  "{% url 'eventsHomepage' %}";
+     
+    }
+  })
+}
   </script>
 
 </body>
