@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-
 from django.urls import path, include
+from django_otp.admin import OTPAdminSite
 
 
 admin.site.site_header = "SA Ratings Administration"
+
+#Enfore 2FA in all environments
+admin.site.__class__ = OTPAdminSite
 
 
 urlpatterns = [
