@@ -2,6 +2,7 @@ import datetime
 from re import template
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.mail import EmailMessage,send_mail
+from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from django.conf import settings
 import random, string
@@ -67,7 +68,7 @@ def sar_about(request):
     template = "home/sar_about.html"
     return render(request, template)
 
-
+@cache_page(60*15)
 def sar_team(request):
     
     """

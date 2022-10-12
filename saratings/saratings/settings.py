@@ -228,6 +228,24 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Johannesburg'
 
+"""
+https://realpython.com/caching-in-django-with-redis/
+Checking the cached views
+run: redis-cli -h 127.0.0.1 -p 6383
+127.0.0.1:6383> keys *
+"""
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6383',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "sar_cache"
+    },
+    
+}
+
 
 """
 AWS S3
