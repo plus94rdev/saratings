@@ -99,7 +99,8 @@ def sar_contact(request):
 
 def event_homepage(request):
     
-    get_all_events = SAREvent.objects.all()
+    #Only display current and future events
+    get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
     
     template = "events/events_homepage.html"
     
@@ -185,12 +186,19 @@ def event_rsvp(request,event_id):
             for field in rsvp_form.errors:
                 rsvp_form[field].field.widget.attrs['class'] += 'form-group textinput textInput form-control form-control is-invalid'
     
-    can_rsvp = event_instance.event_date <= datetime.date.today()
+    can_rsvp = event_instance.event_date >= datetime.date.today()
     
     if can_rsvp:
+        print("Event title:",event_instance.event_title)
+        print("Event date:",event_instance.event_date)
+        print("Today's date:",datetime.date.today())
+        print("Can RSVP:",can_rsvp)
         template = "events/event_rsvp.html"
     else:
-        print("Event has passed")
+        print("Event title:",event_instance.event_title)
+        print("Event date:",event_instance.event_date)
+        print("Today's date:",datetime.date.today())
+        print("Can RSVP:",can_rsvp)
         messages.error(request,"This event has passed")
         return redirect('eventsHomepage')
        
