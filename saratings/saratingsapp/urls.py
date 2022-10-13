@@ -17,6 +17,7 @@ urlpatterns = [
     path('regulatory/public-commentary/article/<str:unique_id>',view_commentary_article, name="viewCommentaryArticle"),
     path('regulatory/public-commentary/article/<str:unique_id>/comment',comment_commentary_article, name="commentCommentaryArticle"),
     path('ratings-publication/',ratings_publication_list, name="ratingsPublications"),
+    path('ratings-methodology/',ratings_methodology_list, name="ratingsMethodologies"),
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD

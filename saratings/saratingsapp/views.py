@@ -412,3 +412,56 @@ def ratings_publication_list(request):
     context = {"get_rating_publications":get_rating_publications} 
     
     return render(request, template, context)
+
+
+
+def ratings_methodology_list(request):
+
+    """
+    List regulatory articles on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    
+    get_rating_methodologies = RatingsMethodology.objects.all().order_by('-publication_date')
+     
+    todays_date = datetime.date.today()
+    
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_methodology/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_rating_methodologies:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+        source = os.path.join(BASE_DIR,'media/ratings_methodology/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/ratings_methodology/')
+        
+        for publication in get_rating_methodologies:
+            
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "ratings/ratings_methodology_list.html"
+    
+    context = {"get_rating_methodologies":get_rating_methodologies} 
+    
+    return render(request, template, context)
