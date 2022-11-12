@@ -1,0 +1,79 @@
+{% extends "custom-template/base_custom.html" %}
+{% block content %}
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script>
+Swal.fire({
+          html:'<div style="background-color:#1a394c;line-height:50px;">\
+                <div">\
+                    <a style="font-size:1.5rem;color:#fff"><span><strong>T&nbsp;I&nbsp;T&nbsp;A&nbsp;N&nbsp;94</strong></span></a>\
+                </div>\
+                <div>\
+                <p></p>\
+                </div>\
+                <div">\
+                    <p style="font-size:1.5rem;color:#00000" ><span>You have been logged out</span></p>\
+                </div>\
+                <div>\
+                </div>\
+                <div>\
+                </div>',
+          showConfirmButton: true,
+          confirmButtonColor:'#39485a',
+          confirmButtonText:'Login',
+          allowOutsideClick: false,
+         
+              }).then(function(){
+
+                window.location.href="{% url 'login' %}"
+
+              });
+</script>
+
+<style type="text/css">
+
+    .swal2-popup.swal2-modal.swal2-show{
+        top:-212px;
+
+    }
+
+    .swal2-popup{
+        padding: 0px;
+    }
+
+
+    .swal2-container.swal2-center.swal2-fade.swal2-shown{
+
+       background-image: url(https://titan94.com/static/images/titan94_img1.jpeg);
+    }
+
+</style>
+
+<!--div class="container-fluid" id="Test" style="margin-top:-80px;">
+<nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid" id="container-fluid" style="background-color: #1a394c;line-height: 50px;">
+                
+                    <div class="mx-auto w-50"  id="topNavBarTitle">
+                        <a style="font-size:1.5rem;color:#fff"><span>T&nbsp;I&nbsp;T&nbsp;A&nbsp;N&nbsp;94</span></a>
+                    </div>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                       
+                    </div>
+                </div>
+            </nav>
+
+    <h4 style="color:#fff;margin-left:15px;">You have been logged out</h4>
+    
+    <div class="border-top pt-3" style="margin-left:15px">
+        <small class="text-muted">
+            <a href="{% url 'login' %}" style="font-size:2rem;color:#fff">Log In</a>
+        </small>
+    </div>
+</div-->
+
+{% endblock content %}

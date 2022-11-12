@@ -1,0 +1,318 @@
+{% extends 'layouts/base.html'%}
+{% load static %}
+{%load humanize%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SAR|Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:10%!important" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    } {% endcomment %}
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+
+  
+</style>
+
+  {%block landing_section%}
+  {% endblock landing_section%}
+
+  <main id="main">
+
+  {%block about_section%}
+
+
+
+    <!-- ======= About Section ======= -->
+    <div id="about" class="about-area area-padding mt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h4 class="fw-bold">{{get_nugget.title}}</h4>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-6">
+          <div class="text">
+            <h6 class="fw-bold">Publication date:&nbsp;{{get_nugget.publication_date|date:"d F Y"}}</h6>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single-well start-->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <div class="single-well" style="font-size:18px!important">
+                <p style="font-family: "Open Sans", sans-serif!important;">
+                  {{get_nugget.article_body|linebreaks}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- single-well end-->
+          <br><br>
+          <hr>
+          
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            
+            <div class="well-middle">
+              
+              <div class="signin-inner my-4 my-lg-4 bg-white shadow-soft 
+                    border rounded border-gray-300 p-2 w-100 fmxw-500">
+                        <div class="text text-md mb-0 mt-md-0">
+                            <h4 class="mb-0 h6 fw-bold">
+                                {{count_nugget_comments}}&nbsp;Article Comments 
+                            </h4>
+                            <br>
+                            <span class="font-weight-normal" style="color: red;font-weight: bold">
+                                                                  
+                            </span>
+                        </div>
+
+                        <section class="section" style="padding-top:0px!important;">
+                          <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                              <div class="card" style="background-color: #ffffff;">
+                                  <div id="chat-messages" style="max-height:500px; overflow-y:scroll;margin:0px!important;">
+                                    {%for message in get_nugget_comments%}
+                      
+                                    {%if message.username == get_username%}
+
+
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert"
+                                        style="color:#ffffff;background-color:#374151;border-color:#374151;
+                                                border-radius:0rem;margin-bottom:0px;padding-right:1rem!important" 
+                                                id="message-id-{{message.id}}">
+                                          <b><i class="bi bi-person-circle"></i>&nbsp;{{message.username}}:</b>{{message.comment}}
+                                      
+                                        </div>
+                                      
+                                      <div class="card-footer border-0 d-flex 
+                                        justify-content-between" 
+                                        style="background-color:#ffffff;padding:initial!important;margin-bottom:8px!important;color:#8e8e8e">
+                                        {{message.added_on_date|naturaltime}}
+                                      </div>
+                      
+                                    {%elif message.username != get_username%}
+                                    
+                                    <div class="comment-text" id="{{message.id}}" value="{{message.comment_ref_number}}">
+                                      <div class="alert alert-success alert-dismissible fade show" role="alert"
+                                        style="color:#ffffff;background-color:#385885;border-color:#385885;border-radius:0rem;
+                                            margin-bottom:0px;padding-right:1rem!important;" 
+                                            value="{{message.comment_ref_number}}" id="comment-posted">
+                                            
+                                          <b><i class="bi bi-person-circle"></i>&nbsp;{{message.username}}:</b>{{message.comment}}
+                                      </div>
+                                  
+                                    <div class="card-footer border-0 d-flex 
+                                    justify-content-between" 
+                                        style="background-color:#ffffff;padding:initial!important;margin-bottom:8px!important;color:#8e8e8e">
+                                        {{message.added_on_date|naturaltime}}
+                      
+                                        <a class="btn-primary-soft">
+                                          <span class="text  small pt-2 fw-bold" id="{{message.id}}" data-ref_number="{{message.comment_ref_number}}"
+                                          value="{{message.username}}" style="font-weight:bold;color:#8e8e8e;cursor:pointer;" onClick="replyToCommentBE(this)">
+                                            Reply
+                                          <span class="text-success pt-1 fw-bold">
+                                          <i class="bi bi-chat"></i></span>
+                                          </span>
+                                        </a>
+                                      
+                                    </div>
+                      
+                                  </div>
+                                      {%endif%}
+                                        
+                                        <div id="append-comment"></div>
+                      
+                                      {%endfor%}
+                                </div>
+                      
+                                </div>
+                      
+                            </div>
+                      
+                            </div>
+                      
+                            
+                          </div>
+                        </section>
+
+                        <form method="post" action="">
+
+                          {% csrf_token %}
+
+                          {{nugget_comment_form.as_p}}
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark" id="submit-comment">Submit</button>
+                            </div>
+                        </form>
+                        
+                        <br>
+                        <br>
+
+                     
+                    </div>
+
+            </div>
+          </div>
+          <!-- End col-->
+        </div>
+      </div>
+    
+    </div><!-- End About Section -->
+
+<script>  
+
+    document.getElementById('submit-comment').addEventListener('click', function(){
+      location.reload();
+     
+      
+    });
+
+    //BackEnd Reply
+const replyToCommentBE = (getValue) => {
+
+  console.log("BE Reply")
+
+  //If user switches from ReplyFE to ReplyBE, then remove the replyCommentRefNumberFE
+  sessionStorage.removeItem('replyCommentRefNumberFE');
+
+  //Gets the comment text from the card
+  let commentText = getValue.closest('.comment-text').querySelector("#comment-posted").innerText;
+  console.log("commentText: " + commentText);
+  let commentTextRefNumber = getValue.getAttribute('data-ref_number');
+
+  let finalText = commentText.split(':').pop();
+  
+  const getUsername = getValue.getAttribute('value');
+  sessionStorage.setItem('commentId', getValue.getAttribute('id'));
+  sessionStorage.setItem('commentUsername', getUsername);
+  sessionStorage.setItem('replyCommentRefNumberBE',commentTextRefNumber);
+
+  const finalValue = getValue.getAttribute('value').split(':').pop();
+  
+  document.querySelector("#id_comment").value = "@"+getUsername+": " 
+
+  const input = document.getElementById('id_comment');
+  const end = input.value.length;
+
+   //Move focus to END of input field
+   input.setSelectionRange(end,end);
+   input.focus();
+
+   return getUsername;
+
+}
+
+    document.querySelector('#submit-comment').scrollIntoView(true);
+    
+
+  </script>
+    
+    {% endblock about_section%}
+
+
+
+{%block team_section%}
+
+{% endblock team_section%}
+
+{%block research_section%}
+{% endblock research_section%}
+    
+
+
+{%block insights_section%}
+{% endblock insights_section%}
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block news_section%}
+{%endblock news_section%}
+
+
+{%block contact_section%}
+{%endblock contact_section%}
+
+{%block footer_main%}
+  
+{%endblock footer_main%}
+
+  </main><!-- End #main -->
+
+
+
+
+</body>
+
+</html>

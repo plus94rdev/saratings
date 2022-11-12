@@ -56,11 +56,25 @@
 
   {%block landing_section%}
   <!-- ======= hero Section ======= -->
+
+  {%if messages%}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {%for message in messages%}
+    <strong>{{message}}</strong>
+    {%endfor%}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {%endif%}
+
   <section id="hero">
     <div class="hero-container">
       <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
 
         <ol id="hero-carousel-indicators" class="carousel-indicators"></ol>
+
+  
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
         <div class="carousel-inner" role="listbox">
 
@@ -87,6 +101,8 @@
       </div>
     </div>
   </section><!-- End Hero Section -->
+
+  
 
   {% endblock landing_section%}
 

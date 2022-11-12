@@ -1,0 +1,54 @@
+{% extends "custom-template/base_custom.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-image: url(https://titan94.com/static/images/titan94_img1.jpeg);">
+  <div class="modal-dialog" role="document" id="registerModalDialog">
+    <div class="modal-content" >
+    
+    <div class="modal-header" id="loginModalHeader">
+        <h3 class="col-5 modal-title text-center" id="loginModalHeaderText">T&nbsp;I&nbsp;T&nbsp;A&nbsp;N&nbsp;94&nbsp;Registration</h3>
+      </div>
+      <div class="modal-body" id="loginModalBody">
+       <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+
+         <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Registered? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+        </small>
+
+         </div>
+  
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  console.log("hello");
+</script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+      <script>
+
+        $(document).ready(function(e){
+           
+          
+        });
+
+        </script>
+
+        
+
+{% endblock content %}

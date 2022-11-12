@@ -1,0 +1,104 @@
+{% extends "admin/base_fullscreen.html" %}
+
+{% block title %} Login{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        <!-- Section -->
+        <section class="min-vh-100 d-flex align-items-center section-image overlay-soft-dark" 
+        data-background="static/assets/img/logos/research_exp_round_logo.png" sizes="15-x150">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-4 my-lg-0 bg-white shadow-soft border rounded border-gray-300 p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                   ResearchExpress
+                                </h1>
+                                <br />
+                                <span class="font-weight-normal" style="color:#dc3545;font-weight: bold;">
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                    {{message}}
+                                    {{msg}}
+                                    {% endfor %}
+                                {% endif %}
+                                                   
+                                </span>
+                            </div>
+                            <form method="post" action="" class="mt-4">
+
+                                {% csrf_token %}
+
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <label for="email">Username</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="fas fa-user"></span></span>
+                                        {{ form.username }}
+                                    </div>
+                                </div>
+                                <!-- End of Form -->
+                                <div class="form-group">
+                                    <!-- Form -->
+                                    <div class="form-group mb-4">
+                                        <label for="password">Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <span class="fas fa-unlock-alt"></span></span>
+                                            {{ form.password }}
+                                        </div>  
+                                    </div>
+                                    <!-- End of Form -->
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        
+                                        <div><a href="{% url 'userRegistration' %}" class="text-right" 
+                                            style="color: #242e4c;font-weight: bold">Register
+                                            <span style="color: #242e4c;font-weight: bold"></span></a></div>
+
+                                            <div><a href="#" class="text-right" 
+                                                style="color: #242e4c;font-weight: bold">&nbsp;
+                                            <span style="color: #242e4c;font-weight: bold"></span></a></div>
+
+                                            <div><a href="{% url 'password_reset' %}" class="text-right" 
+                                                style="color: #242e4c;font-weight: bold">Forgot Password?&nbsp;
+                                            <span style="color: #242e4c;font-weight: bold"></span></a></div>
+
+                                    </div>
+
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" name="login" class="btn btn-primary">Login</button>
+                                </div>
+                            </form>
+
+    
+                            
+ 
+
+                            <br />
+
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    &copy; ResearchExpress
+                                    <a href="" target="_blank"
+                                       class="fw-bold text-underline"></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

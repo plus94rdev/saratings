@@ -49,6 +49,7 @@ SECRET_KEY = config.get('SECRET_KEY')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.humanize',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -61,7 +62,6 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
-    
 ]
 
 MIDDLEWARE = [
@@ -70,11 +70,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if 'aws' in os.uname()[2]:
+    MIDDLEWARE.append('django_otp.middleware.OTPMiddleware')
+    
 ROOT_URLCONF = 'saratings.urls'
 
 TEMPLATES = [
@@ -214,6 +216,8 @@ EMAIL_HOST_PASSWORD = config['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+DEFAULT_FROM_EMAIL = config['EMAIL_HOST_USER']
+
 
 #Running on a specified port
 CELERY_BROKER_URL = 'redis://localhost:6382'
@@ -283,6 +287,7 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 """
 
+LOGIN_URL = 'login/'
 
 with open('/etc/recaptcha_config.json') as rc_config_file:
     recap_config = json.load(rc_config_file)

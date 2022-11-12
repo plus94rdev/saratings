@@ -1,11 +1,15 @@
 from django.urls import path
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from saratingsapp.views import *
 from django.conf import settings
 
 
 urlpatterns = [
-    
+    path("register/", registration, name="register"),
+    path("login/", user_login, name="login"),
+    path('accounts/login/', auth_views.LoginView.as_view()),
+    path("logout/", user_logout, name="logout"),
     path("", sar_home, name="sar_home"),
     path("about/", sar_about, name="sar_about"),
     path("team/", sar_team, name="sar_team"),
@@ -18,6 +22,10 @@ urlpatterns = [
     path('regulatory/public-commentary/article/<str:unique_id>/comment',comment_commentary_article, name="commentCommentaryArticle"),
     path('ratings-publication/',ratings_publication_list, name="ratingsPublications"),
     path('ratings-methodology/',ratings_methodology_list, name="ratingsMethodologies"),
+    path('research/',resarch_publication_list, name="researchPublications"),
+    path('list-daily-nuggets/',nuggets_publication_list, name="nuggets_publication_list"),
+    path('read-daily-nugget/<str:unique_id>',read_nugget, name="read_nugget"),
+    
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD

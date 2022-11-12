@@ -144,12 +144,18 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>
-          <li><a class="nav-link scrollto" href="{%url 'sar_about'%}">About</a></li>
-          <li><a class="nav-link scrollto" href="{%url 'sar_team' %}">Our Team</a></li>
-          <li class="dropdown"><a href="#"><span>Ratings</span><i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>About</span><i class="bi bi-chevron-down"></i></a>
             <ul>
-                <li><a href="{%url 'ratingsMethodologies'%}" target="_blank">Rating Methodologies</a></li>
-                <li><a  href="{%url 'ratingsPublications'%}" target="_blank">Ratings Publications</a></li>
+              <li><a href="{%url 'sar_about'%}">About SAR</a></li>
+              <li><a href="{%url 'sar_team'%}">Our Team</a></li>
+              <li><a href="{%url 'sar_contact'%}">Contact Us</a></li>
+            </ul>
+          <li class="dropdown"><a href="#"><span>Ratings and Research</span><i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="{%url 'ratingsMethodologies'%}">Rating Methodologies</a></li>
+                <li><a  href="{%url 'ratingsPublications'%}">Ratings Publications</a></li>
+                <li><a href="" target="_blank">Research</a></li>
+                <li><a href="{%url 'nuggets_publication_list'%}">Daily Nuggets</a></li>
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
@@ -159,7 +165,17 @@
           </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
           <li><a class="nav-link scrollto" href="{%url 'eventsHomepage'%}">Events</a></li>
-          <li><a class="nav-link scrollto" href="{%url 'sar_contact'%}">Contact</a></li>
+          <li><a class="nav-link scrollto" href="">Subscribe</a></li>
+         <li><a class="nav-link scrollto" href="{%url 'register'%}">Register</a></li>
+          {%if is_user_authenticated %}
+          <li class="dropdown"><a href="#"><span>{{get_username}}</span><i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a class="nav-link scrollto" href="{%url 'logout'%}">Logout</a></li>
+            </ul>
+          </li>
+          {%else%}
+          <li><a class="nav-link scrollto" href="{%url 'login'%}">Login</a></li>
+          {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -411,17 +427,32 @@
 
 {%block footer%}
 
+<style>
+
+  a.link {
+    font-size: 1.25rem;
+}
+
+</style>
+
 <div class="footer-area-bottom">
       <div class="container">
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="copyright text-center">
               <p>
-                <span> &copy;<strong>Sovereign Africa Ratings</strong></span>
-                 
+                <span> &copy;<strong>Sovereign Africa Ratings</strong>
+                
+                  <div>
+                    <a href="https://www.linkedin.com/in/sovereign-africa-ratings-477479250/" class="link" target="_blank" style="color:#0072b1">
+                        <i class="fa-brands fa bi-linkedin"></i>
+                    </a>
+                    <a href="https://youtube.com/@saratings" class="link" target="_blank" style="color:#ff0000;">
+                        <i class="fa-brands fa bi-youtube"></i>
+                    </a>
+                    </div>
+                  </span>
               </p>
-
-              
             </div>
             
           </div>
@@ -442,6 +473,8 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js'%}"></script>
+  <script src="{% static 'assets/js/jquery.min.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
 
 {%block data_table_js%}
 {%endblock data_table_js%}

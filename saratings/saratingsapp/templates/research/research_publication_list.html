@@ -1,0 +1,392 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ 
+  {% block title %}
+  <title>SAR|Ratings</title>
+  {% endblock title %}
+
+</head>
+
+<body>
+
+
+  <style>
+
+ 
+  .section-headline h2::after {
+    border: 1px solid #f9fafb!important;
+
+  }
+
+    header#header{
+      background: #0d1822!important;
+    }
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    }
+    .team-modal{
+
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+
+  h4.card-title {
+    color:#000000!important
+  }
+  a.card-link{
+
+    color:
+  }
+
+  span#footer-text{
+    color:#29649a!important;
+  }
+
+  .section-headline h2 {
+    color: #f9fafb!important;
+}
+
+
+
+
+  </style>
+
+  
+
+<style>
+  .card-title {
+    font-size: 14px!important;
+    font-family: "Poppins", sans-serif!important;
+  }
+  .poll-items{
+  display:none;
+  }
+
+  
+
+</style>
+
+
+{%block landing_section%}
+{%endblock landing_section%}
+
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block main_section%}
+
+  <!-- ======= Main Section ======= -->
+<main id="main" style="margin-top:100px" class="col-12">
+  
+  <!-- ======= Ratings Publication Item Section ======= -->
+  <div id="ratings-publication-item" class="our-team-area col-12">
+
+   <!-- ======= Ratings Publication Section ======= -->
+   <div id="ratings-publication" class="ratings-item">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Ratings Publication</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {% for publication in get_rating_publications %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="single-team-member">
+            <div class="p-2">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">{{publication.title}}</h4>
+                  <p class="card-text">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
+                  <a href="{{publication.file_link}}" target="_blank" class="card-link">View</a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- End column -->
+        {%endfor%}
+      </div>
+    </div>
+    <!--End Ratings Publication-->
+
+  </main><!-- End #main -->
+
+  
+
+{%endblock main_section%}
+
+
+{%block research_section%}
+    <!-- ======= Research Section ======= -->
+    <div id="research" class="services-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline services-head text-center">
+              <h2>Research</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <!-- Start Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-briefcase"></i>
+                  </a>
+                  <h4>Expert Ratings</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-card-checklist"></i>
+                  </a>
+                  <h4>Research</h4>
+                  <p>
+                    We provide...
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-bar-chart"></i>
+                  </a>
+                  <h4>Insights</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          
+          <!-- End Left services -->
+
+          
+          
+              <!-- end about-details -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Services Section -->
+{% endblock research_section%}
+    
+<br><br><br><br>    
+
+
+{%block insights_section%}
+    <!-- ======= Insights Section ======= -->
+    <div id="insights" class="pricing-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Insights</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Economy <br /> <span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+          
+              <h3>Trade Insights <br /><span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Capital Markets <br /><span>.</span></h3>
+              <ol>
+                
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Pricing Section -->
+
+    {% endblock insights_section%}
+
+
+  {%block footer_main%}
+  <style>
+
+    .footer-area-bottom{
+      position: fixed!important;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+  {%endblock footer_main%}
+
+
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="footer-area" id="footer_document_links">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="footer-content">
+              <div class="footer-head">
+                <div class="footer-logo">
+                 
+                </div>
+                <div class="footer-icons" id="social_media_links">
+                  <ul>
+                    <li>
+                      <a href="#"><i class="bi bi-twitter"></i></a>
+                    </li>
+
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+         
+
+        
+        </div>
+      </div>
+    </div>
+    <div class="footer-area-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="copyright text-center">
+              <p>
+                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+  
+
+</body>
+
+</html>

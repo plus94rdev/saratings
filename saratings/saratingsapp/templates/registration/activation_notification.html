@@ -1,0 +1,69 @@
+{% extends "admin/base_fullscreen.html" %}
+
+{% block title %} Login{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+</style>
+
+    <main>
+        <!-- Section -->
+        <section class="min-vh-100 d-flex align-items-center section-image overlay-soft-dark" 
+        data-background="static/assets/img/logos/anc_logo.png" sizes="192x192">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-4 my-lg-0 bg-white shadow-soft border rounded border-gray-300 p-4 p-lg-5 w-100 fmxw-550">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                   ANCConnected
+                                </h1>
+                                <br />
+                           
+
+								<div class="alert alert-success" role="alert" style="background-color:#171f38!important;color:#f9fafb!important;">
+								
+									{% if messages %}
+                                    {% for message in messages %}
+                                    {{message}}
+                                    {% endfor %}
+                                	{% endif %}
+
+								</div>
+									
+								
+								<br>
+								                   
+                             
+
+								<button type="button" class="btn btn-secondary"><a href="{%url 'userLogin'%}" style="color:#ffffff">Close</a></button>
+                            
+
+
+                            </div>
+           
+             
+                            <br />
+
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    &copy; ANCConnected
+                                    <a href="" target="_blank"
+                                       class="fw-bold text-underline"></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

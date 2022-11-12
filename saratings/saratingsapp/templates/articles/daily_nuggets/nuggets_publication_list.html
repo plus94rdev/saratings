@@ -6,7 +6,7 @@
 <head>
  
   {% block title %}
-  <title>SAR|Ratings</title>
+  <title>SAR|Nuggets</title>
   {% endblock title %}
 
 </head>
@@ -90,8 +90,6 @@
 
   </style>
 
-  
-
 <style>
   .card-title {
     font-size: 14px!important;
@@ -101,10 +99,7 @@
   display:none;
   }
 
-  
-
 </style>
-
 
 {%block landing_section%}
 {%endblock landing_section%}
@@ -122,29 +117,46 @@
 <main id="main" style="margin-top:100px" class="col-12">
   
   <!-- ======= Ratings Publication Item Section ======= -->
-  <div id="ratings-publication-item" class="our-team-area col-12">
+  <div id="nugget-publication-item" class="our-team-area col-12">
 
    <!-- ======= Ratings Publication Section ======= -->
-   <div id="ratings-publication" class="ratings-item">
+   <div id="nugget-publication" class="ratings-item">
     <div class="container">
+      
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="section-headline text-center">
-            <h2>Ratings Publication</h2>
+            <h2>Daily Economic Nuggets</h2>
           </div>
         </div>
       </div>
 
+  <div class="col-md-12">
+    <div>
+      <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+      <div class="input-group">
+        <input type="text" class="form-control" 
+        placeholder="Search by title,date..." id="nugget-search">
+        <span class="input-group-btn" style="flex:inherit!important">
+          <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+        </span>
+        </div>
+      </ol>
+    </div>
+  </div>
+  
+  <br>
+
       <div class="row">
-        {% for publication in get_rating_publications %}
+        {% for publication in get_nugget_publications %}
         <div class="col-md-6 col-sm-6 col-xs-12">
           <div class="single-team-member">
             <div class="p-2">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">{{publication.title}}</h4>
-                  <p class="card-text">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
-                  <a href="{{publication.file_link}}" target="_blank" class="card-link">View</a>
+                  <p class="card-text">Publication Date:&nbsp;{{publication.publication_date|date:"d F Y"}}</p>
+                  <a href="{%url 'read_nugget' publication.unique_id%}" target="_blank" class="card-link">Read</a>
                 </div>
               </div>
 
@@ -154,14 +166,63 @@
         </div>
         <!-- End column -->
         {%endfor%}
+
+        
       </div>
     </div>
     <!--End Ratings Publication-->
 
+    
+
   </main><!-- End #main -->
 
-{%endblock main_section%}
 
+  
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <script src="{% static 'assets/js/jquery.min.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+
+  <script>
+
+      {%if not is_user_authenticated %}
+
+        Swal.fire({
+          text: "You need to login or register to view the articles.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#0d1822',
+          confirmButtonText: 'Login',
+          cancelButtonText : 'Register',
+          allowOutsideClick: false,
+        }).then((result) => {
+          
+          if (result.isConfirmed) {
+            window.location.href = "{%url 'login'%}";
+          }
+          else if(result.isDismissed){
+            window.location.href = "{%url 'register'%}";
+          }
+        })
+      
+      {% endif %}
+
+  
+    $(document).ready(function(){
+      console.log("ready");
+      $("#nugget-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".col-md-6*").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    
+    });
+</script>
+  
+  
+{%endblock main_section%}
 
   {%block footer_main%}
   <style>
@@ -178,69 +239,9 @@
 
 
 
-  <!-- ======= Footer ======= -->
-  <footer>
-    <div class="footer-area" id="footer_document_links">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="footer-content">
-              <div class="footer-head">
-                <div class="footer-logo">
-                 
-                </div>
-                <div class="footer-icons" id="social_media_links">
-                  <ul>
-                    <li>
-                      <a href="#"><i class="bi bi-twitter"></i></a>
-                    </li>
-
-                    </li>
-                    <li>
-                      <a href="#"><i class="bi bi-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end single footer -->
-         
-
-        
-        </div>
-      </div>
-    </div>
-    <div class="footer-area-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="copyright text-center">
-              <p>
-                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
-              </p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
-  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
-  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
-  <script src="{% static 'assets/vendor/php-email-form/validate.js'%}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{% static 'assets/js/main.js'%}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
-  
-
 </body>
 
+
+
 </html>
+

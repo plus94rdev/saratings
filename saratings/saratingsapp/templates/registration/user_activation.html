@@ -1,0 +1,70 @@
+{% extends "admin/base_fullscreen.html" %}
+
+{% block title %} Login{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+</style>
+
+    <main>
+        <!-- Section -->
+        <section class="min-vh-100 d-flex align-items-center section-image overlay-soft-dark" 
+        data-background="static/assets/img/logos/anc_logo.png" sizes="192x192">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-4 my-lg-0 bg-white shadow-soft border rounded border-gray-300 p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                   ANC Connected
+                                </h1>
+                                <br />
+                             
+
+                                <div>
+                                    {% if message %}
+                                 
+                                        <div class="alert" id="display-messages" style="font-size:0.95rem;color: #37ffb7;background-color: #232e4c;border-color: #232e4c;">
+                                          <h6 class="alert" style="color:#37ffb7">{{ message }}</h6>
+                                        </div>
+                                     
+                                    {% endif %}
+                          
+                                  </div>
+                            </div>
+                            
+							<div class="d-flex justify-content-center align-items-center mt-4">
+								
+                                        
+								<div><a href="{% url 'userLogin' %}" class="text-center" style="color: #242e4c;font-weight: bold">Login
+									<span style="color: #242e4c;font-weight: bold"></span></a></div>
+									
+							</div>
+
+							
+
+
+                            <br />
+
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    &copy; ANC Connected
+                                    <a href="https://appseed.us" target="_blank"
+                                       class="fw-bold text-underline"></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
