@@ -732,7 +732,8 @@ def nuggets_publication_list(request):
 def read_nugget(request, unique_id):
     
     is_user_authenticated = request.user.is_authenticated
-    get_username = request.user.username
+    get_username = request.user.username or "Guest"
+    
     print("read_nugget:is_authenticated:",request.user.is_authenticated)
     get_nugget = NuggetPublication.objects.get(unique_id=unique_id)
     print("get_nugget:",get_nugget)
@@ -767,22 +768,23 @@ def read_nugget(request, unique_id):
         
             return redirect('read_nugget',unique_id=unique_id)
     
-    if request.user.is_authenticated:
-        template = "articles/daily_nuggets/read_nugget.html"
+    # if request.user.is_authenticated:
         
-        context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
-                   "get_nugget":get_nugget,
-                   "nugget_comment_form":nugget_comment_form,
-                   "get_nugget_comments":get_nugget_comments,"count_nugget_comments":count_nugget_comments}
-    else:
+    template = "articles/daily_nuggets/read_nugget.html"
+    
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
+                "get_nugget":get_nugget,
+                "nugget_comment_form":nugget_comment_form,
+                "get_nugget_comments":get_nugget_comments,"count_nugget_comments":count_nugget_comments}
+    # else:
         
-        view_error_message =  "asfasdf"
+    #     view_error_message =  "Error: You need to be logged in to view this page"
         
-        print("user not registered")
+    #     print("user not registered")
 
-        context = {"view_error_message":view_error_message}
+    #     context = {"view_error_message":view_error_message}
             
-        return redirect('nuggets_publication_list')
+    #     return redirect('nuggets_publication_list')
     
     
     return render(request, template, context)
