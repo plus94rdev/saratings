@@ -22,10 +22,12 @@ urlpatterns = [
     path('regulatory/public-commentary/article/<str:unique_id>/comment',comment_commentary_article, name="commentCommentaryArticle"),
     path('ratings-publication/',ratings_publication_list, name="ratingsPublications"),
     path('ratings-methodology/',ratings_methodology_list, name="ratingsMethodologies"),
-    path('research/',resarch_publication_list, name="researchPublications"),
-    path('list-daily-nuggets/',nuggets_publication_list, name="nuggets_publication_list"),
-    path('read-daily-nugget/<str:unique_id>',read_nugget, name="read_nugget"),
-    
+    path('research-reports/',resarch_publication_list, name="researchPublications"),
+    path('list-weekly-economic-nuggets/',nuggets_publication_list, name="nuggets_publication_list"),
+    path('read-weekly-economic-nugget/<str:unique_id>',read_nugget, name="read_nugget"),
+    path('purchase-research/',purchase_research, name="purchase_research"),
+    path('reports-subscriptions/',research_reports_subscription_list, name="reports_subscription_list"),
+
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD

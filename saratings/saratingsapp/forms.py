@@ -171,3 +171,24 @@ class NuggetCommentForm(forms.ModelForm):
     class Meta:
         model = NuggetComment
         fields = ['comment']
+        
+        
+
+class ResearchPurchaseForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(ResearchPurchaseForm, self).__init__(*args, **kwargs)
+
+        self.label_suffix = ""
+        self.error_class = DivErrorList
+
+        # Add class to format the input fields
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-group textinput textInputt form-control', }
+            self.label_suffix = ""
+            
+        
+    class Meta:
+        model = ResearchPurchase
+        fields = '__all__'

@@ -1,12 +1,13 @@
 {%extends 'layouts/base.html'%}
 {% load static %}
+{% load app_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
  
   {% block title %}
-  <title>SAR|Ratings</title>
+  <title>SAR|ReportsList</title>
   {% endblock title %}
 
 </head>
@@ -97,8 +98,6 @@
   .poll-items{
   display:none;
   }
-
-
   
 
 </style>
@@ -113,71 +112,70 @@
 
 {%block main_section%}
 
+<style>
+
+  a#submission-button{
+    color:#f9fafb!important;
+  }
+
+
+</style>
 
   <!-- ======= Main Section ======= -->
-<main id="main" style="margin-top:100px" class="col-12">
+<main id="main" style="margin-top:0px" class="col-12">
   
-  <!-- ======= Ratings Publication Item Section ======= -->
-  <div id="research-publication-item" class="our-team-area col-12">
-
-   <!-- ======= Ratings Publication Section ======= -->
-   <div id="research-publication" class="research-item">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="section-headline text-center">
-            <h2>Research Reports</h2>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-12">
-        <div>
-          <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
-          <div class="input-group">
-            <input type="text" class="form-control" 
-            placeholder="Search by title,date..." id="report-search">
-            <span class="input-group-btn" style="flex:inherit!important">
-              <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
-            </span>
-            </div>
-          </ol>
-        </div>
-      </div>
-      
-      <br>
-
-      <div class="row">
-        {% for publication in get_research_publications %}
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <div class="single-team-member">
-            <div class="p-2">
-              <div class="card">
-                <div class="card-body" style="background-image:url('http://127.0.0.1:8001/static/assets/img/hero-carousel/1.jpg')">
-                  <h4 class="card-title">{{publication.title}}</h4>
-                  <p class="card-text">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
-                  <p class="card-text">Publication Date:&nbsp;{{publication.overview|truncatewords:20}}</p>
-                  <a href="{%url 'purchase_research'%}" target="_blank" class="card-link"><button type="button" class="btn btn-dark"><i class="bi bi-lock-fill">Purchase Report</i></button></a>
-                </div>
-              </div>
-
-            </div>
-
+  <div class="row">
+    <!-- ======= Subscription Section ======= -->
+    <div id="pricing" class="pricing-area area-padding">
+      <div class="container">
+       
+        <div class="row">
+          <div class="section-headline text-center mt-2">
+            <h2>Options</h2>
           </div>
 
+          {%for subscription in get_subscriptions%}
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            
+            <div class="pri_table_list active">
+
+              <h3>{{subscription.subscription_type|render_subscription_type}}<br />
+                {% if subscription.subscription_type != 'unsubscribed'%}
+                <span>{{subscription.subscription_fee|render_currency}}</span></h3>
+                {%else%}
+                <span>&nbsp;</span></h3>
+                {%endif%}
+                
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_1|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_1_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_2|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_2_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_3|render_subscription_item}}&nbsp;<strong>{{subscription.item_3_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_4|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_4_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_5|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_5_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_6|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_6_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_7|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_7_fee|render_subscription_item_fee|upper}}</strong></span></li>
+                <li class="check"><i class="bi bi-check"></i><span>{{subscription.item_8|render_subscription_item|title}}&nbsp;<strong>{{subscription.item_8_fee|render_subscription_item_fee|upper}}</strong></span></li>
+              </ol>
+
+              {%if subscription.subscription_type == "unsubscribed"%}
+              <button type="button" class="btn btn-info"><a href="{%url 'purchase_research'%}" id="submission-button">Purchase Reports</a></button>
+              {%elif subscription.subscription_type == "6_month"%}
+              <button type="button" class="btn btn-info"><a href="" id="submission-button">Subscribe</a></button>
+              {%elif subscription.subscription_type == "annual"%}
+              <button type="button" class="btn btn-info"><a href="" id="submission-button">Subscribe</a></button>
+              {%endif%}
+            </div>
+          </div>
+          {%endfor%}
+
+         
+          
         </div>
+      </div>
+    </div><!-- End Subscription Section -->
 
-     
-        <!-- End column -->
-        {%endfor%}
-
-
-        
       </div>
 
-
-      
     </div>
     <!--End Ratings Publication-->
 
@@ -190,6 +188,7 @@
 
   
     $(document).ready(function(){
+      console.log("ready");
       $("#report-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".col-md-6*").filter(function() {

@@ -42,7 +42,7 @@ class RegulatoryArticleCommentAdmin(admin.ModelAdmin):
     
 class RatingsPublicationAdmin(admin.ModelAdmin):
     
-    list_display = ('title','added_by','added_on_date','file_type','upload_file','file_link','file_description','publication_date')
+    list_display = ('title','added_by','added_on_date','upload_file','publication_date','is_report_historical')
     search_fields: Sequence[str] = ('title', 'added_by','added_on_date','review_date')
     list_filter: Sequence[str] = ('title','added_on_date', 'added_by')
     ordering: Optional[Sequence[str]] = ('-added_on_date',)
@@ -74,6 +74,22 @@ class NuggetPublicationAdmin(admin.ModelAdmin):
     ordering: Optional[Sequence[str]] = ('-added_on_date',)
     list_per_page: int = 10
     
+    
+class SARSubscriptionAdmin(admin.ModelAdmin):
+   
+    list_display = ('subscription_type','subscription_fee','subscription_code',
+                    'item_1','item_1_fee','item_2','item_2_fee','item_3','item_3_fee',
+                    'item_4','item_4_fee','item_5','item_5_fee','item_6','item_6_fee',
+                    'item_7','item_7_fee')
+class CreditRatingReportAdmin(admin.ModelAdmin):
+    list_display = ('title','added_by','added_on_date','upload_file','is_report_historical','publication_date')
+    
+    
+
+class ResearchReportAdmin(admin.ModelAdmin):
+    list_display = ('title','added_by','added_on_date','upload_file','is_report_historical','publication_date')
+    
+
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
 admin.site.register(EventRSVP, EventRSVPAdmin)
@@ -84,3 +100,5 @@ admin.site.register(RatingsPublication, RatingsPublicationAdmin)
 admin.site.register(RatingsMethodology, RatingsMethodologyAdmin)
 admin.site.register(ResearchPublication, ResearchPublicationAdmin)
 admin.site.register(NuggetPublication, NuggetPublicationAdmin)
+admin.site.register(SARSubscription, SARSubscriptionAdmin)
+admin.site.register(ResearchReport, ResearchReportAdmin)

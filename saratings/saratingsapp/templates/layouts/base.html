@@ -128,7 +128,18 @@
 
   text-align: center!important;
 }
-
+.team-social-icon ul li a {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    height: 34px;
+    width: 34px;
+    margin: 0 3px;
+}
 </style>
 
 
@@ -150,12 +161,22 @@
               <li><a href="{%url 'sar_team'%}">Our Team</a></li>
               <li><a href="{%url 'sar_contact'%}">Contact Us</a></li>
             </ul>
+          </li>
           <li class="dropdown"><a href="#"><span>Ratings and Research</span><i class="bi bi-chevron-down"></i></a>
             <ul>
-                <li><a href="{%url 'ratingsMethodologies'%}">Rating Methodologies</a></li>
-                <li><a  href="{%url 'ratingsPublications'%}">Ratings Publications</a></li>
-                <li><a href="" target="_blank">Research</a></li>
-                <li><a href="{%url 'nuggets_publication_list'%}">Daily Nuggets</a></li>
+                <li class="dropdown"><a href="{%url 'ratingsMethodologies'%}">Ratings<i class="bi bi-chevron-right"></i></a>
+                  <ul>
+                    <li><a href="{%url 'ratingsPublications'%}#ratings-reports">Ratings Reports</a></li>
+                    <li><a href="{%url 'ratingsMethodologies'%}#methodologies">Rating Methodologies</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="" target="_blank">Research<i class="bi bi-chevron-right"></i></a>
+                  <ul>
+                    <li><a href="{%url 'researchPublications'%}">Research Reports</a></li>
+                    <li><a href="{%url 'nuggets_publication_list'%}">Weekly Economic Nuggets</a></li>
+                  </ul>
+                </li>
+               
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
@@ -165,7 +186,7 @@
           </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
           <li><a class="nav-link scrollto" href="{%url 'eventsHomepage'%}">Events</a></li>
-          <li><a class="nav-link scrollto" href="">Subscribe</a></li>
+          <li><a class="nav-link scrollto" href="{%url 'reports_subscription_list'%}">Subscribe</a></li>
          <li><a class="nav-link scrollto" href="{%url 'register'%}">Register</a></li>
           {%if is_user_authenticated %}
           <li class="dropdown"><a href="#"><span>{{get_username}}</span><i class="bi bi-chevron-down"></i></a>
@@ -442,13 +463,14 @@
             <div class="copyright text-center">
               <p>
                 <span> &copy;<strong>Sovereign Africa Ratings</strong>
+
                 
                   <div>
                     <a href="https://www.linkedin.com/in/sovereign-africa-ratings-477479250/" class="link" target="_blank" style="color:#0072b1">
-                        <i class="fa-brands fa bi-linkedin"></i>
+                        <i class="bi bi-linkedin"></i>
                     </a>
                     <a href="https://youtube.com/@saratings" class="link" target="_blank" style="color:#ff0000;">
-                        <i class="fa-brands fa bi-youtube"></i>
+                        <i class="bi bi-youtube"></i>
                     </a>
                     </div>
                   </span>

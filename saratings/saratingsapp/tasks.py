@@ -21,7 +21,7 @@ sudo supervisorctl restart all
 def rsvp_confirmation_email(guest,email_address):
     
     """
-    Send a welcom email after a new registration
+    Send a welcome email after a new registration
     """
 
     subject = 'BuildRSA: Welcome'

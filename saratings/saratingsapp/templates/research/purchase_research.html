@@ -1,0 +1,598 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ 
+  {% block title %}
+  <title>SAR|Research</title>
+  {% endblock title %}
+
+</head>
+
+<body>
+
+
+  <style>
+
+ 
+  .section-headline h2::after {
+    border: 1px solid #f9fafb!important;
+
+  }
+
+    header#header{
+      background: #0d1822!important;
+    }
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    }
+    .team-modal{
+
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+
+  h4.card-title {
+    color:#000000!important
+  }
+  a.card-link{
+
+    color:
+  }
+
+  span#footer-text{
+    color:#29649a!important;
+  }
+
+  .section-headline h2 {
+    color: #f9fafb!important;
+}
+
+
+
+
+  </style>
+
+  
+
+<style>
+  .card-title {
+    font-size: 14px!important;
+    font-family: "Poppins", sans-serif!important;
+  }
+  .poll-items{
+  display:none;
+  }
+
+  
+
+</style>
+
+
+{%block landing_section%}
+{%endblock landing_section%}
+
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block main_section%}
+
+  <!-- ======= Main Section ======= -->
+<main id="main" style="margin-top:100px" class="col-12">
+  
+  <!-- ======= Ratings Publication Item Section ======= -->
+  <div id="research-publication-item" class="our-team-area col-12">
+
+   <!-- ======= Ratings Publication Section ======= -->
+   <div id="research-publication" class="research-item">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Research Purchase</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="container">
+            <main>
+              <div class="py-5 text-center">
+                <h2>Checkout form</h2>
+                <p class="lead">Report Purchase</p>
+              </div>
+          
+              <div class="row g-5">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-primary">Your cart</span>
+                    <span class="badge bg-primary rounded-pill">3</span>
+                  </h4>
+                  <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                      <div>
+                        <h6 class="my-0">Report 1</h6>
+                        <small class="text-muted">Brief description</small>
+                      </div>
+                      <span class="text-muted">R12000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                      <div>
+                        <h6 class="my-0">Report 2</h6>
+                        <small class="text-muted">Brief description</small>
+                      </div>
+                      <span class="text-muted">R12000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                      <div>
+                        <h6 class="my-0">Report 3</h6>
+                        <small class="text-muted">Brief description</small>
+                      </div>
+                      <span class="text-muted">R20000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                      <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>SAR2022RP</small>
+                      </div>
+                      <span class="text-success">R4,000</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Total (ZAR)</span>
+                      <strong>R40,000</strong>
+                    </li>
+                  </ul>
+          
+              <form class="card p-2">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Promo code">
+                      <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                  <h4 class="mb-3">Billing address</h4>
+                  <form class="needs-validation was-validated" novalidate="">
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="firstName" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                          Valid first name is required.
+                        </div>
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="lastName" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                          Valid last name is required.
+                        </div>
+                      </div>
+          
+                      <div class="col-12">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text">@</span>
+                          <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                        <div class="invalid-feedback">
+                            Your username is required.
+                          </div>
+                        </div>
+                      </div>
+          
+                      <div class="col-12">
+                        <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <div class="invalid-feedback">
+                          Please enter a valid email address for shipping updates.
+                        </div>
+                      </div>
+          
+                      <div class="col-12">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                        <div class="invalid-feedback">
+                          Please enter your shipping address.
+                        </div>
+                      </div>
+          
+                      <div class="col-12">
+                        <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                      </div>
+          
+                      <div class="col-md-5">
+                        <label for="country" class="form-label">Country</label>
+                        <select class="form-select" id="country" required="">
+                          <option value="">Choose...</option>
+                          <option>United States</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Please select a valid country.
+                        </div>
+                      </div>
+          
+                      <div class="col-md-4">
+                        <label for="state" class="form-label">State</label>
+                        <select class="form-select" id="state" required="">
+                          <option value="">Choose...</option>
+                          <option>California</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Please provide a valid state.
+                        </div>
+                      </div>
+          
+                      <div class="col-md-3">
+                        <label for="zip" class="form-label">Zip</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required="">
+                        <div class="invalid-feedback">
+                          Zip code required.
+                        </div>
+                      </div>
+                    </div>
+          
+                    <hr class="my-4">
+          
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="same-address">
+                      <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+          
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="save-info">
+                      <label class="form-check-label" for="save-info">Save this information for next time</label>
+                    </div>
+          
+                    <hr class="my-4">
+          
+                    <h4 class="mb-3">Payment</h4>
+          
+                    <div class="my-3">
+                      <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                        <label class="form-check-label" for="credit">Credit card</label>
+                      </div>
+                      <div class="form-check">
+                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="debit">Debit card</label>
+                      </div>
+                      <div class="form-check">
+                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="paypal">PayPal</label>
+                      </div>
+                    </div>
+          
+                    <div class="row gy-3">
+                      <div class="col-md-6">
+                        <label for="cc-name" class="form-label">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                          Name on card is required
+                        </div>
+                      </div>
+          
+                      <div class="col-md-6">
+                        <label for="cc-number" class="form-label">Credit card number</label>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                        <div class="invalid-feedback">
+                          Credit card number is required
+                        </div>
+                      </div>
+          
+                      <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Expiration</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <div class="invalid-feedback">
+                          Expiration date required
+                        </div>
+                      </div>
+          
+                      <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <div class="invalid-feedback">
+                          Security code required
+                        </div>
+                      </div>
+                    </div>
+          
+                    <hr class="my-4">
+          
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                  </form>
+                </div>
+              </div>
+            </main>
+          
+            <footer class="my-5 pt-5 text-muted text-center text-small">
+              <p class="mb-1">© 2017–2022 Company Name</p>
+              <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+              </ul>
+            </footer>
+          </div>
+      </div>
+
+
+      
+    </div>
+    <!--End Ratings Publication-->
+
+  </main><!-- End #main -->
+
+  
+
+{%endblock main_section%}
+
+
+{%block research_section%}
+    <!-- ======= Research Section ======= -->
+    <div id="research" class="services-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline services-head text-center">
+              <h2>Research</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <!-- Start Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-briefcase"></i>
+                  </a>
+                  <h4>Expert Ratings</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-card-checklist"></i>
+                  </a>
+                  <h4>Research</h4>
+                  <p>
+                    We provide...
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-bar-chart"></i>
+                  </a>
+                  <h4>Insights</h4>
+                  <p>
+                    We provide...
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          
+          <!-- End Left services -->
+
+          
+          
+              <!-- end about-details -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Services Section -->
+{% endblock research_section%}
+    
+<br><br><br><br>    
+
+
+{%block insights_section%}
+    <!-- ======= Insights Section ======= -->
+    <div id="insights" class="pricing-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Insights</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Economy <br /> <span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Economy</span></li>
+                
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+          
+              <h3>Trade Insights <br /><span>.</span></h3>
+              <ol>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Trade</span></li>
+                <li class="cross"><i class="bi bi-x"></i><span>Trade</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="pri_table_list">
+              <h3>Capital Markets <br /><span>.</span></h3>
+              <ol>
+                
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+                <li class="check"><i class="bi bi-check"></i><span>Markets</span></li>
+              </ol>
+              <button>Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Pricing Section -->
+
+    {% endblock insights_section%}
+
+
+  {%block footer_main%}
+  <style>
+
+    .footer-area-bottom{
+      position: fixed!important;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+  {%endblock footer_main%}
+
+
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <div class="footer-area" id="footer_document_links">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="footer-content">
+              <div class="footer-head">
+                <div class="footer-logo">
+                 
+                </div>
+                <div class="footer-icons" id="social_media_links">
+                  <ul>
+                    <li>
+                      <a href="#"><i class="bi bi-twitter"></i></a>
+                    </li>
+
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+         
+
+        
+        </div>
+      </div>
+    </div>
+    <div class="footer-area-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="copyright text-center">
+              <p>
+                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+  
+
+</body>
+
+</html>

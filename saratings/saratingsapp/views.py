@@ -1,5 +1,6 @@
 import datetime
 from re import template
+from django.http import HttpResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from django.core.mail import EmailMessage,send_mail
 from django.contrib.auth import authenticate, login, logout
@@ -109,7 +110,12 @@ def user_login(request):
                 print("Successful login")
                 is_user_authenticated = request.user.is_authenticated
                 print("is_user_authenticated first main check",is_user_authenticated) 
-                return redirect("sar_home")
+                
+                response = redirect('sar_home')
+                response.set_cookie('site', "saratings.com")
+                
+                return response
+                
 
             else:
                print("SAR login: User is None")
@@ -495,7 +501,7 @@ def comment_commentary_article(request,unique_id):
     return render(request, template, context)
 
 
- 
+
 def ratings_publication_list(request):
 
     """
@@ -618,7 +624,7 @@ def resarch_publication_list(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
     
-    get_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')
+    get_research_publications = ResearchPublication.objects.all().order_by('-publication_date')
      
     todays_date = datetime.date.today()
     
@@ -626,7 +632,7 @@ def resarch_publication_list(request):
         source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_publication/'
         destination = '/Users/jasonm/Desktop/TestCopy/'
         
-        for publication in get_rating_publications:
+        for publication in get_research_publications:
             
             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
             
@@ -641,7 +647,7 @@ def resarch_publication_list(request):
         source = os.path.join(BASE_DIR,'media/research_publication/') 
         destination = os.path.join(BASE_DIR,'static/assets/file/research_publication/')
         
-        for publication in get_rating_publications:
+        for publication in get_research_publications:
             
             file_url = publication.upload_file.url      
             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
@@ -658,7 +664,7 @@ def resarch_publication_list(request):
     
     template = "research/research_publication_list.html"
     
-    context = {"get_rating_publications":get_rating_publications,
+    context = {"get_research_publications":get_research_publications,
                "is_user_authenticated":is_user_authenticated,"get_username":get_username}
     
     return render(request, template, context)    
@@ -763,6 +769,7 @@ def read_nugget(request, unique_id):
     
     if request.user.is_authenticated:
         template = "articles/daily_nuggets/read_nugget.html"
+        
         context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
                    "get_nugget":get_nugget,
                    "nugget_comment_form":nugget_comment_form,
@@ -780,3 +787,71 @@ def read_nugget(request, unique_id):
     
     return render(request, template, context)
 
+
+def purchase_research(request):
+    
+    get_username = request.user.username
+    is_user_authenticated = request.user.is_authenticated
+    
+    template = "research/purchase_research.html"
+    
+    research_purchase_form = ResearchPurchaseForm()
+    
+    if request.method == "POST":
+        purchase_form = ResearchPurchaseForm(request.POST)
+        
+        if purchase_form.is_valid():
+            purchase_form = purchase_form.save(commit=False)
+            purchase_form.username = request.user.username
+            purchase_form.save()
+            
+            return redirect('research_publication_list')
+    
+    context = {"is_user_authenticated":is_user_authenticated,
+               "get_username":get_username,"research_purchase_form":research_purchase_form}
+    
+    return render(request, template, context)
+
+
+
+def research_reports_subscription_list(request):
+    
+    """
+    All users can view the research subscription list
+    """
+    
+    get_username = request.user.username
+    is_user_authenticated = request.user.is_authenticated
+    is_user_subscribed = False
+    # user_subscription_type = request.user.subscription_type
+    is_user_subscription_active = False
+    
+    get_subscriptions = SARSubscription.objects.all()
+    
+    template = "research/research_reports_subscription_list.html"
+    
+    context = {"get_username":get_username,"is_user_authenticated":is_user_authenticated,
+               "get_subscriptions":get_subscriptions}
+    
+    return render(request, template, context)
+
+
+def research_report_purchase_list(request):
+    """
+    Only subscribed users can view this page
+    """
+    
+    get_username = request.user.username
+    is_user_authenticated = request.user.is_authenticated
+    is_user_subscribed = False
+    # user_subscription_type = request.user.subscription_type
+    is_user_subscription_active = False
+   
+    get_current_research_reports = ResearchReport.objects.filter(is_report_current=True)
+    
+    template = "research/research_report_purchase_list.html"
+    
+    context = {"get_username":get_username,"is_user_authenticated":is_user_authenticated,
+               "get_current_research_reports":get_current_research_reports}
+    
+    return render(request, template, context)

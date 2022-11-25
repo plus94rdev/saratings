@@ -9,27 +9,20 @@ from django.conf import settings
 import asyncio,os
 
 if settings.IS_PROD:
-    base_url = 'https://saratings.com/read-daily-nugget/'
-    daily_nuggets_mailing_list = ["jason@saratings.com","jasonm@plus94.co.za"]
+    print("Running mails in PROD")
+    base_url = 'https://saratings.com/read-weekly-economic-nugget/'
+    daily_nuggets_mailing_list = ["jason@saratings.com","jasonm@plus94.co.za","tumi@saratings.com","zweli@saratings.com","wayne@bettersa.co.za","liza@socialhat.co.za"]
 
 else:
-    base_url = 'http://127.0.0.1:8001/read-daily-nugget/'
+    print("Running mails in DEV")
+    base_url = 'http://127.0.0.1:8001/read-weekly-economic-nugget/'
     daily_nuggets_mailing_list = ["jason@saratings.com","jasonm@plus94.co.za"]
 
 """
 For asyncio PROD
 https://python.readthedocs.io/en/stable/library/asyncio-task.html
-"""
-
-async def send_email(subject, message):
-    
-    # send_mail(
-    #     subject,
-    #     message,
-    #     settings.EMAIL_HOST_USER,
-    #     daily_nuggets_mailing_list,
-    #     fail_silently=False,
-    # )
+""" 
+async def send_email(subject, message):   
     
     bcc_recipient_list = daily_nuggets_mailing_list
     # bcc_recipient_list.extend(['systemadmin@ResearchExpress.co.za','jasemudau@gmail.com'])
@@ -284,6 +277,7 @@ class RatingsPublication(models.Model):
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     unique_id = models.CharField(max_length=20, null=True, blank=True)
+    is_report_historical = models.BooleanField(default=False)
    
     def __str__(self):
         return self.title
@@ -337,7 +331,7 @@ class ResearchPublication(models.Model):
     file_type = models.CharField(max_length=10, null=True, blank=True)
     file_link = models.TextField(null=True, blank=True)
     publication_date = models.DateField(null=True, blank=False)
-    upload_file = models.FileField(upload_to='ratings_publication/', blank=True,null=True)
+    upload_file = models.FileField(upload_to='research_publication/', blank=True,null=True)
     added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
@@ -351,11 +345,39 @@ class ResearchPublication(models.Model):
         if not self.unique_id:
             self.unique_id = get_string(10,10)
             
-        super(RatingsPublication,self).save(*args,**kwargs)
+        super(ResearchPublication,self).save(*args,**kwargs)
     class Meta:
         db_table = "research_publication"
-        verbose_name_plural = "Research Publication"   
-
+        verbose_name_plural = "Research Publication"
+class ResearchReport(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    report_price = models.CharField(max_length=1000, null=True, blank=False)
+    overview = models.TextField(null=True, blank=True)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=False)
+    upload_file = models.FileField(upload_to='report_publication/research_reports/', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    is_report_historical = models.BooleanField(default=False)
+   
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(ResearchReport,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "research_report"
+        verbose_name_plural = "Research Reports"
+    
 #Daily nugget publications
 class NuggetPublication(models.Model):
     
@@ -384,15 +406,15 @@ class NuggetPublication(models.Model):
         
         article_link = base_url +  str(self.unique_id)
         
-        subject = "SAR Daily Nuggets:" + " " + str(self.title)
-        message = "Good day, \n\n" + "Please find the link below for the daily nugget publication for " + str(self.publication_date) + "\n\n" + article_link + "\n\n" + "Regards, \n" + "SAR Team"
-    
-       
-        
+        subject = "SAR: Economic Nuggets(" + str(self.title) + ")"
+        message = "Good day, \n\n" + "Please find the link below for the weekly economic nugget published on " + str(self.publication_date) + "\n\n" + article_link + "\n\n" + "Regards, \n" + "SAR Team"
+     
         if settings.IS_PROD: 
             """
             Apache running python 3.6.8
+            asyncio.sleep(1) to prevent 'not awaited error'
             """
+            asyncio.sleep(1)
             loop = asyncio.get_event_loop()
             # Blocking call which returns when the hello_world() coroutine is done
             loop.run_until_complete(send_email(str(subject),str(message)))
@@ -405,9 +427,7 @@ class NuggetPublication(models.Model):
             Development server running python 3.7.3
             """
             asyncio.run((send_email(str(subject),str(message))))
-            
-
-        
+            print("Email sent")
         
     class Meta:
         db_table = "nugget_publication"
@@ -436,3 +456,85 @@ class NuggetComment(models.Model):
     class Meta:
         db_table = "nugget_comment"
         verbose_name_plural = "Nuggets Comment"
+        
+        
+        
+class ResearchPurchase(models.Model):
+    
+    research = models.ForeignKey(ResearchPublication,on_delete=models.CASCADE,null=True,blank=True)
+    research_unique_id = models.CharField(max_length=20, null=True, blank=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True,related_name='user')
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    purchase_date = models.DateField(auto_now_add=True,null=True, blank=True)
+    purchase_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    purchase_unique_id = models.CharField(max_length=20, null=True, blank=True)
+    
+    def __str__(self):
+        return self.research.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.purchase_unique_id:
+            self.purchase_unique_id = get_string(10,10)
+            
+        super(ResearchPurchase,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "research_purchase"
+        verbose_name_plural = "Research Purchase"
+        
+        
+class SARSubscription(models.Model):
+    
+    SUBSCRIPTION_TYPE_OPTIONS = [('unsubscribed','Unsubscribed'),('6_month','6-Month Subscription'),('annual','Annual Subscription')]
+    SUBSCRIPTION_FEE_OPTIONS = [('0','Free'),('30000','30000'),('50000','50000')]
+    SUBSCRIPTION_OFFERS_OPTIONS = [('free','Free'),('3000','3000'),('5000','5000'),('free_+_vip_access_to_sar_team','Free + VIP Access to SAR Team'),('full_access','Full Access')]
+    SUBSCRIPTION_ITEMS = [('weekly_economic_nuggets','Weekly Economic Nuggets'),
+                          ('month_in_the_mirror','Month in the Mirror'),
+                          ('SAR_Events','SAR Events'),
+                          ('rating_announcements','Rating Announcements'),
+                          ('current_credit_rating_reports','Current Credit Rating Reports'),
+                          ('current_research_reports','Current Research Reports'),
+                          ('historical_credit_rating_reports','Historical Credit Rating Reports'),
+                          ('historical_research_reports','Historical Research Reports')]
+
+    subscription_type = models.CharField(max_length=100,choices=SUBSCRIPTION_TYPE_OPTIONS,null=True, blank=False)
+    subscription_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_FEE_OPTIONS,null=True, blank=False)
+    item_1 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_1_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_2 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_2_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_3 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_3_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_4 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_4_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_5 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_5_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_6 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_6_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_7 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_7_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    item_8 =    models.CharField(max_length=100,choices=SUBSCRIPTION_ITEMS,null=True, blank=True)
+    item_8_fee = models.CharField(max_length=100,choices=SUBSCRIPTION_OFFERS_OPTIONS,null=True, blank=False)
+    
+    
+    
+    subscription_code = models.CharField(max_length=100, null=True, blank=True)
+    
+    def __str__(self):
+        return self.subscription_type
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.subscription_code:
+            self.subscription_code = get_string(5,5)
+            
+        super(SARSubscription,self).save(*args,**kwargs)
+           
+    class Meta:
+        db_table = "sar_subscription"
+        verbose_name_plural = "SAR Subscriptions"
+    
+    
+    

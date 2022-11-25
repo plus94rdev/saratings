@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>SAR|Home</title>
+  <title>SAR|Nugget</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -241,14 +241,12 @@
     //BackEnd Reply
 const replyToCommentBE = (getValue) => {
 
-  console.log("BE Reply")
-
+  
   //If user switches from ReplyFE to ReplyBE, then remove the replyCommentRefNumberFE
   sessionStorage.removeItem('replyCommentRefNumberFE');
 
   //Gets the comment text from the card
   let commentText = getValue.closest('.comment-text').querySelector("#comment-posted").innerText;
-  console.log("commentText: " + commentText);
   let commentTextRefNumber = getValue.getAttribute('data-ref_number');
 
   let finalText = commentText.split(':').pop();
@@ -273,7 +271,7 @@ const replyToCommentBE = (getValue) => {
 
 }
 
-    document.querySelector('#submit-comment').scrollIntoView(true);
+    //document.querySelector('#submit-comment').scrollIntoView(true);
     
 
   </script>
