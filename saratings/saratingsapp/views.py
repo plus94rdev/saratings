@@ -789,6 +789,59 @@ def read_nugget(request, unique_id):
     
     return render(request, template, context)
 
+def year_in_review_publication_list(request):
+
+    """
+    List regulatory articles on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+    
+    get_year_in_reviews = YearInReview.objects.all().order_by('-publication_date')
+    
+    #Use Celery to copy files from media to static
+    if IS_DEV: 
+        
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/year_in_review/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_year_in_reviews:
+                
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+          
+    if IS_PROD:
+        
+        source = os.path.join(BASE_DIR,'media/year_in_review/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
+        
+        for publication in get_year_in_reviews:
+                
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+    
+    print("BASE_DIR:",BASE_DIR)
+    
+    
+    
+
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "research/year_in_review/year_in_review_publication_list.html"
+    
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
+               "get_year_in_reviews":get_year_in_reviews} 
+    
+    return render(request, template, context)
 
 def purchase_research(request):
     

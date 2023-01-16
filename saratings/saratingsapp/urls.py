@@ -23,8 +23,9 @@ urlpatterns = [
     path('ratings-publication/',ratings_publication_list, name="ratingsPublications"),
     path('ratings-methodology/',ratings_methodology_list, name="ratingsMethodologies"),
     path('research-reports/',resarch_publication_list, name="researchPublications"),
-    path('list-weekly-economic-nuggets/',nuggets_publication_list, name="nuggets_publication_list"),
-    path('read-weekly-economic-nugget/<str:unique_id>',read_nugget, name="read_nugget"),
+    path('list-economic-nuggets/',nuggets_publication_list, name="nuggets_publication_list"),
+    path('read-economic-nugget/<str:unique_id>',read_nugget, name="read_nugget"),
+    path('list-year-in-review/',year_in_review_publication_list, name="year_in_review_publication_list"),
     path('purchase-research/',purchase_research, name="purchase_research"),
     path('reports-subscriptions/',research_reports_subscription_list, name="reports_subscription_list"),
 

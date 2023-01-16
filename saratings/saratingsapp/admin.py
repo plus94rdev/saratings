@@ -89,7 +89,14 @@ class CreditRatingReportAdmin(admin.ModelAdmin):
 class ResearchReportAdmin(admin.ModelAdmin):
     list_display = ('title','added_by','added_on_date','upload_file','is_report_historical','publication_date')
     
-
+class YearInReviewAdmin(admin.ModelAdmin):
+    
+    list_display = ('title','added_by','added_on_date','file_type','upload_file','file_link','file_description','publication_date')
+    search_fields: Sequence[str] = ('title', 'added_by','added_on_date','review_date')
+    list_filter: Sequence[str] = ('title','added_on_date', 'added_by')
+    ordering: Optional[Sequence[str]] = ('-added_on_date',)
+    list_per_page: int = 10
+    
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
 admin.site.register(EventRSVP, EventRSVPAdmin)
@@ -102,3 +109,4 @@ admin.site.register(ResearchPublication, ResearchPublicationAdmin)
 admin.site.register(NuggetPublication, NuggetPublicationAdmin)
 admin.site.register(SARSubscription, SARSubscriptionAdmin)
 admin.site.register(ResearchReport, ResearchReportAdmin)
+admin.site.register(YearInReview, YearInReviewAdmin)

@@ -1,22 +1,25 @@
-from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import User
-import random, string
 from django.core.validators import MinLengthValidator
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.conf import settings
-import asyncio,os
+import asyncio, random, string
+
 
 if settings.IS_PROD:
     print("Running mails in PROD")
     base_url = 'https://saratings.com/read-weekly-economic-nugget/'
-    daily_nuggets_mailing_list = ["jason@saratings.com","jasonm@plus94.co.za","tumi@saratings.com","zweli@saratings.com","wayne@bettersa.co.za","liza@socialhat.co.za"]
+    year_in_review_base_url = 'https://saratings.com/read-year-in-review/'
+    mailing_list = ["jason@saratings.com","jasonm@plus94.co.za","tumi@saratings.com","zweli@saratings.com","wayne@bettersa.co.za","liza@socialhat.co.za"]
 
 else:
     print("Running mails in DEV")
     base_url = 'http://127.0.0.1:8001/read-weekly-economic-nugget/'
-    daily_nuggets_mailing_list = ["jason@saratings.com","jasonm@plus94.co.za"]
+    year_in_review_base_url = 'http://127.0.0.1:8001/read-year-in-review/'
+    mailing_list = ["jason@saratings.com","jasonm@plus94.co.za"]
+
+from_email_address = settings.EMAIL_HOST_USER
 
 """
 For asyncio PROD
@@ -24,24 +27,39 @@ https://python.readthedocs.io/en/stable/library/asyncio-task.html
 """ 
 async def send_email(subject, message):   
     
-    bcc_recipient_list = daily_nuggets_mailing_list
-    # bcc_recipient_list.extend(['systemadmin@ResearchExpress.co.za','jasemudau@gmail.com'])
-    
+    bcc_recipient_list = mailing_list
     """
     empty_recipient_list is for the 'to' field
-    bcc_recipient_list is for the 'bcc' field
+    bcc_recipient_list is for the 'bcc' feld
     """
     empty_recipient_list = []
     email = EmailMessage(
     subject,
     message,
-    settings.EMAIL_HOST_USER,
+    from_email_address,
     empty_recipient_list,
     bcc_recipient_list,
     )  
             
     email.send(fail_silently=False)
-            
+
+
+
+def send_email_async(subject, message):
+    
+    bcc_recipient_list = mailing_list
+    empty_recipient_list = []
+    
+    email = EmailMessage(
+    subject,
+    message,
+    from_email_address,
+    empty_recipient_list,
+    bcc_recipient_list
+    )  
+         
+    return email.send(fail_silently=False)
+    
 
 async def confirm_sent_notification():
     
@@ -378,7 +396,7 @@ class ResearchReport(models.Model):
         db_table = "research_report"
         verbose_name_plural = "Research Reports"
     
-#Daily nugget publications
+#Nugget publications
 class NuggetPublication(models.Model):
     
     title = models.CharField(max_length=1000, null=True, blank=False)
@@ -416,7 +434,6 @@ class NuggetPublication(models.Model):
             """
             asyncio.sleep(1)
             loop = asyncio.get_event_loop()
-            # Blocking call which returns when the hello_world() coroutine is done
             loop.run_until_complete(send_email(str(subject),str(message)))
             loop.run_until_complete(confirm_sent_notification())
             loop.close()
@@ -458,7 +475,69 @@ class NuggetComment(models.Model):
         verbose_name_plural = "Nuggets Comment"
         
         
+   
+#Year In Review publications
+class YearInReview(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    reviewed_country = models.CharField(max_length=100,null=True,blank=False)
+    reviewed_year = models.CharField(max_length=5,null=True,blank=False)
+    overview = models.TextField(null=True, blank=True)
+    article_body = models.TextField(null=True, blank=True)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=False)
+    upload_file = models.FileField(upload_to='year_in_review/', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
         
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+         
+        super(YearInReview,self).save(*args,**kwargs)
+        
+        article_link = year_in_review_base_url +  str(self.unique_id)
+        
+        subject = "SAR: Year In Review(" + str(self.title) + ")"
+        message = "Good day, \n\n" + "Please find the link below for the Year In Review publication" + "\n\n" + self.file_link + "\n\n" + "Regards, \n" + "SAR Team"
+     
+        if settings.IS_PROD: 
+            """
+            Apache running python 3.6.8
+            asyncio.sleep(1) to prevent 'not awaited error'
+            """
+            asyncio.sleep(1)
+            #new_event_loop() to prevent 'RuntimeError: There is no current event loop in thread'
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            # Blocking call which returns when the hello_world() coroutine is done
+            loop.run_until_complete(send_email(str(subject),str(message)))
+            loop.run_until_complete(confirm_sent_notification())
+            loop.close()
+            print("Prod: Year In Review Email sent")
+            
+            
+            
+        if settings.IS_DEV:
+            """
+            Development server running python 3.7.3
+            """
+            #Working asyncio
+            asyncio.run((send_email(str(subject),str(message))))
+            
+            
+    class Meta:
+        db_table = "year_in_review"
+        verbose_name_plural = "Year In Review"
+  
 class ResearchPurchase(models.Model):
     
     research = models.ForeignKey(ResearchPublication,on_delete=models.CASCADE,null=True,blank=True)
@@ -536,5 +615,5 @@ class SARSubscription(models.Model):
         db_table = "sar_subscription"
         verbose_name_plural = "SAR Subscriptions"
     
-    
+   
     
