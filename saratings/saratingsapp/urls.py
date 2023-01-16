@@ -4,6 +4,11 @@ from django.contrib.auth import views as auth_views
 from saratingsapp.views import *
 from django.conf import settings
 
+"""
+New URLS added in Dev
+Added new views in Dev for report purchase and subscription:
+ie research_reports_subscription_list 
+"""
 
 urlpatterns = [
     path("register/", registration, name="register"),
