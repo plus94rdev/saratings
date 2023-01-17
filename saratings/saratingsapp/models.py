@@ -4,8 +4,8 @@ from django.core.validators import MinLengthValidator
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.conf import settings
-import asyncio, random, string
-
+import asyncio,os,shutil, random, string
+from pathlib import Path
 
 if settings.IS_PROD:
     print("Running mails in PROD")
@@ -20,6 +20,8 @@ else:
     mailing_list = ["jason@saratings.com","jasonm@plus94.co.za"]
 
 from_email_address = settings.EMAIL_HOST_USER
+BASE_DIR = Path(__file__).resolve().parent.parent
+    
 
 """
 For asyncio PROD
@@ -498,6 +500,42 @@ class YearInReview(models.Model):
         return self.title
     
     def save(self,*args,**kwargs):
+        
+        
+        """
+        Move files from Media to Assets to allow PDF viewing
+        """
+        get_year_in_reviews = YearInReview.objects.all().order_by('-publication_date')
+        
+        if settings.IS_DEV: 
+            
+            source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/year_in_review/'
+            destination = '/Users/jasonm/Desktop/TestCopy/'
+            
+            for publication in get_year_in_reviews:
+                    
+                self.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+
+        if settings.IS_PROD:
+            
+            source = os.path.join(BASE_DIR,'media/year_in_review/') 
+            destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
+            
+            for publication in get_year_in_reviews:
+                    
+                file_url = publication.upload_file.url      
+                
+                self.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+                
+            print("Prod:Moved files from media to static")
+
+        # gather all files
+        allfiles = os.listdir(source)
+        
+        # iterate on all files to move them to destination folder
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source,fname), destination)    
+        
         
         if not self.unique_id:
             self.unique_id = get_string(10,10)
