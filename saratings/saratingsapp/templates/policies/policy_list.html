@@ -1,0 +1,247 @@
+{%extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ 
+  {% block title %}
+  <title>SAR|Policies</title>
+  {% endblock title %}
+
+</head>
+
+<body>
+
+
+  <style>
+
+ 
+  .section-headline h2::after {
+    border: 1px solid #f9fafb!important;
+
+  }
+
+    header#header{
+      background: #0d1822!important;
+    }
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    }
+    .team-modal{
+
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+
+  h4.card-title {
+    color:#000000!important
+  }
+  a.card-link{
+
+    color:
+  }
+
+  span#footer-text{
+    color:#29649a!important;
+  }
+
+  .section-headline h2 {
+    color: #f9fafb!important;
+}
+
+
+
+
+  </style>
+
+<style>
+  .card-title {
+    font-size: 14px!important;
+    font-family: "Poppins", sans-serif!important;
+  }
+  .poll-items{
+  display:none;
+  }
+
+</style>
+
+{%block landing_section%}
+{%endblock landing_section%}
+
+
+{%block research_section%}
+{%endblock research_section%}
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block main_section%}
+
+  <!-- ======= Main Section ======= -->
+<main id="main" style="margin-top:100px" class="col-12">
+  
+  <!-- ======= Ratings Publication Item Section ======= -->
+  <div id="nugget-publication-item" class="our-team-area col-12">
+
+   <!-- ======= Ratings Publication Section ======= -->
+   <div id="nugget-publication" class="ratings-item">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Policies</h2>
+          </div>
+        </div>
+      </div>
+
+  <div class="col-md-12">
+    <div>
+      <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+      <div class="input-group">
+        <input type="text" class="form-control" 
+        placeholder="Search by title,date..." id="nugget-search">
+        <span class="input-group-btn" style="flex:inherit!important">
+          <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+        </span>
+        </div>
+      </ol>
+    </div>
+  </div>
+  
+  <br>
+
+      <div class="row">
+        {% for publication in get_policy_documents %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="single-team-member">
+            <div class="p-2">
+              <div class="card" style="background:#0c1822">
+                <div class="card-body">
+                  <h5 style="color:#ffffff">{{publication.title}}</h5>
+                  <p class="card-text" style="color:#ffffff">Effective Date:&nbsp;{{publication.effective_date|date:"d F Y"}}</p>
+                  <a href="{{publication.file_link}}" target="_blank" class="card-link" style="color:#3fc1d5">View</a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- End column -->
+        {%endfor%}
+
+        
+      </div>
+    </div>
+    <!--End Ratings Publication-->
+
+    
+
+  </main><!-- End #main -->
+
+
+  
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <script src="{% static 'assets/js/jquery.min.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+
+  <script>
+
+      {%if False %}
+
+        Swal.fire({
+          text: "You need to login or register to view the articles.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#0d1822',
+          confirmButtonText: 'Login',
+          cancelButtonText : 'Register',
+          allowOutsideClick: false,
+        }).then((result) => {
+          
+          if (result.isConfirmed) {
+            window.location.href = "{%url 'login'%}";
+          }
+          else if(result.isDismissed){
+            window.location.href = "{%url 'register'%}";
+          }
+        })
+      
+      {% endif %}
+
+  
+    $(document).ready(function(){
+      console.log("ready");
+      $("#nugget-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".col-md-6*").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    
+    });
+</script>
+  
+  
+{%endblock main_section%}
+
+  {%block footer_main%}
+  <style>
+
+    .footer-area-bottom{
+      position: inherit!important;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+  {%endblock footer_main%}
+
+
+
+</body>
+
+
+
+</html>
+

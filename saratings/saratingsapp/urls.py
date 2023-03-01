@@ -33,6 +33,9 @@ urlpatterns = [
     path('list-year-in-review/',year_in_review_publication_list, name="year_in_review_publication_list"),
     path('purchase-research/',purchase_research, name="purchase_research"),
     path('reports-subscriptions/',research_reports_subscription_list, name="reports_subscription_list"),
+    path('sar-policies',sar_policy_list,name="SARPoliyList"),
+    path('sector-commentary',sector_commentary_list,name="sectorCommentaryList"),
+     
 
 ]
 

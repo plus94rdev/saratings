@@ -557,8 +557,8 @@ class YearInReview(models.Model):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             # Blocking call which returns when the hello_world() coroutine is done
-            loop.run_until_complete(send_email(str(subject),str(message)))
-            loop.run_until_complete(confirm_sent_notification())
+            # loop.run_until_complete(send_email(str(subject),str(message)))
+            # loop.run_until_complete(confirm_sent_notification())
             loop.close()
             print("Prod: Year In Review Email sent")
             
@@ -575,7 +575,8 @@ class YearInReview(models.Model):
     class Meta:
         db_table = "year_in_review"
         verbose_name_plural = "Year In Review"
-  
+
+#Not added to Prod yet
 class ResearchPurchase(models.Model):
     
     research = models.ForeignKey(ResearchPublication,on_delete=models.CASCADE,null=True,blank=True)
@@ -601,7 +602,7 @@ class ResearchPurchase(models.Model):
         db_table = "research_purchase"
         verbose_name_plural = "Research Purchase"
         
-        
+#Not added to Prod yet    
 class SARSubscription(models.Model):
     
     SUBSCRIPTION_TYPE_OPTIONS = [('unsubscribed','Unsubscribed'),('6_month','6-Month Subscription'),('annual','Annual Subscription')]
@@ -654,4 +655,58 @@ class SARSubscription(models.Model):
         verbose_name_plural = "SAR Subscriptions"
     
    
+#Added to Prod
+class SARPolicy(models.Model):
     
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    upload_file = models.FileField(upload_to='policy/', blank=True,null=True)
+    effective_date = models.DateField(null=True,blank=False)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(SARPolicy,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "sar_policy"
+        verbose_name_plural = "SAR Policies"
+        
+        
+
+#Added to Prod
+class SectorCommentary(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    upload_file = models.FileField(upload_to='sector_commentary/', blank=True,null=True)
+    effective_date = models.DateField(null=True,blank=False)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(SectorCommentary,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "sector_commentary"
+        verbose_name_plural = "Sector Commentaries"    

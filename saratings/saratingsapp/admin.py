@@ -97,6 +97,15 @@ class YearInReviewAdmin(admin.ModelAdmin):
     ordering: Optional[Sequence[str]] = ('-added_on_date',)
     list_per_page: int = 10
     
+class SARPolicyAdmin(admin.ModelAdmin):
+    
+    list_display = ['title']
+    
+
+class SectorCommentaryAdmin(admin.ModelAdmin):
+    
+    list_display = ['title']
+    
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
 admin.site.register(EventRSVP, EventRSVPAdmin)
@@ -110,3 +119,5 @@ admin.site.register(NuggetPublication, NuggetPublicationAdmin)
 admin.site.register(SARSubscription, SARSubscriptionAdmin)
 admin.site.register(ResearchReport, ResearchReportAdmin)
 admin.site.register(YearInReview, YearInReviewAdmin)
+admin.site.register(SARPolicy,SARPolicyAdmin)
+admin.site.register(SectorCommentary,SectorCommentaryAdmin)

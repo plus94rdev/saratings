@@ -910,3 +910,109 @@ def research_report_purchase_list(request):
                "get_current_research_reports":get_current_research_reports}
     
     return render(request, template, context)
+
+
+
+
+
+def sar_policy_list(request):
+
+    """
+    List policy documents on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+
+    get_policy_documents = SARPolicy.objects.all()
+     
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/policy/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_policy_documents:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        
+        source = os.path.join(BASE_DIR,'media/policy/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/policy/')
+        
+        for publication in get_policy_documents:
+            
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "policies/policy_list.html"
+    
+    context = {"get_policy_documents":get_policy_documents,
+               "is_user_authenticated":is_user_authenticated} 
+    
+    return render(request, template, context)
+
+
+
+def sector_commentary_list(request):
+
+    """
+    List policy documents on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+
+    get_sector_commentary_documents = SectorCommentary.objects.all()
+     
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/sector_commentary/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_sector_commentary_documents:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        
+        source = os.path.join(BASE_DIR,'media/sector_commentary/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/sector_commentary/')
+        
+        for publication in get_sector_commentary_documents:
+            
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "commentary/sector_commentary_list.html"
+    
+    context = {"get_sector_commentary_documents":get_sector_commentary_documents,
+               "is_user_authenticated":is_user_authenticated} 
+    
+    return render(request, template, context)
