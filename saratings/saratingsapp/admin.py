@@ -101,7 +101,6 @@ class SARPolicyAdmin(admin.ModelAdmin):
     
     list_display = ['title']
     
-
 class SectorCommentaryAdmin(admin.ModelAdmin):
     
     list_display = ['title']
