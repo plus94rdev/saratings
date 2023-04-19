@@ -179,7 +179,6 @@
                   <ul>
                     <li><a href="{%url 'nuggets_publication_list'%}">Economic Nuggets</a></li>
                     <li><a href="{%url 'issuerCommentaryList' %}">Issuer Commentary</a></li>
-                    <li><a href="{%url 'researchPublications'%}">Research Reports</a></li>
                     <li><a href="{%url 'sectorCommentaryList'%}">Sector Commentary</a></li>
                     <li><a href="{%url 'year_in_review_publication_list'%}">Year In Review</a></li>
                     
@@ -192,7 +191,7 @@
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
             <ul>
                 <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions_2022-07-03.pdf'%}" target="_blank">Rating Definitions</a></li>
-                <li><a href="{% static 'assets/file/Sovereign_Africa_Ratings_Certificate_18032022.pdf'%}" target="_blank">Licence</a></li>
+                <li><a href="{% static 'assets/file/SAR_Licence_No_FSCA-CRA006.pdf'%}" target="_blank">Licence</a></li>
                 <li><a href="{%url 'SARPoliyList' %}" target="_blank">Policies</a></li>
             </ul>
             <ul>
@@ -201,7 +200,6 @@
           </li>
           <li><a class="nav-link scrollto" href="{%url 'mediaHomepage'%}">Media</a></li>
           <li><a class="nav-link scrollto" href="{%url 'eventsHomepage'%}">Events</a></li>
-          <li><a class="nav-link scrollto" href="{%url 'reports_subscription_list'%}">Subscribe</a></li>
          <li><a class="nav-link scrollto" href="{%url 'register'%}">Register</a></li>
           {%if is_user_authenticated %}
           <li class="dropdown"><a href="#"><span>{{get_username}}</span><i class="bi bi-chevron-down"></i></a>
@@ -435,8 +433,6 @@
   </main><!-- End #main -->
 
   {%endblock main_section%}
-
-
 
 
   {%block footer_main%}

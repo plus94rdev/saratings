@@ -1027,7 +1027,7 @@ def issuer_commentary_list(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
 
-    get_issuer_commentary_documents = IssuerCommentary.objects.all()
+    get_issuer_commentary_documents = IssuerCommentary.objects.all().order_by('-id')
      
     if IS_DEV: 
         source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/issuer_commentary/'
