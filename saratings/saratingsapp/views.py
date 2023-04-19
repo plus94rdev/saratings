@@ -1016,3 +1016,54 @@ def sector_commentary_list(request):
                "is_user_authenticated":is_user_authenticated} 
     
     return render(request, template, context)
+
+
+def issuer_commentary_list(request):
+    
+    """
+    List policy documents on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+
+    get_issuer_commentary_documents = IssuerCommentary.objects.all()
+     
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/issuer_commentary/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_issuer_commentary_documents:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        
+        source = os.path.join(BASE_DIR,'media/issuer_commentary/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/issuer_commentary/')
+        
+        for publication in get_issuer_commentary_documents:
+            
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    # gather all files
+    allfiles = os.listdir(source)
+    
+    # iterate on all files to move them to destination folder
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
+    
+    template = "commentary/issuer_commentary_list.html"
+    
+    context = {"get_issuer_commentary_documents":get_issuer_commentary_documents,
+               "is_user_authenticated":is_user_authenticated} 
+    
+    return render(request, template, context)

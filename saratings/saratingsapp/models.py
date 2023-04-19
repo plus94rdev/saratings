@@ -709,4 +709,33 @@ class SectorCommentary(models.Model):
         super(SectorCommentary,self).save(*args,**kwargs)
     class Meta:
         db_table = "sector_commentary"
-        verbose_name_plural = "Sector Commentaries"    
+        verbose_name_plural = "Sector Commentaries"
+        
+        
+
+#Added to Prod    
+class IssuerCommentary(models.Model):
+    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    upload_file = models.FileField(upload_to='issuer_commentary/', blank=True,null=True)
+    effective_date = models.DateField(null=True,blank=False)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(IssuerCommentary,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "issuer_commentary"
+        verbose_name_plural = "Issuer Commentaries"

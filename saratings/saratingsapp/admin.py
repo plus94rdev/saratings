@@ -104,6 +104,12 @@ class SARPolicyAdmin(admin.ModelAdmin):
 class SectorCommentaryAdmin(admin.ModelAdmin):
     
     list_display = ['title']
+
+
+class IssuerCommentaryAdmin(admin.ModelAdmin):
+    
+    list_display = ['title']
+
     
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
@@ -120,3 +126,4 @@ admin.site.register(ResearchReport, ResearchReportAdmin)
 admin.site.register(YearInReview, YearInReviewAdmin)
 admin.site.register(SARPolicy,SARPolicyAdmin)
 admin.site.register(SectorCommentary,SectorCommentaryAdmin)
+admin.site.register(IssuerCommentary,IssuerCommentaryAdmin)
