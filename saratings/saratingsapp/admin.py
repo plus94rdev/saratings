@@ -111,6 +111,14 @@ class IssuerCommentaryAdmin(admin.ModelAdmin):
     list_display = ['title']
 
     
+class LeadershipProfileAdmin(admin.ModelAdmin):
+    list_display = ['name', 'position','is_executive','is_non_executive']
+    
+    
+    
+class AnnualReportAdmin(admin.ModelAdmin):
+    list_display = ['title','added_by','added_on_date','upload_file','publication_date']
+    
 admin.site.register(FileUpload, FileUploadAdmin)
 admin.site.register(SAREvent, SAREventAdmin)
 admin.site.register(EventRSVP, EventRSVPAdmin)
@@ -127,3 +135,5 @@ admin.site.register(YearInReview, YearInReviewAdmin)
 admin.site.register(SARPolicy,SARPolicyAdmin)
 admin.site.register(SectorCommentary,SectorCommentaryAdmin)
 admin.site.register(IssuerCommentary,IssuerCommentaryAdmin)
+admin.site.register(LeadershipProfile,LeadershipProfileAdmin)
+admin.site.register(AnnualReport,AnnualReportAdmin)

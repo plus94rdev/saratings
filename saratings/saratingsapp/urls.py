@@ -17,6 +17,7 @@ urlpatterns = [
     path("logout/", user_logout, name="logout"),
     path("", sar_home, name="sar_home"),
     path("about/", sar_about, name="sar_about"),
+    path("mission-vision/", sar_mission, name="sar_mission"),
     path("team/", sar_team, name="sar_team"),
     path("contact/", sar_contact, name="sar_contact"),
     path('events/',event_homepage, name="eventsHomepage"),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('sar-policies',sar_policy_list,name="SARPoliyList"),
     path('sector-commentary',sector_commentary_list,name="sectorCommentaryList"),
     path('issuer-commentary',issuer_commentary_list,name="issuerCommentaryList"),
+    path('annual-reports',annual_reports_list,name="annualReportsList"),
     
      
 

@@ -100,7 +100,7 @@
 
 
 .footer-area-bottom{
-  position: fixed;
+  position: inherit!important;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -163,7 +163,8 @@
           <li class="dropdown"><a href="#"><span>About</span><i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{%url 'sar_about'%}">About SAR</a></li>
-              <li><a href="{%url 'sar_team'%}">Our Team</a></li>
+              <li><a href="{%url 'sar_mission' %}">Mission And Vision</a></li>
+              <li><a href="{%url 'sar_team'%}">Leadership</a></li>
               <li><a href="{%url 'sar_contact'%}">Contact Us</a></li>
             </ul>
           </li>
@@ -189,6 +190,12 @@
                
             </ul>
           </li>
+          <li class="dropdown"><a href="#"><span>Reports</span><i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="{%url 'annualReportsList'%}">Annual Reports</a></li>
+            </ul>
+          </li>
+
           <li class="dropdown"><a href="#"><span>Regulatory</span><i class="bi bi-chevron-down"></i></a>
             <ul>
                 <li><a href="{% static 'assets/file/ratings/SAR-Ratings-Definitions_2022-07-03.pdf'%}" target="_blank">Rating Definitions</a></li>
@@ -254,7 +261,9 @@
 
   {%block about_section%} 
   {%endblock about_section%}
-
+  
+  {%block mission_section%}
+  {%endblock mission_section%}
   {%block team_section%}
   {%endblock team_section%}
    

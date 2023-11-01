@@ -24,6 +24,7 @@ Users should be able to register and login to the site
 
 Subscribe to a plan
 https://icons8.com/illustrations/pricing
+https://getbootstrap.com/docs/5.3/examples/pricing/
 
 Payment gateways
 https://portmoni.com/best-payment-gateway-south-africa/

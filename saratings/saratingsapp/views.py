@@ -197,7 +197,27 @@ def sar_about(request):
     
     return render(request, template,context)
 
-@cache_page(60*15)
+
+
+
+def sar_mission(request):
+    
+    """
+    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+    Sections are hidden using style attribute in html
+    """
+    
+    is_user_authenticated = request.user.is_authenticated
+    
+    get_username = request.user.username
+    
+    template = "home/sar_mission.html"
+    
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    
+    return render(request, template,context)
+
+# @cache_page(60*15)
 def sar_team(request):
     
     """
@@ -207,11 +227,15 @@ def sar_team(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    executives = LeadershipProfile.objects.filter(is_executive=1)
+    non_executives = LeadershipProfile.objects.filter(is_non_executive=1)
+     
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
+               "executives":executives,"non_executives":non_executives}
     
     template = "home/sar_team.html"
     
-    return render(request, template)
+    return render(request, template,context)
 
 
 def sar_contact(request):
@@ -232,7 +256,8 @@ def sar_contact(request):
 def event_homepage(request):
     
     #Only display current and future events
-    get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
+    # get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
+    get_all_events = SAREvent.objects.filter().order_by('-event_date')
     
     template = "events/events_homepage.html"
     
@@ -976,7 +1001,7 @@ def sector_commentary_list(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
 
-    get_sector_commentary_documents = SectorCommentary.objects.all()
+    get_sector_commentary_documents = SectorCommentary.objects.all().order_by('-id')
      
     if IS_DEV: 
         source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/sector_commentary/'
@@ -1064,6 +1089,66 @@ def issuer_commentary_list(request):
     template = "commentary/issuer_commentary_list.html"
     
     context = {"get_issuer_commentary_documents":get_issuer_commentary_documents,
+               "is_user_authenticated":is_user_authenticated} 
+    
+    return render(request, template, context)
+
+
+
+def annual_reports_list(request):
+
+    """
+    List annual reports on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    'Media' not working on production server
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+
+    get_annual_reports = AnnualReport.objects.all().order_by('-publication_date')
+     
+    todays_date = datetime.date.today()
+    
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/reports/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_annual_reports:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+        source = os.path.join(BASE_DIR,'media/reports/annual_reports/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/reports/annual_reports/')
+        
+        for report in get_annual_reports:
+            
+            file_url = report.upload_file.url      
+            report.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            report.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    try:
+        # gather all files
+        allfiles = os.listdir(source)
+        
+        # iterate on all files to move them to destination folder
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source,fname), destination)
+    except Exception as e:
+        print("Error copying files:",e)
+    
+    template = "reports/annual_reports/annual_reports_list.html"
+    
+    context = {"get_annual_reports":get_annual_reports,
                "is_user_authenticated":is_user_authenticated} 
     
     return render(request, template, context)

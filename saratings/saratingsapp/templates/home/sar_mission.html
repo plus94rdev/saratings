@@ -1,0 +1,157 @@
+{% extends 'layouts/base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SAR|MissionVision</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+</head>
+
+<body>
+
+
+  <style>
+
+  .single-well ul li{
+    display: flex!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    }
+
+    #sar_profile{
+      color:#3ec1d5;
+      font-weight: bold;
+      cursor:pointer;
+      margin-bottom:0px!important;
+
+    }
+    .modal-dialog {
+      margin-top: 20%;
+    }
+
+  #profile_image{
+      height:245px;
+      width:390px;
+    }
+
+    .single-team-member{
+      border:none;
+    }
+
+    #sar_title{
+      font-weight: bold;
+      
+    }
+
+    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+      display:none;
+    } {% endcomment %}
+    .team-modal{
+      cursor:pointer;
+    }
+
+    .footer-head h4 {
+      padding-bottom:0px
+  }
+</style>
+
+  {%block landing_section%}
+  {% endblock landing_section%}
+
+  {%block mission_section%}
+
+  
+    <!-- ======= Mission-Vision Section ======= -->
+    <div id="about" class="about-area area-padding mt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2 class="text fw-bold">Mission And Vision</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Mission single-well start-->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <h5 class="text fw-bold">Mission</h5>
+              <div class="single-well">
+                <h6 style="font-family: "Open Sans", sans-serif!important;">
+                SAR’s mission is to provide credit rating services for corporates, sovereign governments, and regional and municipal government issuers (with a special interest in developing countries, particularly in the African continent) to ensure that investors are provided with an informed analysis of the risk associated with rated entities and financial securities. It also aims to monitor and report to issuers the effectiveness of policy on credit rating fundamentals to foster economic growth, activity, and development.
+                SAR's mission is to act as a catalyst for economic transformation and growth in BRICS (Brazil, Russia, India, China, South Africa) and other Global South countries. We firmly believe in the untapped potential of these nations and are dedicated to providing comprehensive and actionable rating services that stimulate economic performance.
+                For sovereign ratings, SAR’s point of departure is to factor in the structural nature of developing markets in its process to ensure fair and unbiased ratings. This includes consideration for resource endowments and reforms that the countries we rate implement, not only for their own betterment but to strengthen their ability to meet their financial commitments.
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!-- Mission single-well end-->
+
+          <!-- Vision single-well start-->
+          <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <h5 class="text fw-bold">Vision</h5>
+              <div class="single-well">
+                <h6 style="font-family: "Open Sans", sans-serif!important;">
+                  Vision
+                  SAR’s vision is to position itself as the premier and preferred credit rating agency for emerging markets that uniquely and objectively catalyses economic performance.
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!--Vision single-well end-->
+
+    
+          <!-- End col-->
+        </div>
+      </div>
+    
+    </div><!-- End Mission-Vision Section -->
+
+  {%endblock mission_section%}
+
+  <main id="main">
+
+    {%block about_section%}
+    {% endblock about_section%}
+
+    <br><br><br><br><br><br><br><br><br>
+
+{%block team_section%}
+
+{% endblock team_section%}
+
+{%block research_section%}
+{% endblock research_section%}
+    
+<br><br><br><br>    
+
+
+{%block insights_section%}
+{% endblock insights_section%}
+
+{%block quotes_section%}
+{%endblock quotes_section%}
+
+{%block news_section%}
+    
+  {%endblock news_section%}
+
+
+    {%block contact_section%}
+  
+    {%endblock contact_section%}
+
+  </main><!-- End #main -->
+
+
+
+</body>
+
+</html>
