@@ -198,7 +198,7 @@ if 'aws' in os.uname()[2]:
 #For browser to access the files over http.
 MEDIA_URL = '/media/'
 
-    
+#https://testdriven.io/blog/django-static-files/  
 #For browser to access the files over http.
 # MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
 # MEDIA_URL = '/media/'

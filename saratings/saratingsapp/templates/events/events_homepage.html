@@ -152,10 +152,62 @@
       {% endif %}
       
       </div>
-      {% for event in get_all_events %}
 
-      <div class="col-xxl-4 col-md-6">
+     
+  <div class="col-md-12">
+    <div>
+      <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+      <div class="input-group">
+        <input type="text" class="form-control" 
+        placeholder="Search by title,date..." id="event-search">
+        <span class="input-group-btn" style="flex:inherit!important">
+          <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+        </span>
+        </div>
+      </ol>
+    </div>
+  </div>
+  
+  <br>
+
+
+      <div class="row">
+
+      {% for event in get_all_events %}
       
+      <div class="col-xxl-6 col-md-12 mb-4">
+        
+        {%if event.is_online%}
+        <div class="card h-100 border-0">
+          <div class="card-header">
+            <h6 class="fw-bolder">{{event.event_title}}</h6>
+            <h6 class="card-text"><small class="text">Date:&nbsp;{{event.event_date|date:"d/m/Y"}},&nbsp;{{event.event_venue}}</small></h6>
+          </div>
+          <div class="card-body">
+           
+            <p class="card-text">{{event.introduction}}</p>
+
+            {%if todays_date <= event.event_date%}
+            <div class="card-footer bg-transparent border-dark text-center"><a class="btn btn-secondary" href="{{event.rsvp_link}}" target="_blank">RSVP Link</a></div>
+            {%endif%}
+
+           
+          </div>
+
+          <div class="card-footer bg-transparent border-dark text-left justify-content-between border-0">
+            {%if event.meeting_recording_url%}
+            <a class="btn btn-secondary" href="{{event.meeting_recording_url}}" target="_blank">Recording</a>
+            {%endif%}
+
+            {%if event.event_presentation%}
+            <a class="btn btn-secondary" href="{{event.presentation_url}}" target="_blank">Presentation</a>
+            {%endif%}
+          </div>
+        </div>
+        {%endif%}
+        
+       {%if event.is_in_person%}
+
         <div class="card info-card sales-card" style="padding-bottom:0px!important;">
   
           <div class="card-body pt-0">
@@ -164,17 +216,19 @@
                 <span style="color:#012970!important;cursor:pointer;">
                   <!-- Default Accordion -->
                   </span></a><div class="accordion" id="voluntary"><a>
-                      <div class="accordion-item" style="border:none">
+                      
+                    <div class="accordion-item" style="border:none">
                         <h2 class="accordion-header" id="headingVoluntary">
                           <button class="accordion-button collapsed" type="button" 
                               data-bs-toggle="collapse" 
                               data-bs-target="#collapseVoluntary" 
                               aria-expanded="false" aria-controls="collapseVoluntary" 
-                              style="font-weight:bold;border-color:#242e4c;">
+                              style="font-weight:bold;border-color:#242e4c;padding-left:0px">
                               {{event.event_title}}&nbsp;<i class="bi bi-info-circle" style="color:#dc3545"></i>
                         </button>
                         </h2>
-                  
+                        
+                     
                         <div id="collapseVoluntary" class="accordion-collapse collapse" data-bs-target="#collapseVoluntary" aria-expanded="false" aria-controls="collapseVoluntary" style="">
                           <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;font-weight:bold">
                             Agenda
@@ -204,13 +258,18 @@
                         <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
                           {{event.agenda_item_10}}
                         </div>
+                        
                       </div>
+                     
                     </div>
                  
               </a>
-            </div></h5>
+            </div>
+          </h5>
           
+
             <div class="align-items-center">
+
               <div class="ps-0">
                 <a href="">
                   <p style="font-weight:600;">{{event.introduction}}</p>
@@ -221,7 +280,7 @@
                  {{event.event_time|time:"H:i"}},</span>
                  <span class="text pt-1 fw-bold" id="footer-text">{{event.event_venue}}</span>
                     
-                {%if todays_date <= event.event_date %}
+                {%if todays_date <= event.event_date and event.rsvp_needed%}
                 <a href="{%url 'eventRSVP' event.event_id%}">
                 <span class="text fw-bold" style="color:#dc3545!important;float:right;cursor:pointer;">
                   RSVP
@@ -234,11 +293,14 @@
           </div>
   
         </div>
+        {%endif%}
       </div>
      
         <!-- End card -->
       
         {%endfor%}
+
+    </div>
 
 
       </div>
@@ -366,9 +428,22 @@
   <script src="{% static 'assets/vendor/php-email-form/validate.js'%}"></script>
 
   <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/jquery.min.js'%}"></script>
   <script src="{% static 'assets/js/main.js'%}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
   <script>
+
+
+    $(document).ready(function(){
+      console.log("ready");
+      $("#event-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".col-xxl-6*").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    
+    });
 
     if(document.querySelector("#success-message")){
 

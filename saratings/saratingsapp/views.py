@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.conf import settings
 import random, string
 from saratings.settings import IS_DEV,IS_PROD
+from saratings.utils import convert_docx_to_html
 from .models import *
 from .forms import *
 from .tasks import *
@@ -197,7 +198,27 @@ def sar_about(request):
     
     return render(request, template,context)
 
-@cache_page(60*15)
+
+
+
+def sar_mission(request):
+    
+    """
+    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+    Sections are hidden using style attribute in html
+    """
+    
+    is_user_authenticated = request.user.is_authenticated
+    
+    get_username = request.user.username
+    
+    template = "home/sar_mission.html"
+    
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    
+    return render(request, template,context)
+
+# @cache_page(60*15)
 def sar_team(request):
     
     """
@@ -207,11 +228,15 @@ def sar_team(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    executives = LeadershipProfile.objects.filter(is_executive=1)
+    non_executives = LeadershipProfile.objects.filter(is_non_executive=1)
+     
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
+               "executives":executives,"non_executives":non_executives}
     
     template = "home/sar_team.html"
     
-    return render(request, template)
+    return render(request, template,context)
 
 
 def sar_contact(request):
@@ -232,7 +257,8 @@ def sar_contact(request):
 def event_homepage(request):
     
     #Only display current and future events
-    get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
+    # get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
+    get_all_events = SAREvent.objects.filter().order_by('-event_date') or None
     
     template = "events/events_homepage.html"
     
@@ -976,7 +1002,7 @@ def sector_commentary_list(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
 
-    get_sector_commentary_documents = SectorCommentary.objects.all()
+    get_sector_commentary_documents = SectorCommentary.objects.all().order_by('-id')
      
     if IS_DEV: 
         source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/sector_commentary/'
@@ -1067,3 +1093,181 @@ def issuer_commentary_list(request):
                "is_user_authenticated":is_user_authenticated} 
     
     return render(request, template, context)
+
+
+
+def annual_reports_list(request):
+
+    """
+    List annual reports on a table
+    Using shutil to copy files from media to static to allow viewing of pdfs
+    'Media' not working on production server
+    """
+    is_user_authenticated = request.user.is_authenticated
+    get_username = request.user.username
+
+    get_annual_reports = AnnualReport.objects.all().order_by('-publication_date')
+     
+    todays_date = datetime.date.today()
+    
+    if IS_DEV: 
+        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/reports/'
+        destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+        for publication in get_annual_reports:
+            
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+        
+    
+    if IS_PROD:
+        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+        source = os.path.join(BASE_DIR,'media/reports/annual_reports/') 
+        destination = os.path.join(BASE_DIR,'static/assets/file/reports/annual_reports/')
+        
+        for report in get_annual_reports:
+            
+            file_url = report.upload_file.url      
+            report.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            report.save()
+        
+    print("BASE_DIR:",BASE_DIR)
+
+    try:
+        # gather all files
+        allfiles = os.listdir(source)
+        
+        # iterate on all files to move them to destination folder
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source,fname), destination)
+    except Exception as e:
+        print("Error copying files:",e)
+    
+    template = "reports/annual_reports/annual_reports_list.html"
+    
+    context = {"get_annual_reports":get_annual_reports,
+               "is_user_authenticated":is_user_authenticated} 
+    
+    return render(request, template, context)
+
+
+def save_docx_to_html(request):
+
+    """
+    Prefebly for uploading nuggets in word format
+    convert word into html
+    Edit the html in a text editor and save the final html in the database
+    """
+
+    #Is user in admins group
+    is_user_admins = request.user.groups.filter(name='admins').exists()
+    
+    template = "articles/daily_nuggets/save_docx_to_html.html"
+
+    if request.method == 'POST':
+        nugget_form = NuggetDocumentUploadForm(request.POST, request.FILES)
+       
+        if nugget_form.is_valid():
+
+            new_doc = nugget_form.save()
+            
+            print("new_doc file:", new_doc.upload_file.path)
+
+            # Convert and store HTML
+            html_content = convert_docx_to_html(new_doc.upload_file.path)
+            
+            # Get the base name of the DOCX file without extension
+            base_name = os.path.splitext(os.path.basename(new_doc.upload_file.path))[0]
+            
+            # Construct the new HTML file path
+            new_html_file_path = os.path.join('media', 'DocToHTML', f"{base_name}.html")
+            
+            # Create a new HTML file and write the HTML content to it
+            with open(new_html_file_path, "w") as new_html_file:
+                new_html_file.write(html_content)
+
+            # Redirect or handle accordingly
+            return redirect('convertDocxToHtml')
+
+    else:
+    
+        nugget_form = NuggetDocumentUploadForm()
+        
+
+    context = {"nugget_form":nugget_form}
+
+    if is_user_admins:
+        return render(request, template, context)
+    
+    else:
+        return HttpResponse("You are not authorised to view this page")
+
+
+
+def nugget_document_upload(request):
+
+    """
+    Prefebly for uploading nuggets in word format
+    convert word into html
+    Edit the html in a text editor and save the final html in the database
+    """
+
+    #Is user in admins group
+    is_user_admins = request.user.groups.filter(name='admins').exists()
+    
+    template = "articles/daily_nuggets/nugget_upload.html"
+
+    if request.method == 'POST':
+
+        nugget_form = NuggetDocumentUploadForm(request.POST, request.FILES)
+       
+
+        if nugget_form.is_valid():
+
+    
+            new_doc = nugget_form.save()
+
+            print("new_doc file:",new_doc.upload_file.path)
+
+            # # Convert and store HTML
+            # html_content = "convert_docx_to_html(new_doc.upload_file.path)"
+            
+            # new_doc.html_content = "html_content"
+            
+            new_doc.save()
+
+            print("Nugget uploaded")
+
+            return redirect('nuggetdocumentUpload')
+    else:
+
+        print("Nugget form is not valid 2")
+       
+
+        nugget_form = NuggetDocumentUploadForm()
+
+        print("nugget_form_errors:",nugget_form.errors)
+
+    context = {"nugget_form":nugget_form}
+
+    if is_user_admins:
+        return render(request, template, context)
+    
+    else:
+
+        return redirect('userNotAuthorised')
+
+def disp_nugget(request):
+
+    nuggets = NuggetPublication.objects.all()
+
+    return render(request, 'disp_nugget.html', {'nuggets': nuggets})
+
+
+def user_not_authorised(request):
+    
+    return HttpResponse("Unauthorised access...")

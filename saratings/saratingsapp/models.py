@@ -149,6 +149,27 @@ class FileUpload(models.Model):
     class Meta:
         db_table = "file_upload"
         
+class LeadershipProfile(models.Model):
+    
+    name = models.CharField(max_length=100, null=True, blank=True)
+    position = models.CharField(max_length=100, null=True, blank=True)
+    profile_image = models.ImageField(upload_to='leadership/', null=True, blank=True)
+    profile_bio = models.TextField(null=True, blank=True)
+    profile_ref = models.CharField(max_length=90, unique=True,null=True,blank=True)
+    is_non_executive = models.BooleanField(default=False,null=True,blank=True)
+    is_executive = models.BooleanField(default=False,null=True,blank=True)
+    date_added = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    date_updated = models.DateTimeField(auto_now=True,null=True,blank=True)
+    
+    def __str__(self):
+        return str(self.name)
+    
+    def save(self, *args, **kwargs):
+        self.profile_ref = get_string(6,6)
+        super(LeadershipProfile, self).save(*args, **kwargs)
+        
+    class Meta:
+        db_table = "leadership_profile"
         
 class SAREvent(models.Model):
     
@@ -156,6 +177,15 @@ class SAREvent(models.Model):
     event_id = models.CharField(max_length=100, null=True, blank=True,unique=True)
     event_date = models.DateField(null=True, blank=False)
     event_time = models.TimeField(null=True, blank=False)
+    is_online = models.BooleanField(default=False,null=True,blank=True)
+    meeting_recording_url = models.CharField(max_length=1000, null=True, blank=True)
+    presentation_url = models.CharField(max_length=1000, null=True, blank=True) 
+    event_presentation =  models.FileField(upload_to='presentations/', null=True, blank=True)
+    is_in_person = models.BooleanField(default=False,null=True,blank=True)
+    is_hybrid = models.BooleanField(default=False,null=True,blank=True)
+    has_agenda = models.BooleanField(default=False,null=True,blank=True)
+    rsvp_needed = models.BooleanField(default=False,null=True,blank=True)
+    rsvp_link = models.CharField(max_length=1000, null=True, blank=True)
     event_venue = models.CharField(max_length=100, null=True, blank=True)
     introduction = models.TextField(null=True, blank=True)
     event_image =  models.ImageField(upload_to='events/', null=True, blank=True)
@@ -413,6 +443,7 @@ class NuggetPublication(models.Model):
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     unique_id = models.CharField(max_length=20, null=True, blank=True)
+    html_content = models.TextField(blank=True)  # For storing converted HTML
     
     def __str__(self):
         return self.title
@@ -445,7 +476,7 @@ class NuggetPublication(models.Model):
             """
             Development server running python 3.7.3
             """
-            asyncio.run((send_email(str(subject),str(message))))
+            # asyncio.run((send_email(str(subject),str(message))))
             print("Email sent")
         
     class Meta:
@@ -739,3 +770,34 @@ class IssuerCommentary(models.Model):
     class Meta:
         db_table = "issuer_commentary"
         verbose_name_plural = "Issuer Commentaries"
+        
+        
+        
+
+class AnnualReport(models.Model):    
+    title = models.CharField(max_length=1000, null=True, blank=False)
+    overview = models.TextField(null=True, blank=True)
+    file_description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=10, null=True, blank=True)
+    file_link = models.TextField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=False)
+    upload_file = models.FileField(upload_to='reports/annual_reports', blank=True,null=True)
+    added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    unique_id = models.CharField(max_length=20, null=True, blank=True)
+    is_report_historical = models.BooleanField(default=False)
+   
+    def __str__(self):
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        
+        if not self.unique_id:
+            self.unique_id = get_string(10,10)
+            
+        super(AnnualReport,self).save(*args,**kwargs)
+    class Meta:
+        db_table = "annual_report"
+        verbose_name_plural = "Annual Reports"  
+          
