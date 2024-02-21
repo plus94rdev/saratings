@@ -212,4 +212,25 @@ class NuggetDocumentUploadForm(forms.ModelForm):
 
     class Meta:
         model = NuggetPublication
-        fields = ['title','publication_date','upload_file']
+        fields = ['title','publication_date','upload_file','html_content']
+
+
+class NuggetConvertDocToHTMLForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(NuggetConvertDocToHTMLForm, self).__init__(*args, **kwargs)
+
+        self.label_suffix = ""
+        self.error_class = DivErrorList
+
+        # Add class to format the input fields
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-group textinput textInputt form-control', }
+            self.label_suffix = ""
+            
+        
+
+    class Meta:
+        model = NuggetPublication
+        fields = ['upload_file']

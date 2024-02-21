@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.contrib import messages
 from django.conf import settings
 import random, string
@@ -1155,65 +1157,11 @@ def annual_reports_list(request):
     return render(request, template, context)
 
 
-def save_docx_to_html(request):
-
-    """
-    Prefebly for uploading nuggets in word format
-    convert word into html
-    Edit the html in a text editor and save the final html in the database
-    """
-
-    #Is user in admins group
-    is_user_admins = request.user.groups.filter(name='admins').exists()
-    
-    template = "articles/daily_nuggets/save_docx_to_html.html"
-
-    if request.method == 'POST':
-        nugget_form = NuggetDocumentUploadForm(request.POST, request.FILES)
-       
-        if nugget_form.is_valid():
-
-            new_doc = nugget_form.save()
-            
-            print("new_doc file:", new_doc.upload_file.path)
-
-            # Convert and store HTML
-            html_content = convert_docx_to_html(new_doc.upload_file.path)
-            
-            # Get the base name of the DOCX file without extension
-            base_name = os.path.splitext(os.path.basename(new_doc.upload_file.path))[0]
-            
-            # Construct the new HTML file path
-            new_html_file_path = os.path.join('media', 'DocToHTML', f"{base_name}.html")
-            
-            # Create a new HTML file and write the HTML content to it
-            with open(new_html_file_path, "w") as new_html_file:
-                new_html_file.write(html_content)
-
-            # Redirect or handle accordingly
-            return redirect('convertDocxToHtml')
-
-    else:
-    
-        nugget_form = NuggetDocumentUploadForm()
-        
-
-    context = {"nugget_form":nugget_form}
-
-    if is_user_admins:
-        return render(request, template, context)
-    
-    else:
-        return HttpResponse("You are not authorised to view this page")
-
-
-
 def nugget_document_upload(request):
 
     """
-    Prefebly for uploading nuggets in word format
-    convert word into html
-    Edit the html in a text editor and save the final html in the database
+    Uploading nuggets
+    Add the final html to the html_content field
     """
 
     #Is user in admins group
@@ -1225,18 +1173,9 @@ def nugget_document_upload(request):
 
         nugget_form = NuggetDocumentUploadForm(request.POST, request.FILES)
        
-
         if nugget_form.is_valid():
 
-    
             new_doc = nugget_form.save()
-
-            print("new_doc file:",new_doc.upload_file.path)
-
-            # # Convert and store HTML
-            # html_content = "convert_docx_to_html(new_doc.upload_file.path)"
-            
-            # new_doc.html_content = "html_content"
             
             new_doc.save()
 
@@ -1244,9 +1183,6 @@ def nugget_document_upload(request):
 
             return redirect('nuggetdocumentUpload')
     else:
-
-        print("Nugget form is not valid 2")
-       
 
         nugget_form = NuggetDocumentUploadForm()
 
@@ -1271,4 +1207,64 @@ def disp_nugget(request):
 def user_not_authorised(request):
     
     return HttpResponse("Unauthorised access...")
-    return render(request, template, context)
+
+
+@login_required
+def save_docx_to_html_file(request):
+
+    """
+    Working
+    This view is used to convert a word document to html
+    First, convert a DOCX file to HTML and save inside the media/tmp folder
+    Edit the html file and save the final html in the database using the nugget_document_upload view
+    """
+    template = "articles/daily_nuggets/save_docx_to_html.html"
+
+    if request.method == 'POST':
+
+        nugget_form = NuggetConvertDocToHTMLForm(request.POST, request.FILES)
+        
+        if nugget_form.is_valid():
+
+            # Temporarily save the uploaded DOCX file
+            docx_file = request.FILES['upload_file']
+            temp_docx_path = default_storage.save('tmp/' + docx_file.name, ContentFile(docx_file.read()))
+            full_docx_path = default_storage.path(temp_docx_path)
+            print("full_docx_path:",full_docx_path)
+
+            # Convert DOCX to HTML
+            html_content = convert_docx_to_html(full_docx_path)
+            
+            # Get the base name of the DOCX file without extension
+            base_name = os.path.splitext(os.path.basename(full_docx_path))[0] + datetime.datetime.now().strftime("%m%d_%H_%M_%S")
+            
+            # Construct the new HTML file path
+            new_html_file_path = default_storage.path('tmp/' + f"{base_name}.html")
+            print("new_html_file_path:",new_html_file_path)
+            
+            # Create a new HTML file and write the HTML content to it
+            with open(new_html_file_path, "w") as new_html_file:
+                new_html_file.write(html_content)
+
+            # Clean up: delete the temporarily saved DOCX file
+            default_storage.delete(temp_docx_path)
+
+            #Return HTML content for preview
+            return HttpResponse(html_content, content_type='text/html')
+
+    else:
+
+        nugget_form = NuggetConvertDocToHTMLForm()
+
+    context = {"nugget_form": nugget_form}
+
+    if request.user.groups.filter(name='admins').exists():
+
+        return render(request, template, context)
+    
+    else:
+            
+        return redirect('userNotAuthorised')
+
+
+

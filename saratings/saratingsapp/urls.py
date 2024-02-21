@@ -40,7 +40,7 @@ urlpatterns = [
     path('annual-reports',annual_reports_list,name="annualReportsList"),
     path('nugget-document-upload',nugget_document_upload,name="nuggetdocumentUpload"),
     path('not-authorised',user_not_authorised,name="userNotAuthorised"),      
-    path('doctohtml',save_docx_to_html,name="convertDocxToHtml"),
+    path('savedoctohtmlfile',save_docx_to_html_file,name="createDocxToHtmlFile"),
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD

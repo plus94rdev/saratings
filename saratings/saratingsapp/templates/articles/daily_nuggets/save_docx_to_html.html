@@ -152,27 +152,7 @@ header#header{
                         <form method="post" action="" action="#" enctype="multipart/form-data">
 
                             {% csrf_token %}
-
                       
-                            <div class="form-group col-md-12 mb-3">
-                                <label for="title">Title</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"></span>
-                                    {{ nugget_form.title }}
-                                </div>  
-                                <span class="text-error">{{ nugget_form.title.errors }}</span>
-                            </div>
-
-
-                             <div class="form-group col-md-12 mb-3">
-                                <label for="publication_date">Publication Date</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"></span>
-                                    {{ nugget_form.publication_date }}
-                                </div>  
-                                <span class="text-error">{{ nugget_form.publication_date.errors }}</span>
-                            </div>
-
                             <div class="form-group col-md-12 mb-3">
                               <label for="u">File</label>
                               <div class="input-group">
@@ -182,15 +162,12 @@ header#header{
                               <span class="text-error">{{ nugget_form.upload_file.errors }}</span>
                             </div>
                           
-                            
-                                           
-                            <!-- End of Form -->
                              
                             <div class="d-grid">
-                                <button type="submit" name="register" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">ConvertToHTML</button>
                             </div>
                         </form>
-                        
+                           
                         <br>
                         <br>
 
