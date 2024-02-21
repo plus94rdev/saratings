@@ -258,7 +258,7 @@ def event_homepage(request):
     
     #Only display current and future events
     # get_all_events = SAREvent.objects.filter(event_date__gte=datetime.date.today()).order_by('event_date')
-    get_all_events = SAREvent.objects.filter().order_by('-event_date') or None
+    get_all_events = SAREvent.objects.filter().order_by('-event_date')
     
     template = "events/events_homepage.html"
     
@@ -1271,3 +1271,4 @@ def disp_nugget(request):
 def user_not_authorised(request):
     
     return HttpResponse("Unauthorised access...")
+    return render(request, template, context)
