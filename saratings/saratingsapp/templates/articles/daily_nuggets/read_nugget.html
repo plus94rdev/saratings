@@ -77,7 +77,6 @@
       padding-bottom:0px
   }
 
-  
 </style>
 
   {%block landing_section%}
@@ -86,6 +85,27 @@
   <main id="main">
 
   {%block about_section%}
+
+
+  <style type="text/css">
+    
+     table {
+        border-collapse: collapse!important;
+    }
+    table, th, td {
+        border: 1px solid black!important;
+    }
+    
+
+  .single-well ul li {
+    display: block!important;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+
+  }
+
+
+  </style>
 
 
 
@@ -111,7 +131,17 @@
             <div class="well-left">
               <div class="single-well" style="font-size:18px!important">
                 <p style="font-family: "Open Sans", sans-serif!important;">
+
+                  {%if get_nugget.html_content%}
+
+                      {{get_nugget.html_content|safe}}
+
+                  {%else%}
+
                   {{get_nugget.article_body|linebreaks}}
+
+                  {%endif%}
+
                 </p>
               </div>
             </div>

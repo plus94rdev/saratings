@@ -744,11 +744,11 @@ def nuggets_publication_list(request):
     print("BASE_DIR:",BASE_DIR)
 
     # gather all files
-    allfiles = os.listdir(source)
+    #allfiles = os.listdir(source)
     
     # iterate on all files to move them to destination folder
-    for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
+    # for fname in allfiles:
+    #     shutil.copy2(os.path.join(source,fname), destination)    
     
     template = "articles/daily_nuggets/nuggets_publication_list.html"
     
@@ -1250,7 +1250,7 @@ def save_docx_to_html_file(request):
             default_storage.delete(temp_docx_path)
 
             #Return HTML content for preview
-            return HttpResponse(html_content, content_type='text/html')
+            return HttpResponse(html_content, content_type="text/html,charset=utf-8")
 
     else:
 

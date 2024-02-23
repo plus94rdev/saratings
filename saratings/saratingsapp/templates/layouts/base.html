@@ -100,7 +100,7 @@
 
 
 .footer-area-bottom{
-  position: inherit!important;
+  position: inherit;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -154,7 +154,7 @@
     <div class="container d-flex justify-content-between">
 
       <div class="logo">
-        <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff">Sovereign&nbsp;<span>Africa Ratings</span></a></h1>
+        <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff" id="navconame-left">Sovereign&nbsp;<span id="navconame-right">Africa Ratings</span></a></h1>
       </div>
 
       <nav id="navbar" class="navbar">
@@ -520,6 +520,8 @@
 
 {%block data_table_js%}
 {%endblock data_table_js%}
+
+
 </body>
 
 </html>

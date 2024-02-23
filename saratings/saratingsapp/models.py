@@ -460,16 +460,18 @@ class NuggetPublication(models.Model):
         subject = "SAR: Economic Nuggets(" + str(self.title) + ")"
         message = "Good day, \n\n" + "Please find the link below for the weekly economic nugget published on " + str(self.publication_date) + "\n\n" + article_link + "\n\n" + "Regards, \n" + "SAR Team"
      
-        if settings.IS_PROD: 
+        if settings.IS_PROD:
+
+            pass 
             """
             Apache running python 3.6.8
             asyncio.sleep(1) to prevent 'not awaited error'
             """
-            asyncio.sleep(1)
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(send_email(str(subject),str(message)))
-            loop.run_until_complete(confirm_sent_notification())
-            loop.close()
+            # asyncio.sleep(1)
+            # loop = asyncio.get_event_loop()
+            # loop.run_until_complete(send_email(str(subject),str(message)))
+            # loop.run_until_complete(confirm_sent_notification())
+            # loop.close()
             
             
         if settings.IS_DEV:
