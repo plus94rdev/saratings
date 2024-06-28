@@ -30,3 +30,11 @@ Payment gateways
 https://portmoni.com/best-payment-gateway-south-africa/
 https://www.paygate.co.za/banks/south-africa/nedbank/
 https://www.altexsoft.com/blog/business/payment-gateway-integration/
+
+Jason: Feb 2024
+When uploading nugget:
+-run the 'save_docx_to_html_file' view
+-This view is used to convert a word document to html
+-First, convert a DOCX file to HTML and save inside the media/tmp folder
+-Edit the html file and save the final html in the database using the nugget_document_upload view
+ 
