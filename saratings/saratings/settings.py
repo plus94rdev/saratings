@@ -248,8 +248,6 @@ CACHES = {
     
 }
 
-
-
 LOGIN_URL = 'login/'
 
 with open('/etc/recaptcha_config.json') as rc_config_file:
