@@ -8,6 +8,10 @@ __pycache__/
 
 .DS_Store
 
+
+
+o365_token.txt
+
 file/
 media/
 migrations/
