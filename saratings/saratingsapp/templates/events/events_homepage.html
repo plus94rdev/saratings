@@ -27,75 +27,70 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
 </head>
-
 <body>
-
-
   <style>
 
   main#main {
-      background: #212529!important
+    background: #212529!important
   }
 
   .section-headline h2::after {
     border: 1px solid #f9fafb!important;
-
   }
 
-    header#header{
-      background: #0d1822!important;
-    }
+  header#header{
+    background: #0d1822!important;
+  }
 
   .single-well ul li{
     display: flex!important;
     font-size: 16px;
     font-family: "Open Sans", sans-serif;
-    }
+  }
 
-    #sar_profile{
-      color:#3ec1d5;
-      font-weight: bold;
-      cursor:pointer;
-      margin-bottom:0px!important;
+  #sar_profile{
+    color:#3ec1d5;
+    font-weight: bold;
+    cursor:pointer;
+    margin-bottom:0px!important;
+  }
 
-    }
-    .modal-dialog {
-      margin-top: 20%;
-    }
+  .modal-dialog {
+    margin-top: 20%;
+  }
 
   #profile_image{
       height:245px;
       width:390px;
-    }
+  }
 
-    .single-team-member{
-      border:none;
-    }
+  .single-team-member{
+    border:none;
+  }
 
-    #sar_title{
-      font-weight: bold;
-      
-    }
+  #sar_title{
+    font-weight: bold;    
+  }
 
-    #news,#testimonials,#insights,#research,#social_media_links,#articles{
-      display:none;
-    }
-    .team-modal{
+  #news,#testimonials,#insights,#research,#social_media_links,#articles{
+    display:none;
+  }
 
-      cursor:pointer;
-    }
+  .team-modal{
+    cursor:pointer;
+  }
 
-    .footer-head h4 {
-      padding-bottom:0px
+  .footer-head h4 {
+    padding-bottom:0px
   }
 
   h4.card-title {
     color:#000000!important;
   }
-  a.card-link{
 
+  /* a.card-link{
     color:
-  }
+  } */
 
   span#footer-text{
     color:#29649a!important;
@@ -103,8 +98,7 @@
 
   .section-headline h2 {
     color: #f9fafb!important;
-}
-
+  }
   </style>
 
   <!-- ======= Header ======= -->
@@ -115,23 +109,27 @@
         <h1><a href="{%url 'sar_home'%}"><span style="font-size:1.6rem!important"><img src="{% static 'assets/img/logo/sar_logo.svg'%}" style="width:8%!important;vertical-align: baseline;"><span style="color:#fff">Sovereign&nbsp;<span>Africa Ratings</span></a></h1>
       </div>
 
+      <!-- ======= Navbar ======= -->
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>
-         
-     
+          <li><a class="nav-link scrollto active" href="{%url 'sar_home'%}">Home</a></li>     
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      </nav>
+      <!-- ======= End Navbar ======= -->
 
     </div>
-  </header><!-- End Header -->
+  </header>
+   <!-- ======= End Header ======= -->
 
-  <!-- ======= hero Section ======= -->
+
+  <!-- ======= Hero Section ======= -->
   <main id="main" style="margin-top:30px">
+
    <!-- ======= Team Section ======= -->
-   <div id="team" class="our-team-area area-padding">
+  <div id="team" class="our-team-area area-padding">
     <div class="container">
+
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="section-headline text-center" style="color:#f9fafb">
@@ -149,49 +147,39 @@
       <p style="display:none" id="error-message">{{message.level}}</p>
       {%endif%}
       {% endfor %}
-      {% endif %}
-      
+      {% endif %}      
       </div>
-
      
-  <div class="col-md-12">
-    <div>
-      <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
-      <div class="input-group">
-        <input type="text" class="form-control" 
-        placeholder="Search by title,date..." id="event-search">
-        <span class="input-group-btn" style="flex:inherit!important">
-          <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
-        </span>
+      <div class="col-md-12">
+        <div>
+          <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+          <div class="input-group">
+            <input type="text" class="form-control" 
+            placeholder="Search by title,date..." id="event-search">
+            <span class="input-group-btn" style="flex:inherit!important">
+              <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+            </span>
+            </div>
+          </ol>
         </div>
-      </ol>
-    </div>
-  </div>
-  
-  <br>
-
+      </div>    
+      <br>
 
       <div class="row">
-
-      {% for event in get_all_events %}
-      
-      <div class="col-xxl-6 col-md-12 mb-4">
-        
+      {% for event in get_all_events %}      
+      <div class="col-xxl-6 col-md-12 mb-4">        
         {%if event.is_online%}
         <div class="card h-100 border-0">
           <div class="card-header">
             <h6 class="fw-bolder">{{event.event_title}}</h6>
             <h6 class="card-text"><small class="text">Date:&nbsp;{{event.event_date|date:"d/m/Y"}},&nbsp;{{event.event_venue}}</small></h6>
           </div>
-          <div class="card-body">
-           
-            <p class="card-text">{{event.introduction}}</p>
 
+          <div class="card-body">           
+            <p class="card-text">{{event.introduction}}</p>
             {%if todays_date <= event.event_date%}
             <div class="card-footer bg-transparent border-dark text-center"><a class="btn btn-secondary" href="{{event.rsvp_link}}" target="_blank">RSVP Link</a></div>
-            {%endif%}
-
-           
+            {%endif%}           
           </div>
 
           <div class="card-footer bg-transparent border-dark text-left justify-content-between border-0">
@@ -226,8 +214,7 @@
                               style="font-weight:bold;border-color:#242e4c;padding-left:0px">
                               {{event.event_title}}&nbsp;<i class="bi bi-info-circle" style="color:#dc3545"></i>
                         </button>
-                        </h2>
-                        
+                        </h2>                        
                      
                         <div id="collapseVoluntary" class="accordion-collapse collapse" data-bs-target="#collapseVoluntary" aria-expanded="false" aria-controls="collapseVoluntary" style="">
                           <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;font-weight:bold">
@@ -257,12 +244,9 @@
                         </div>
                         <div class="accordion-body" style="font-size:16px!important;color:#242e4c!important;">
                           {{event.agenda_item_10}}
-                        </div>
-                        
-                      </div>
-                     
-                    </div>
-                 
+                        </div>                        
+                      </div>                     
+                    </div>                 
               </a>
             </div>
           </h5>
@@ -305,118 +289,11 @@
 
       </div>
     </div>
-  </div><!-- End Team Section -->
-
-
-    <br><br><br><br><br><br><br><br><br>
-    <!-- ======= Contact Section ======= -->
-    <div id="contact" class="contact-area">
-      <div class="contact-inner area-padding">
-        <div class="contact-overly"></div>
-        <div class="container ">
-          <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="section-headline text-center">
-                <h2 style="color: #f9fafb!important;">Contact us</h2>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- Start contact icon column -->
-            <div class="col-md-4">
-              <div class="contact-icon text-center">
-                <div class="single-icon">
-                  <i class="bi bi-phone"></i>
-                  <p style="color: #f9fafb!important;">
-                    Call: +27 11 327 2020
-                    <br>
-                    <span>Monday-Friday 9:00-17:00</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!-- Start contact icon column -->
-            <div class="col-md-4">
-              <div class="contact-icon text-center">
-                <div class="single-icon">
-                  <i class="bi bi-envelope"></i>
-                  <p style="color: #f9fafb!important;">
-                    Info:&nbsp;info@saratings.com<br>
-                    <span>Complaints:&nbsp;complaints@saratings.com</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!-- Start contact icon column -->
-            <div class="col-md-4">
-              <div class="contact-icon text-center">
-                <div class="single-icon">
-                  <a href="https://goo.gl/maps/shpwPmY5TEkCWHr46" target="blank"><i class="bi bi-geo-alt"></i></a>
-                  <p style="color: #f9fafb!important;">
-                    Thornhill Office Park
-                    Block 13, Ground Floor
-                    94 Bekker Road,
-                    Midrand,&nbsp;Johannesburg,&nbsp;South Africa
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-    </div><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer>
-    <div class="footer-area" id="footer_document_links">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="footer-content">
-              <div class="footer-head">
-                <div class="footer-logo">
-                 
-                </div>
-                <div class="footer-icons" id="social_media_links">
-                  <ul>
-                    <li>
-                      <a href="#"><i class="bi bi-twitter"></i></a>
-                    </li>
-
-                    </li>
-                    <li>
-                      <a href="#"><i class="bi bi-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end single footer -->
-         
-
-        
-        </div>
-      </div>
-    </div>
-    <div class="footer-area-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="copyright text-center">
-              <p>
-                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
-              </p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
+  </div>
+  <!-- ======= End Team Section ======= -->
+   
+  </main>       
+     
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -466,11 +343,8 @@
         window.location.href =  "{% url 'eventsHomepage' %}";
        
       }
-    })
-  
-  }
-  
-  
+    })  
+  }  
 
   if(document.querySelector("#error-message")){
 
@@ -496,7 +370,5 @@
   })
 }
   </script>
-
 </body>
-
 </html>

@@ -9,8 +9,8 @@ import os
 admin.site.site_header = "SA Ratings Administration"
 
 #Enfore 2FA in all environments
-if 'aws' in os.uname()[2]:
-    admin.site.__class__ = OTPAdminSite
+# if 'aws' in os.uname()[2]:
+#     admin.site.__class__ = OTPAdminSite
 
 
 urlpatterns = [
@@ -28,8 +28,6 @@ urlpatterns = [
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_completed.html'),
 	name='password_reset_complete'),
 ]
-
-
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns
 if settings.DEBUG:

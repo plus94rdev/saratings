@@ -94,13 +94,10 @@
             <div class="card-body">
               <h5 class="card-title">Overview</h5>
               <p class="card-text">{{regulatory_article.overview}}</p>
-
               
-              <br>
+              <br>            
 
-            
-
-              <p class="card-text"><a href="{{regulatory_article.file_link}}" target="_blank">Open Document</a></p>
+              <p class="card-text"><a href="{{regulatory_article.file_link}}" target="_blank" style="color:#4B9CD3">Open Document</a></p>
               
               {%if regulatory_article.is_submission_overdue%}
               <p class="card-text">Commentary Submission Closed</p>
@@ -111,9 +108,6 @@
             </div>
 
           </div>
-
-        
-
         </div>
       </div>
       <!-- End row -->

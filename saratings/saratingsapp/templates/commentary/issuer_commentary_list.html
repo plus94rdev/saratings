@@ -112,14 +112,14 @@
 {%endblock quotes_section%}
 
 {%block main_section%}
-
-  <!-- ======= Main Section ======= -->
+<!-- 
+ Main Section 
 <main id="main" style="margin-top:100px" class="col-12">
   
-  <!-- ======= Ratings Publication Item Section ======= -->
+   Ratings Publication Item Section 
   <div id="nugget-publication-item" class="our-team-area col-12">
 
-   <!-- ======= Ratings Publication Section ======= -->
+    Ratings Publication Section 
    <div id="nugget-publication" class="ratings-item">
     <div class="container">
       
@@ -143,10 +143,8 @@
         </div>
       </ol>
     </div>
-  </div>
-  
+  </div>  
   <br>
-
       <div class="row">
         {% for publication in get_issuer_commentary_documents %}
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -164,17 +162,73 @@
 
           </div>
         </div>
-        <!-- End column -->
+       
         {%endfor%}
 
         
       </div>
     </div>
-    <!--End Ratings Publication-->
+  </main> -->
 
-    
+  <!-- ======= Main Section ======= -->
+<main id="main" style="margin-top:100px; margin-bottom: 100px;" class="col-12">
+  
+  <!-- ======= Ratings Publication Item Section ======= -->
+  <div id="nugget-publication-item" class="our-team-area col-12">
 
-  </main><!-- End #main -->
+   <!-- ======= Ratings Publication Section ======= -->
+   <div id="nugget-publication" class="ratings-item">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline text-center">
+            <h2>Issuer Commentary</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div>
+          <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+            <div class="input-group">
+              <input type="text" class="form-control" 
+              placeholder="Search by title, date..." id="nugget-search">
+              <span class="input-group-btn" style="flex:inherit!important">
+                <button class="btn btn-primary" type="button" id="search-button">
+                  <i class="fa bi-search" aria-hidden="true"></i>
+                </button>
+              </span>
+            </div>
+          </ol>
+        </div>
+      </div>  
+      <br>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <ul class="list-group">
+            {% for publication in get_issuer_commentary_documents %}
+            <li class="list-group-item" style="background:#0c1822; margin-bottom: 10px;">
+              <div class="p-2">
+                <div class="card" style="background:#0c1822">
+                  <div class="card-body">
+                    <h5 style="color:#ffffff"><img src="{{publication.upload_flag.url}}">{{publication.title}}</h5>
+                    <p class="card-text" style="color:#ffffff">Effective Date: {{publication.effective_date|date:"d F Y"}}</p>
+                    <a href="{{publication.file_link}}" target="_blank" class="card-link" style="color:#3fc1d5">View</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div><!-- End Ratings Publication -->
+
+</main><!-- End #main -->
+
 
 
   
@@ -222,26 +276,12 @@
 </script>
   
   
-{%endblock main_section%}
+  {%endblock main_section%}
 
   {%block footer_main%}
-  <style>
-
-    .footer-area-bottom{
-      position: fixed!important;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      text-align: left;
-    }
-  </style>
+ 
   {%endblock footer_main%}
 
-
-
 </body>
-
-
-
 </html>
 

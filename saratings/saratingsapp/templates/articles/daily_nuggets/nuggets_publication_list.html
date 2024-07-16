@@ -2,51 +2,44 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
- 
+<head> 
   {% block title %}
   <title>SAR|Nuggets</title>
   {% endblock title %}
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
 <body>
-
-
   <style>
-
  
   .section-headline h2::after {
     border: 1px solid #f9fafb!important;
-
   }
 
-    header#header{
-      background: #0d1822!important;
-    }
+  header#header{
+    background: #0d1822!important;
+  }
 
   .single-well ul li{
     display: flex!important;
     font-size: 16px;
     font-family: "Open Sans", sans-serif;
-    }
+  }
 
-    #sar_profile{
-      color:#3ec1d5;
-      font-weight: bold;
-      cursor:pointer;
-      margin-bottom:0px!important;
+  #sar_profile{
+    color:#3ec1d5;
+    font-weight: bold;
+    cursor:pointer;
+    margin-bottom:0px!important;
+  }
 
-    }
-    .modal-dialog {
-      margin-top: 20%;
-    }
+  .modal-dialog {
+    margin-top: 20%;
+  }
 
   #profile_image{
-      height:245px;
-      width:390px;
-    }
+    height:245px;
+    width:390px;
+  }
 
     .single-team-member{
       border:none;
@@ -72,10 +65,10 @@
   h4.card-title {
     color:#000000!important
   }
-  a.card-link{
+  /* a.card-link{
 
     color:
-  }
+  } */
 
   span#footer-text{
     color:#29649a!important;
@@ -90,16 +83,16 @@
 
   </style>
 
-<style>
-  .card-title {
-    font-size: 14px!important;
-    font-family: "Poppins", sans-serif!important;
-  }
-  .poll-items{
-  display:none;
-  }
+  <style>
+    .card-title {
+      font-size: 14px!important;
+      font-family: "Poppins", sans-serif!important;
+    }
+    .poll-items{
+    display:none;
+    }
 
-</style>
+  </style>
 
 {%block landing_section%}
 {%endblock landing_section%}
@@ -113,8 +106,28 @@
 
 {%block main_section%}
 
-<style>
+  <style>
+    
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #20252d!important;
 
+      background-clip: border-box;
+      border: 1px solid rgba(0,0,0,.125);
+      border-radius: 0.25rem;
+      min-height: 218px;
+  }
+
+
+  .card-title, .card-text {
+    color:#fdfdfd!important;
+  }
+
+  @media (max-width: 768px){
   .card {
     position: relative;
     display: flex;
@@ -122,57 +135,37 @@
     min-width: 0;
     word-wrap: break-word;
     background-color: #20252d!important;
-
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.25rem;
     min-height: 218px;
-}
+  }
+
+  .col-sm-6 {
+    width: -webkit-fill-available;;
+    
+  }
+
+  }
 
 
-.card-title, .card-text {
-  color:#fdfdfd!important;
-}
+  a{
 
-@media (max-width: 768px){
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #20252d!important;
-  background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: 0.25rem;
-  min-height: 218px;
-}
-
-.col-sm-6 {
-  width: -webkit-fill-available;;
-  
-}
-
-}
-
-
-a{
-
-  color:#0dcaf0
-}
+    color:#0dcaf0
+  }
 
 
 
 
-</style>
-
-  <!-- ======= Main Section ======= -->
+  </style>
+<!-- 
+   Main Section 
 <main id="main" style="margin-top:100px" class="col-12">
   
-  <!-- ======= Ratings Publication Item Section ======= -->
+   Ratings Publication Item Section 
   <div id="nugget-publication-item" class="our-team-area col-12">
 
-   <!-- ======= Ratings Publication Section ======= -->
+    Ratings Publication Section 
    <div id="nugget-publication" class="ratings-item">
     <div class="container">
       
@@ -228,18 +221,137 @@ a{
 
           </div>
         </div>
-        <!-- End column -->
+      
         {%endfor%}
-
         
       </div>
     </div>
-    <!--End Ratings Publication-->
+  </main> -->
 
-    
+  <!-- <main id="main" style="margin-top:100px; margin-bottom: 100px;" class="col-12">
 
-  </main><!-- End #main -->
+     Ratings Publication Item Section
+    <div id="nugget-publication-item" class="our-team-area col-12">
+  
+       Ratings Publication Section 
+      <div id="nugget-publication" class="ratings-item">
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>Economic Nuggets</h2>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-12">
+            <div>
+              <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">
+                <div class="input-group">
+                  <input type="text" class="form-control" 
+                  placeholder="Search by title,date..." id="nugget-search" name="nugget-search">
+                  <span class="input-group-btn" style="flex:inherit!important">
+                    <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+                  </span>
+                </div>
+              </ol>
+            </div>
+          </div>
+          
+          <br>
+  
+          <div class="row">         
 
+
+
+            {% for publication in results %}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="single-team-member">
+                <div class="p-2">
+                  <div class="card">
+                    
+                    <div class="card-body">
+  
+                      <p class="card-text">&nbsp;{{publication.publication_date|date:"d F Y"}}</p>
+                      <h4 class="card-title">{{publication.title}}</h4>                  
+                      
+                    </div>
+  
+                    <div class="card-footer">
+  
+  
+                      <a href="{%url 'read_nugget' publication.unique_id%}" target="_blank" class="card-link">Read</a>
+  
+  
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+            </div>
+          
+            {%endfor%}
+            
+          </div>
+        </div>
+      </div>
+  </main> -->
+
+
+    <main id="main" style="margin-top:100px; margin-bottom: 100px;" class="col-12">
+        <div id="nugget-publication-item" class="our-team-area col-12">
+            <div id="nugget-publication" class="ratings-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="section-headline text-center">
+                                <h2>Economic Nuggets</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div>
+                         
+                            <ol class="breadcrumb mb-0" style="padding-left:0!important;background-color:#f6f9ff!important;">                                                          
+                                <div class="input-group col-md-12">
+                                    <input type="text" class="form-control" 
+                                           placeholder="Search by title,date..." id="nugget-search" name="nugget-search" >
+                                    <div class="group-append">
+                                    <span class="input-group-btn" style="flex:inherit!important">
+                                        <button class="btn btn-primary" type="button" id="search-button"><i class="fa bi-search" aria-hidden="true"></i></button>
+                                    </span>
+                                    </div>
+                                </div>
+                         
+                            </ol>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" id="results-container">
+                        {% for publication in get_nugget_publications %}
+                        <div class="col-md-12 col-sm-12 col-xs-12 nugget">
+                            <div class="single-team-member">
+                                <div class="p-2">
+                                    <div class="card">
+                                        <div class="card-body col-md-6">
+                                            <p class="card-text">&nbsp;{{publication.publication_date|date:"d F Y"}}</p>
+                                            <h4 class="card-title ">{{publication.title}}</h4>                  
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="{% url 'read_nugget' publication.unique_id %}" target="_blank" class="card-link">Read</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -277,13 +389,13 @@ a{
       console.log("ready");
       $("#nugget-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".col-md-6*").filter(function() {
+        $(".nugget*").filter(function() {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
       });
     
     });
-</script>
+  </script>
   
   
 {%endblock main_section%}
@@ -305,20 +417,12 @@ a{
         position: relative; /* Change to 'relative' on smaller screens */
         bottom: 0; /* Set bottom to 0 */
         width: 100%; /* Ensure full width */
-        z-index: 1; /* Ensure the footer appears above other content */
-        
+        z-index: 1; /* Ensure the footer appears above other content */        
       }
-
     }
 
   </style>
   {%endblock footer_main%}
 
-
-
 </body>
-
-
-
 </html>
-

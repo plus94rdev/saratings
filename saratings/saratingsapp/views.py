@@ -20,6 +20,7 @@ from .tasks import *
 import os
 import shutil
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -176,11 +177,14 @@ def sar_home(request):
     get_username = request.user.username
     
     print("is_user_authenticated first check",is_user_authenticated)
+
+    get_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')[:5]
+    get_nugget_publications = NuggetPublication.objects.all().order_by('-publication_date')[:5]
     
     template = "home/sar_home.html"
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
-    
+    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username, "get_rating_publications":get_rating_publications, "get_nugget_publications":get_nugget_publications}
+    get_nugget_publications
     return render(request, template,context)
 
 def sar_about(request):
@@ -199,9 +203,6 @@ def sar_about(request):
     context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
     
     return render(request, template,context)
-
-
-
 
 def sar_mission(request):
     
@@ -241,20 +242,20 @@ def sar_team(request):
     return render(request, template,context)
 
 
-def sar_contact(request):
+# def sar_contact(request):
     
-    """
-    APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
-    Sections are hidden using style attribute in html
-    """
-    is_user_authenticated = request.user.is_authenticated
-    get_username = request.user.username
+#     """
+#     APP_DIRS = True, so template loader will search for templates inside saratingsapp/templates
+#     Sections are hidden using style attribute in html
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
     
-    template = "home/sar_contact.html"
+#     template = "home/sar_contact.html"
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
+#     context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username}
     
-    return render(request, template, context)
+#     return render(request, template, context)
 
 def event_homepage(request):
     
@@ -371,16 +372,88 @@ def media_homepage(request):
     
     radio_interviews = MediaPage.objects.filter(interview_platform="radio").order_by('-interview_date')
     tv_interviews = MediaPage.objects.filter(interview_platform="tv").order_by('-interview_date') 
+    get_all_events = SAREvent.objects.filter().order_by('-event_date')
+    todays_date = datetime.date.today()
         
     template = "media_page/media_homepage.html"
     
-    context = {"radio_interviews":radio_interviews,"tv_interviews":tv_interviews}
+    context = {"radio_interviews":radio_interviews,"tv_interviews":tv_interviews, "get_all_events":get_all_events,"todays_date":todays_date }
     
-    return render(request, template,context)
-    
+    return render(request, template,context)    
   
-def public_commentary_article_list(request):
+# def public_commentary_article_list(request):
 
+#     """
+#     List regulatory articles on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+    
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+    
+    
+#     get_regulatory_articles = RegulatoryArticle.objects.all().order_by('-publication_date')
+    
+#     todays_date = datetime.date.today()
+    
+#     for article in get_regulatory_articles:
+#         if todays_date <= article.submission_deadline:
+#             article.is_submission_overdue = False
+#             article.save()
+#         else:
+#             article.is_submission_overdue = True
+#             article.save()
+    
+#     if IS_DEV: 
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/regulatory_articles/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\regulatory_articles'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for article in get_regulatory_articles:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+article.upload_file.url)
+            
+#             article.file_link = "http://127.0.0.1:8001"+article.upload_file.url
+#             article.save()
+        
+    
+#     if IS_PROD:
+#         # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+#         # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+#         source = os.path.join(BASE_DIR,'media/regulatory_articles/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/regulatory_articles/')
+        
+#         for article in get_regulatory_articles:
+            
+#             file_url = article.upload_file.url      
+#             article.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             article.save()
+        
+#     print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "articles/regulatory/list_public_commentary_article.html"
+    
+#     context = {"get_regulatory_articles":get_regulatory_articles,"is_user_authenticated":is_user_authenticated,
+#                "get_username":get_username}
+    
+#     return render(request, template, context)
+
+import os
+import shutil
+import datetime
+from django.conf import settings
+from django.shortcuts import render
+from .models import RegulatoryArticle
+
+def public_commentary_article_list(request):
     """
     List regulatory articles on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
@@ -389,59 +462,65 @@ def public_commentary_article_list(request):
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
     
-    
     get_regulatory_articles = RegulatoryArticle.objects.all().order_by('-publication_date')
     
     todays_date = datetime.date.today()
     
+    # Update article submission status based on submission deadline
     for article in get_regulatory_articles:
-        if todays_date <= article.submission_deadline:
-            article.is_submission_overdue = False
-            article.save()
-        else:
-            article.is_submission_overdue = True
-            article.save()
+        article.is_submission_overdue = todays_date > article.submission_deadline
+        article.save()
     
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/regulatory_articles/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
+    if settings.IS_DEV: 
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\regulatory_articles'
+        destination = r'C:\Users\User\Desktop\TestCopy'
         
         for article in get_regulatory_articles:
-            
-            print("upload_url:","http://127.0.0.1:8001"+article.upload_file.url)
-            
-            article.file_link = "http://127.0.0.1:8001"+article.upload_file.url
+            print("upload_url:", "http://127.0.0.1:8000" + article.upload_file.url)
+            article.file_link = "http://127.0.0.1:8000" + article.upload_file.url
             article.save()
-        
     
-    if IS_PROD:
-        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
-        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
-        
-        source = os.path.join(BASE_DIR,'media/regulatory_articles/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/regulatory_articles/')
+    if settings.IS_PROD:
+        source = os.path.join(settings.BASE_DIR, 'media', 'regulatory_articles')
+        destination = os.path.join(settings.BASE_DIR, 'static', 'assets', 'file', 'regulatory_articles')
         
         for article in get_regulatory_articles:
-            
             file_url = article.upload_file.url      
-            article.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            article.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
             article.save()
-        
-    print("BASE_DIR:",BASE_DIR)
-
-    # gather all files
-    allfiles = os.listdir(source)
     
-    # iterate on all files to move them to destination folder
-    for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
+    print("BASE_DIR:", settings.BASE_DIR)
+    print("Source path:", source)
+    print("Destination path:", destination)
+
+    try:
+        allfiles = os.listdir(source)
+    except FileNotFoundError as e:
+        print(f"Source directory not found: {e}")
+        return render(request, "articles/regulatory/list_public_commentary_article.html", {
+            "get_regulatory_articles": get_regulatory_articles,
+            "is_user_authenticated": is_user_authenticated,
+            "get_username": get_username,
+            "error_message": f"Source directory not found: {source}"
+        })
+    
+    # Iterate on all files to move them to destination folder
+    try:
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source, fname), destination)
+    except Exception as e:
+        print(f"Error while copying files: {e}")
     
     template = "articles/regulatory/list_public_commentary_article.html"
     
-    context = {"get_regulatory_articles":get_regulatory_articles,"is_user_authenticated":is_user_authenticated,
-               "get_username":get_username}
+    context = {
+        "get_regulatory_articles": get_regulatory_articles,
+        "is_user_authenticated": is_user_authenticated,
+        "get_username": get_username
+    }
     
     return render(request, template, context)
+
 
 def view_commentary_article(request,unique_id):
 
@@ -463,9 +542,7 @@ def view_commentary_article(request,unique_id):
     return render(request, template, context)
 
 
-def comment_commentary_article(request,unique_id):
-    
-    
+def comment_commentary_article(request,unique_id):    
 
     """
     Submit a public commentary about a regulatory article
@@ -530,116 +607,269 @@ def comment_commentary_article(request,unique_id):
 
 
 
-def ratings_publication_list(request):
+# def ratings_publication_list(request):
 
+#     """
+#     List regulatory articles on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+
+#     get_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')
+     
+#     todays_date = datetime.date.today()
+    
+#     if IS_DEV: 
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_publication/'
+#         source = source = 'C:\\Users\\User\\OneDrive - PLUS94 Research\\Desktop\\SARatings\\saratings\\saratings\\ratings_publication'
+
+#         destination = r'C:\Users\User\Desktop\TestCopy'
+
+        
+#         for publication in get_rating_publications:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+        
+    
+#     if IS_PROD:
+#         # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+#         # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+#         source = os.path.join(BASE_DIR,'media/ratings_publication/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/ratings_publication/')
+        
+#         for publication in get_rating_publications:
+            
+#             file_url = publication.upload_file.url      
+#             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             publication.save()
+        
+#     print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "ratings/ratings_publication_list.html"
+    
+#     context = {"get_rating_publications":get_rating_publications,
+#                "is_user_authenticated":is_user_authenticated} 
+    
+#     return render(request, template, context)
+
+
+#
+def ratings_publication_list(request):
     """
     List regulatory articles on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
+    
     """
+
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
 
     get_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')
-     
+    
+    latest_five_rating_publications = RatingsPublication.objects.all().order_by('-publication_date')
     todays_date = datetime.date.today()
-    
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_publication/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
-        
-        for publication in get_rating_publications:
-            
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            publication.save()
-        
-    
-    if IS_PROD:
-        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
-        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
-        
-        source = os.path.join(BASE_DIR,'media/ratings_publication/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/ratings_publication/')
-        
-        for publication in get_rating_publications:
-            
-            file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            publication.save()
-        
-    print("BASE_DIR:",BASE_DIR)
 
-    # gather all files
-    allfiles = os.listdir(source)
+    if IS_DEV: 
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\ratings_publication'
+        destination = r'C:\Users\User\Desktop\TestCopy'  # Update this path as needed
+
+        for publication in get_rating_publications:
+            print("upload_url:", "http://127.0.0.1:8000" + publication.upload_file.url)
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
+            publication.save()
     
-    # iterate on all files to move them to destination folder
+    # if IS_PROD:
+    #     source = os.path.join(BASE_DIR, 'media/ratings_publication/') 
+    #     destination = os.path.join(BASE_DIR, 'static/assets/file/ratings_publication/')
+        
+    #     for publication in get_rating_publications:
+    #         file_url = publication.upload_file.url      
+    #         publication.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
+    #         publication.save()
+        
+    print("BASE_DIR:", BASE_DIR)
+    print("Source path:", source)
+    print("Destination path:", destination)
+
+    # Check if source directory exists
+    if not os.path.exists(source):
+        print(f"Source directory does not exist: {source}")
+        return render(request, "error_template.html", {"error": f"Source directory does not exist: {source}"})
+
+    # Check if destination directory exists, create if it doesn't
+    if not os.path.exists(destination):
+        print(f"Destination directory does not exist. Creating: {destination}")
+        os.makedirs(destination)    
+
+    # Gather all filesv
+    try:
+        allfiles = os.listdir(source)
+    except FileNotFoundError as e:
+        print(f"Error listing files in source directory: {e}")
+        return render(request, "error_template.html", {"error": f"Error listing files in source directory: {e}"})
+    
+    # Iterate on all files to move them to destination folder
     for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
-    
+        src_file = os.path.join(source, fname)
+        dest_file = os.path.join(destination, fname)
+        
+        print(f"Copying from {src_file} to {dest_file}")
+
+        if os.path.exists(src_file):
+            try:
+                shutil.copy2(src_file, dest_file)
+                print(f"Copied {src_file} to {dest_file}")
+            except Exception as e:
+                print(f"Error copying {src_file} to {dest_file}: {e}")
+        else:
+            print(f"File does not exist: {src_file}")
+
     template = "ratings/ratings_publication_list.html"
     
-    context = {"get_rating_publications":get_rating_publications,
-               "is_user_authenticated":is_user_authenticated} 
+    context = {"get_rating_publications": get_rating_publications,
+               "is_user_authenticated": is_user_authenticated} 
     
     return render(request, template, context)
 
 
 
-def ratings_methodology_list(request):
 
+# def ratings_methodology_list(request):
+
+#     """
+#     List regulatory articles on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+    
+    
+#     get_rating_methodologies = RatingsMethodology.objects.all().order_by('-publication_date')
+     
+#     todays_date = datetime.date.today()
+    
+#     if IS_DEV: 
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_methodology/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\ratings_methodology'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for publication in get_rating_methodologies:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+        
+    
+#     if IS_PROD:
+#         # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+#         # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        
+#         source = os.path.join(BASE_DIR,'media/ratings_methodology/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/ratings_methodology/')
+        
+#         for publication in get_rating_methodologies:
+            
+#             file_url = publication.upload_file.url      
+#             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             publication.save()
+        
+#     print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "ratings/ratings_methodology_list.html"
+    
+#     context = {"get_rating_methodologies":get_rating_methodologies,
+#                "is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    
+#     return render(request, template, context)
+
+
+import datetime
+from django.conf import settings
+from django.shortcuts import render
+from .models import RatingsMethodology
+
+def ratings_methodology_list(request):
     """
-    List regulatory articles on a table
+    List rating methodologies on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
     """
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
-    
     
     get_rating_methodologies = RatingsMethodology.objects.all().order_by('-publication_date')
      
     todays_date = datetime.date.today()
     
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/ratings_methodology/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
+    if settings.IS_DEV: 
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\ratings_methodology'
+        destination = r'C:\Users\User\Desktop\TestCopy'
         
         for publication in get_rating_methodologies:
-            
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            print("upload_url:", "http://127.0.0.1:8000" + publication.upload_file.url)
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
             publication.save()
-        
     
-    if IS_PROD:
-        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
-        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
-        
-        source = os.path.join(BASE_DIR,'media/ratings_methodology/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/ratings_methodology/')
+    if settings.IS_PROD:
+        source = os.path.join(settings.BASE_DIR, 'media', 'ratings_methodology')
+        destination = os.path.join(settings.BASE_DIR, 'static', 'assets', 'file', 'ratings_methodology')
         
         for publication in get_rating_methodologies:
-            
             file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
             publication.save()
-        
-    print("BASE_DIR:",BASE_DIR)
+    
+    print("BASE_DIR:", settings.BASE_DIR)
+    print("Source path:", source)
+    print("Destination path:", destination)
 
-    # gather all files
-    allfiles = os.listdir(source)
+    try:
+        allfiles = os.listdir(source)
+    except FileNotFoundError as e:
+        print(f"Source directory not found: {e}")
+        return render(request, "ratings/ratings_methodology_list.html", {
+            "get_rating_methodologies": get_rating_methodologies,
+            "is_user_authenticated": is_user_authenticated,
+            "get_username": get_username,
+            "error_message": f"Source directory not found: {source}"
+        })
     
     # iterate on all files to move them to destination folder
-    for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
+    try:
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source, fname), destination)
+    except Exception as e:
+        print(f"Error while copying files: {e}")
     
     template = "ratings/ratings_methodology_list.html"
     
-    context = {"get_rating_methodologies":get_rating_methodologies,
-               "is_user_authenticated":is_user_authenticated,"get_username":get_username}
+    context = {
+        "get_rating_methodologies": get_rating_methodologies,
+        "is_user_authenticated": is_user_authenticated,
+        "get_username": get_username
+    }
     
     return render(request, template, context)
+
 
 
 #View not currently used, will be used for publishing research doc for purchase
@@ -695,8 +925,7 @@ def resarch_publication_list(request):
     context = {"get_research_publications":get_research_publications,
                "is_user_authenticated":is_user_authenticated,"get_username":get_username}
     
-    return render(request, template, context)    
-
+    return render(request, template, context)   
 
 
 def nuggets_publication_list(request):
@@ -709,53 +938,61 @@ def nuggets_publication_list(request):
     get_username = request.user.username
     
     get_nugget_publications = NuggetPublication.objects.all().order_by('-publication_date')
-     
-    todays_date = datetime.date.today()
+
+    # query = request.GET.get('nugget-search')
+    # results = []
+
+    # if query:
+    #     results = NuggetPublication.objects.filter(title__icontains=query)
+    # else:
+    #     results = get_nugget_publications      
+   
     
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/nuggets_publication/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
+    if IS_DEV:         
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\nuggets_publication'
+        destination = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\TestCopy'
         
-        for publication in get_nugget_publications:
+        for publication in get_nugget_publications:            
             
+            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
             
-            
-            # print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            # publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            # publication.save()
-            pass
-        
+            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            publication.save()
+            pass        
     
     if IS_PROD:
-        # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
-        # destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
+        source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
+        destination = '/home/ubuntu/saratings/saratings/static/assets/file/regulatory_articles/'
         
         source = os.path.join(BASE_DIR,'media/nuggets_publication/') 
         destination = os.path.join(BASE_DIR,'static/assets/file/nuggets_publication/')
         
         for publication in get_nugget_publications:
             
-            # file_url = publication.upload_file.url      
-            # publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            # publication.save()
+            file_url = publication.upload_file.url      
+            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+            publication.save()
             pass
         
     print("BASE_DIR:",BASE_DIR)
-
-    # gather all files
-    #allfiles = os.listdir(source)
-    
-    # iterate on all files to move them to destination folder
-    # for fname in allfiles:
-    #     shutil.copy2(os.path.join(source,fname), destination)    
+  
+    allfiles = os.listdir(source)    
+   
+    for fname in allfiles:
+        shutil.copy2(os.path.join(source,fname), destination)    
     
     template = "articles/daily_nuggets/nuggets_publication_list.html"
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
-               "get_nugget_publications":get_nugget_publications} 
+    context = {"is_user_authenticated":is_user_authenticated,
+               "get_username":get_username,
+               "get_nugget_publications":get_nugget_publications,
+            #    "results":results, 
+            #    "query":query
+              } 
     
     return render(request, template, context)
+
+
 
 def read_nugget(request, unique_id):
     
@@ -817,59 +1054,127 @@ def read_nugget(request, unique_id):
     
     return render(request, template, context)
 
-def year_in_review_publication_list(request):
+# def year_in_review_publication_list(request):
 
+#     """
+#     List regulatory articles on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+    
+#     get_year_in_reviews = YearInReview.objects.all().order_by('-publication_date')
+    
+#     #Use Celery to copy files from media to static
+#     if IS_DEV: 
+        
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/year_in_review/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\year_in_review'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for publication in get_year_in_reviews:
+                
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+          
+#     if IS_PROD:
+        
+#         source = os.path.join(BASE_DIR,'media/year_in_review/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
+        
+#         for publication in get_year_in_reviews:
+                
+#             file_url = publication.upload_file.url      
+#             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             publication.save()
+    
+#     print("BASE_DIR:",BASE_DIR)
+    
+    
+    
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "research/year_in_review/year_in_review_publication_list.html"
+    
+#     context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
+#                "get_year_in_reviews":get_year_in_reviews} 
+    
+#     return render(request, template, context)
+
+
+from django.shortcuts import render
+from .models import YearInReview
+from django.conf import settings
+
+def year_in_review_publication_list(request):
     """
     List regulatory articles on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
     """
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
-    
+
     get_year_in_reviews = YearInReview.objects.all().order_by('-publication_date')
-    
-    #Use Celery to copy files from media to static
-    if IS_DEV: 
+
+    # Use Celery to copy files from media to static
+    if settings.IS_DEV: 
         
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/year_in_review/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\year_in_review'
+        destination = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\TestCopy'
         
         for publication in get_year_in_reviews:
-                
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+            print("upload_url:", "http://127.0.0.1:8000" + publication.upload_file.url)
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
             publication.save()
           
-    if IS_PROD:
+    # if settings.IS_PROD:
+    #     source = os.path.join(settings.BASE_DIR, 'media/year_in_review/')
+    #     destination = os.path.join(settings.BASE_DIR, 'static/assets/file/year_in_review/')
         
-        source = os.path.join(BASE_DIR,'media/year_in_review/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
-        
-        for publication in get_year_in_reviews:
-                
-            file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            publication.save()
+    #     for publication in get_year_in_reviews:
+    #         file_url = publication.upload_file.url      
+    #         publication.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
+    #         publication.save()
     
-    print("BASE_DIR:",BASE_DIR)
-    
-    
-    
+    print("BASE_DIR:", settings.BASE_DIR)
+    print("Source Path:", source)
+    print("Destination Path:", destination)
 
+    # Check if paths exist
+    if not os.path.exists(source):
+        print(f"Source path does not exist: {source}")
+        return render(request, "error.html", {"error_message": f"Source path does not exist: {source}"})
+    if not os.path.exists(destination):
+        print(f"Destination path does not exist: {destination}")
+        os.makedirs(destination)
+    
     # gather all files
     allfiles = os.listdir(source)
+    print("Files to copy:", allfiles)
     
     # iterate on all files to move them to destination folder
     for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
+        shutil.copy2(os.path.join(source, fname), destination)
     
     template = "research/year_in_review/year_in_review_publication_list.html"
     
-    context = {"is_user_authenticated":is_user_authenticated,"get_username":get_username,
-               "get_year_in_reviews":get_year_in_reviews} 
+    context = {
+        "is_user_authenticated": is_user_authenticated,
+        "get_username": get_username,
+        "get_year_in_reviews": get_year_in_reviews
+    } 
     
     return render(request, template, context)
+
+
 
 def purchase_research(request):
     
@@ -943,8 +1248,64 @@ def research_report_purchase_list(request):
 
 
 
-def sar_policy_list(request):
+# def sar_policy_list(request):
 
+#     """
+#     List policy documents on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+
+#     get_policy_documents = SARPolicy.objects.all()
+     
+#     if IS_DEV: 
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/policy/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\policy'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for publication in get_policy_documents:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+        
+    
+#     if IS_PROD:
+        
+#         source = os.path.join(BASE_DIR,'media/policy/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/policy/')
+        
+#         for publication in get_policy_documents:
+            
+#             file_url = publication.upload_file.url      
+#             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             publication.save()
+        
+#     print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "policies/policy_list.html"
+    
+#     context = {"get_policy_documents":get_policy_documents,
+#                "is_user_authenticated":is_user_authenticated} 
+    
+#     return render(request, template, context)
+
+import os
+import shutil
+from django.conf import settings
+from django.shortcuts import render
+from .models import SARPolicy
+
+def sar_policy_list(request):
     """
     List policy documents on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
@@ -953,149 +1314,274 @@ def sar_policy_list(request):
     get_username = request.user.username
 
     get_policy_documents = SARPolicy.objects.all()
-     
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/policy/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
-        
-        for publication in get_policy_documents:
-            
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            publication.save()
-        
-    
-    if IS_PROD:
-        
-        source = os.path.join(BASE_DIR,'media/policy/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/policy/')
-        
-        for publication in get_policy_documents:
-            
-            file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            publication.save()
-        
-    print("BASE_DIR:",BASE_DIR)
 
-    # gather all files
-    allfiles = os.listdir(source)
-    
-    # iterate on all files to move them to destination folder
-    for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
-    
+    if settings.IS_DEV:
+        # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/policy/'
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\policy'
+        destination = r'C:\Users\User\Desktop\TestCopy'
+        
+        for publication in get_policy_documents:
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
+            publication.save()
+
+    if settings.IS_PROD:
+        source = os.path.join(settings.BASE_DIR, 'media', 'policy')
+        destination = os.path.join(settings.BASE_DIR, 'static', 'assets', 'file', 'policy')
+
+        for publication in get_policy_documents:
+            file_url = publication.upload_file.url
+            publication.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
+            publication.save()
+
+    print("BASE_DIR:", settings.BASE_DIR)
+
+    try:
+        # gather all files
+        allfiles = os.listdir(source)
+        
+        # iterate on all files to move them to destination folder
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source, fname), destination)
+    except Exception as e:
+        print(f"Error while copying files: {e}")
+
     template = "policies/policy_list.html"
-    
-    context = {"get_policy_documents":get_policy_documents,
-               "is_user_authenticated":is_user_authenticated} 
-    
+    context = {
+        "get_policy_documents": get_policy_documents,
+        "is_user_authenticated": is_user_authenticated
+    }
+
     return render(request, template, context)
 
 
+
+
+# def sector_commentary_list(request):
+
+#     """
+#     List policy documents on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+
+#     get_sector_commentary_documents = SectorCommentary.objects.all().order_by('-id')
+     
+#     if IS_DEV: 
+#         # source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/sector_commentary/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\sector_commentary'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for publication in get_sector_commentary_documents:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+        
+    
+#     if IS_PROD:
+        
+#         source = os.path.join(BASE_DIR,'media/sector_commentary/') 
+#         destination = os.path.join(BASE_DIR,'static/assets/file/sector_commentary/')
+        
+#         for publication in get_sector_commentary_documents:
+            
+#             file_url = publication.upload_file.url      
+#             publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#             publication.save()
+        
+#     print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "commentary/sector_commentary_list.html"
+    
+#     context = {"get_sector_commentary_documents":get_sector_commentary_documents,
+#                "is_user_authenticated":is_user_authenticated} 
+    
+#     return render(request, template, context)
+
+import os
+import shutil
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import SectorCommentary
+
+IS_DEV = True  # Assume this is set somewhere in your settings
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def sector_commentary_list(request):
-
     """
-    List policy documents on a table
-    Using shutil to copy files from media to static to allow viewing of pdfs
+    List sector commentary documents
     """
     is_user_authenticated = request.user.is_authenticated
-    get_username = request.user.username
+    get_username = request.user.username 
 
-    get_sector_commentary_documents = SectorCommentary.objects.all().order_by('-id')
+    get_sector_commentary_documents = SectorCommentary.objects.all().order_by('-id')   
      
     if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/sector_commentary/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\sector_commentary'
+        destination = r'C:\Users\User\Desktop\TestCopy'  
         
-        for publication in get_sector_commentary_documents:
-            
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            publication.save()
-        
-    
-    if IS_PROD:
-        
-        source = os.path.join(BASE_DIR,'media/sector_commentary/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/sector_commentary/')
-        
-        for publication in get_sector_commentary_documents:
-            
-            file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            publication.save()
-        
-    print("BASE_DIR:",BASE_DIR)
+        # Check if source path exists
+        if not os.path.exists(source):
+            return HttpResponse(f"Source path does not exist: {source}", status=500)
 
-    # gather all files
+        # Copy files from source to destination
+        for publication in get_sector_commentary_documents:
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
+            publication.save()
+
+    elif IS_PROD:
+        source = os.path.join(BASE_DIR, 'media/sector_commentary/')
+        destination = os.path.join(BASE_DIR, 'static/assets/file/sector_commentary/')
+        
+        # Check if source path exists
+        if not os.path.exists(source):
+            return HttpResponse(f"Source path does not exist: {source}", status=500)
+
+        # Copy files from source to destination
+        for publication in get_sector_commentary_documents:
+            file_url = publication.upload_file.url
+            publication.file_link = "https://saratings.com" + file_url.replace("media", "static/assets/file")
+            publication.save()
+
+    # Copy files from source to destination
     allfiles = os.listdir(source)
-    
-    # iterate on all files to move them to destination folder
     for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
-    
+        src_file = os.path.join(source, fname)
+        dst_file = os.path.join(destination, fname)
+        shutil.copy2(src_file, dst_file)
+
     template = "commentary/sector_commentary_list.html"
-    
-    context = {"get_sector_commentary_documents":get_sector_commentary_documents,
-               "is_user_authenticated":is_user_authenticated} 
+    context = {
+        "get_sector_commentary_documents": get_sector_commentary_documents,
+        "is_user_authenticated": is_user_authenticated,
+        # "results":results,
+        # "query":query
+    }
     
     return render(request, template, context)
 
 
-def issuer_commentary_list(request):
+
+
+# def issuer_commentary_list(request):
     
+#     """
+#     List policy documents on a table
+#     Using shutil to copy files from media to static to allow viewing of pdfs
+#     """
+#     is_user_authenticated = request.user.is_authenticated
+#     get_username = request.user.username
+
+#     get_issuer_commentary_documents = IssuerCommentary.objects.all().order_by('-id')
+     
+#     if IS_DEV: 
+#         # source = r'/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/issuer_commentary/'
+#         source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\issuer_commentary'
+#         destination = '/Users/jasonm/Desktop/TestCopy/'
+        
+#         for publication in get_issuer_commentary_documents:
+            
+#             print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            
+#             publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+#             publication.save()
+        
+    
+#     # if IS_PROD:
+        
+#     #     source = os.path.join(BASE_DIR,'media/issuer_commentary/') 
+#     #     destination = os.path.join(BASE_DIR,'static/assets/file/issuer_commentary/')
+        
+#     #     for publication in get_issuer_commentary_documents:
+            
+#     #         file_url = publication.upload_file.url      
+#     #         publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+#     #         publication.save()
+        
+#     # print("BASE_DIR:",BASE_DIR)
+
+#     # gather all files
+#     allfiles = os.listdir(source)
+
+
+    
+    
+#     # iterate on all files to move them to destination folder
+#     for fname in allfiles:
+#         shutil.copy2(os.path.join(source,fname), destination)    
+    
+#     template = "commentary/issuer_commentary_list.html"
+    
+#     context = {"get_issuer_commentary_documents":get_issuer_commentary_documents,
+#                "is_user_authenticated":is_user_authenticated} 
+    
+#     return render(request, template, context)
+
+import os
+import shutil
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import IssuerCommentary
+
+IS_DEV = True  
+
+def issuer_commentary_list(request):
     """
     List policy documents on a table
     Using shutil to copy files from media to static to allow viewing of pdfs
+    Issue with file permissions in DEV
     """
     is_user_authenticated = request.user.is_authenticated
     get_username = request.user.username
 
     get_issuer_commentary_documents = IssuerCommentary.objects.all().order_by('-id')
-     
-    if IS_DEV: 
-        source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/issuer_commentary/'
-        destination = '/Users/jasonm/Desktop/TestCopy/'
-        
-        for publication in get_issuer_commentary_documents:
-            
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
-            
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            publication.save()
-        
     
-    if IS_PROD:
-        
-        source = os.path.join(BASE_DIR,'media/issuer_commentary/') 
-        destination = os.path.join(BASE_DIR,'static/assets/file/issuer_commentary/')
-        
-        for publication in get_issuer_commentary_documents:
-            
-            file_url = publication.upload_file.url      
-            publication.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
-            publication.save()
-        
-    print("BASE_DIR:",BASE_DIR)
+    if IS_DEV:
+        source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\issuer_commentary'
+        destination = r'C:\Users\User\Desktop\TestCopy'       
 
-    # gather all files
-    allfiles = os.listdir(source)
+        for publication in get_issuer_commentary_documents:
+            print("upload_url:", "http://127.0.0.1:8000" + publication.upload_file.url)
+            publication.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
+            publication.save()
+
+        try:
+            
+            allfiles = os.listdir(source)
+            
+            for fname in allfiles:
+                src_file = os.path.join(source, fname)
+                dst_file = os.path.join(destination, fname)
+                shutil.copy2(src_file, dst_file)
+        except Exception as e:
+            print(f"Error copying files: {str(e)}")
+            return HttpResponse(f"Error copying files: {str(e)}", status=500)
     
-    # iterate on all files to move them to destination folder
-    for fname in allfiles:
-        shutil.copy2(os.path.join(source,fname), destination)    
-    
+    # if IS_PROD:
+    #     source = os.path.join(BASE_DIR,'media/issuer_commentary/') 
+    #     destination = os.path.join(BASE_DIR,'static/assets/file/issuer_commentary/')
+    #     for publication in get_issuer_commentary_documents:
+    #         file_url = publication.upload_file.url      
+    #         publication.file_link = "https://saratings.com" + file_url.replace("media","static/assets/file")
+    #         publication.save()
+
     template = "commentary/issuer_commentary_list.html"
     
-    context = {"get_issuer_commentary_documents":get_issuer_commentary_documents,
-               "is_user_authenticated":is_user_authenticated} 
+    context = {
+        "get_issuer_commentary_documents": get_issuer_commentary_documents,
+        "is_user_authenticated": is_user_authenticated
+    }
     
     return render(request, template, context)
-
 
 
 def annual_reports_list(request):
@@ -1118,11 +1604,10 @@ def annual_reports_list(request):
         
         for publication in get_annual_reports:
             
-            print("upload_url:","http://127.0.0.1:8001"+publication.upload_file.url)
+            print("upload_url:","http://127.0.0.1:8000"+publication.upload_file.url)
             
-            publication.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
-            publication.save()
-        
+            publication.file_link = "http://127.0.0.1:8000"+publication.upload_file.url
+            publication.save()        
     
     if IS_PROD:
         # source = '/home/ubuntu/saratings/saratings/media/regulatory_articles/'
@@ -1208,7 +1693,6 @@ def user_not_authorised(request):
     
     return HttpResponse("Unauthorised access...")
 
-
 @login_required
 def save_docx_to_html_file(request):
 
@@ -1265,6 +1749,3 @@ def save_docx_to_html_file(request):
     else:
             
         return redirect('userNotAuthorised')
-
-
-

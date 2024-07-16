@@ -26,45 +26,39 @@
   <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
   <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
   <!-- Template Main CSS File -->
-  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
-  
+  <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">  
 </head>
-
 <body>
-
-
   <style>
 
-header#header{
+    header#header{
       background: #212529!important;
     }
 
     #sar_title{
-      font-weight: bold;
-      
+      font-weight: bold;      
     }
 
     #news,#testimonials,#insights,#research,#social_media_links,#articles{
       display:none;
-    }
-   
+    }   
 
     footer.col-md-12 {
       bottom: 0;
-  }
+    }
  
-  .footer-area {
-    padding: 0;
-  }
+    .footer-area {
+      padding: 0;
+    }
 
-  label {
-    color: #000000!important;
-    font-size: 15px!important;
-  }
+    label {
+      color: #000000!important;
+      font-size: 15px!important;
+    }
 
-  .help-block {
-    color: #dc3545!important;
-}
+    .help-block {
+      color: #dc3545!important;
+    }
 
   </style>
 
@@ -96,42 +90,38 @@ header#header{
                   
                 <style type="text/css">
      
-                      .text-error{
-                 
-                         color: red!important;
-                      }
-                 
-                     a:hover {
-                         color:#00a54f!important;
-                     }
-                 
-                 
-                    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-                     line-height: 2;
-                 }
+                  .text-error{                 
+                    color: red!important;
+                  }
+              
+                  a:hover {
+                      color:#00a54f!important;
+                  }
+                              
+                  .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+                    line-height: 2;
+                  }
                  
                  .col-12 {
-                     width:122%!important;
+                    width:122%!important;
                  }
-                 .row>* {
-                 
-                     max-width: 130%!important;
+                 .row>* {                 
+                    max-width: 130%!important;
                  }
 
-                 div#cover-caption {
-                  background-color: #0d1822!important;
-                  
-                 }
-                  .form-row {
-                    flex-wrap: wrap!important;
-          
+                 /* div#cover-caption {
+                    background-color: #0d1822!important;                  
+                 } */
+
+                 .form-row {
+                    flex-wrap: wrap!important;          
                  }
 
                   </style>
                  
 <main>
     <!-- Section -->
-    <section class="min-vh-100 align-items-center section-image overlay-soft-dark">
+    <section class="min-vh-100 align-items-center section-image overlay-soft-dark ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 d-flex align-items-center justify-content-center">
@@ -249,9 +239,173 @@ header#header{
 </section>
 
 
+<style>
+
+  a.link {
+    font-size: 1.25rem;
+  } 
+  
+  body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+  }
+  
+  .wrapper {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  main {
+      flex: 1;   
+  }
+  
+  footer {
+      display: flex;
+      justify-content: space-between;
+      background-color: #0c1822;;
+      color: #fff;    
+      position: relative;
+      bottom: 0;
+      bottom: 0;
+      width: 100%;
+  }
+  
+  .footer-column {
+      position: relative;
+      margin-left: 45px;
+      padding: 20px;
+  }
+  
+  .footer-column h6 {
+      border-bottom: none; 
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      color: #fff; 
+  }
+  
+  .footer-column p {
+      margin: 0;
+      color: #fff;
+  }
+  
+  .footer-column:first-child,
+  .footer-column:last-child {
+      flex: 1;
+  }
+  
+  .footer-column:nth-child(2) {
+      flex: 2;
+      padding-left: 30px; 
+      padding-right: 10px; 
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+  }
+  
+  .footer-column:nth-child(2)::before,
+  .footer-column:nth-child(2)::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #fff;
+  }
+  
+  .footer-column:nth-child(2)::before {
+      left: 0; 
+  }
+  
+  .footer-column:nth-child(2)::after {
+      right: 0; 
+  }
+  
+  .middle-column-block {
+      width: 48%;
+      /* margin-right: 20px;  */
+  }
+  
+  .socials {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .socials img {
+    width: 30px;
+    height: 30px
+  }
+  
+  a {
+    color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+      footer {
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+        border: none;     
+      }
+  
+      .footer-column {
+        position: relative;
+        margin: 0;
+        padding: 20px;
+      }
+  
+      .footer-column:first-child,
+      .footer-column:last-child {
+         flex: 1;       
+         margin:0;
+  }
+  
+      #second-column {
+        display: flex;
+        flex-direction: column;     
+        min-width: 100%;
+        margin-left:-10px;
+      } 
+    }
+  </style>
+  
+  <footer>
+    <div class="footer-column">
+        <h6>CONTACT US</h6>
+        <p>Call: +27 10 203 9921</p>
+        <p>Monday - Friday 9:00 - 17:00</p><br>
+        <p style="text-decoration: underline;">Info:</p>
+        <p>info@saratings.com</p>
+    </div>
+    <div class="footer-column" id="second-column">
+        <div class="middle-column-block">
+            <h6 style="text-decoration: underline;">Complaints:</h6>
+            <p>complaints@saratings.com</p><br>
+        </div>
+        <div class="middle-column-block">        
+            <h6 style="text-decoration: underline;">Offices South Africa:</h6>
+            <p>Thornhill Office Park</p>
+            <p>Block 13, Ground Floor</p>
+            <p>94 Bekker Road, Midrand, </p>
+            <p>Johannesburg, Gauteng </p>
+        </div>
+    </div>
+    <div class="footer-column">
+        <h6>FOLLOW US</h6>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/sovereign-africa-ratings-477479250/" target="_blank"><img src="{% static 'assets/img/socials/linkedin.png' %}" alt="LinkedIn" style="margin:5px;">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/sovereign-africa-ratings-477479250/" target="_blank"><img src="{% static 'assets/img/socials/instagram.png' %}" alt="LinkedIn" style="margin:5px">Instagram</a>
+          <a href="https://www.youtube.com/@saratings" target="_blank"><img src="{% static 'assets/img/socials/youtube.png' %}" alt="LinkedIn" style="margin:5px">YouTube</a>
+          <a href="https://x.com/saratings" target="_blank"><img src="{% static 'assets/img/socials/twitter.png' %}" alt="LinkedIn" style="margin:5px">Twitter</a>
+        </div>
+             
+    </div>
+  </footer>    
+
 
   <!-- ======= Footer ======= -->
-  <footer class="col-md-12">
+  <!-- <footer class="col-md-12">
     
     <div class="footer-area-bottom">
       <div class="container">
@@ -267,7 +421,8 @@ header#header{
         </div>
       </div>
     </div>
-  </footer><!-- End  Footer -->
+  </footer> -->
+  <!-- End  Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

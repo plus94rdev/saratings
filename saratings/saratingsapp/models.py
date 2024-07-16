@@ -148,6 +148,7 @@ class FileUpload(models.Model):
     
     class Meta:
         db_table = "file_upload"
+
         
 class LeadershipProfile(models.Model):
     
@@ -311,9 +312,6 @@ class RegulatoryArticleComment(models.Model):
         db_table = "regulatory_article_comment"
         verbose_name_plural = "Regulatory Article Comments"
 
-
-
-
 class RatingsPublication(models.Model):
     
     title = models.CharField(max_length=1000, null=True, blank=False)
@@ -323,6 +321,7 @@ class RatingsPublication(models.Model):
     file_link = models.TextField(null=True, blank=True)
     publication_date = models.DateField(null=True, blank=False)
     upload_file = models.FileField(upload_to='ratings_publication/', blank=True,null=True)
+    upload_flag = models.FileField(upload_to='ratings_publication/flags', blank=True,null=True)
     added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
@@ -369,9 +368,7 @@ class RatingsMethodology(models.Model):
     class Meta:
         db_table = "ratings_methodology"
         verbose_name_plural = "Ratings Methodologies" 
-        
-        
-
+  
 
 class ResearchPublication(models.Model):
     
@@ -399,6 +396,7 @@ class ResearchPublication(models.Model):
     class Meta:
         db_table = "research_publication"
         verbose_name_plural = "Research Publication"
+        
 class ResearchReport(models.Model):
     
     title = models.CharField(max_length=1000, null=True, blank=False)
@@ -443,7 +441,7 @@ class NuggetPublication(models.Model):
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     updated_on_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     unique_id = models.CharField(max_length=20, null=True, blank=True)
-    html_content = models.TextField(blank=True)  # For storing converted HTML
+    html_content = models.TextField(blank=True)  
     
     def __str__(self):
         return self.title
@@ -532,43 +530,41 @@ class YearInReview(models.Model):
     def __str__(self):
         return self.title
     
-    def save(self,*args,**kwargs):
-        
+    def save(self,*args,**kwargs):        
         
         """
         Move files from Media to Assets to allow PDF viewing
         """
         get_year_in_reviews = YearInReview.objects.all().order_by('-publication_date')
         
-        if settings.IS_DEV: 
-            
-            source = '/Users/jasonm/SEng/CompanyProjects/SAR/saratings/saratings/media/year_in_review/'
-            destination = '/Users/jasonm/Desktop/TestCopy/'
+        if settings.IS_DEV:             
+
+            source = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\SARatings\saratings\saratings\media\year_in_review'
+            destination = r'C:\Users\User\OneDrive - PLUS94 Research\Desktop\TestCopy'
             
             for publication in get_year_in_reviews:
                     
-                self.file_link = "http://127.0.0.1:8001"+publication.upload_file.url
+                self.file_link = "http://127.0.0.1:8000" + publication.upload_file.url
 
-        if settings.IS_PROD:
+        # if settings.IS_PROD:
             
-            source = os.path.join(BASE_DIR,'media/year_in_review/') 
-            destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
+        #     source = os.path.join(BASE_DIR,'media/year_in_review/') 
+        #     destination = os.path.join(BASE_DIR,'static/assets/file/year_in_review/')
             
-            for publication in get_year_in_reviews:
+        #     for publication in get_year_in_reviews:
                     
-                file_url = publication.upload_file.url      
+        #         file_url = publication.upload_file.url      
                 
-                self.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
+        #         self.file_link = "https://saratings.com"+file_url.replace("media","static/assets/file")
                 
-            print("Prod:Moved files from media to static")
+        #     print("Prod:Moved files from media to static")
 
-        # gather all files
+    
         allfiles = os.listdir(source)
         
-        # iterate on all files to move them to destination folder
-        for fname in allfiles:
-            shutil.copy2(os.path.join(source,fname), destination)    
         
+        for fname in allfiles:
+            shutil.copy2(os.path.join(source,fname), destination)         
         
         if not self.unique_id:
             self.unique_id = get_string(10,10)
@@ -580,29 +576,29 @@ class YearInReview(models.Model):
         subject = "SAR: Year In Review(" + str(self.title) + ")"
         message = "Good day, \n\n" + "Please find the link below for the Year In Review publication" + "\n\n" + self.file_link + "\n\n" + "Regards, \n" + "SAR Team"
      
-        if settings.IS_PROD: 
-            """
-            Apache running python 3.6.8
-            asyncio.sleep(1) to prevent 'not awaited error'
-            """
-            asyncio.sleep(1)
+        # if settings.IS_PROD: 
+            # """
+            # Apache running python 3.6.8
+            # asyncio.sleep(1) to prevent 'not awaited error'
+            # """
+            # asyncio.sleep(1)
             #new_event_loop() to prevent 'RuntimeError: There is no current event loop in thread'
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
+            # loop = asyncio.new_event_loop()
+            # asyncio.set_event_loop(loop)
             # Blocking call which returns when the hello_world() coroutine is done
             # loop.run_until_complete(send_email(str(subject),str(message)))
             # loop.run_until_complete(confirm_sent_notification())
-            loop.close()
-            print("Prod: Year In Review Email sent")
+            # loop.close()
+            # print("Prod: Year In Review Email sent")
             
             
             
-        if settings.IS_DEV:
-            """
-            Development server running python 3.7.3
-            """
+        # if settings.IS_DEV:
+            # """
+            # Development server running python 3.7.3
+            # """
             #Working asyncio
-            asyncio.run((send_email(str(subject),str(message))))
+            # asyncio.run((send_email(str(subject),str(message))))
             
             
     class Meta:
@@ -754,6 +750,7 @@ class IssuerCommentary(models.Model):
     file_type = models.CharField(max_length=10, null=True, blank=True)
     file_link = models.TextField(null=True, blank=True)
     upload_file = models.FileField(upload_to='issuer_commentary/', blank=True,null=True)
+    # upload_flag = models.FileField(upload_to='issuer_commentary/flags', blank=True,null=True)
     effective_date = models.DateField(null=True,blank=False)
     added_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     added_on_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
@@ -769,6 +766,7 @@ class IssuerCommentary(models.Model):
             self.unique_id = get_string(10,10)
             
         super(IssuerCommentary,self).save(*args,**kwargs)
+        
     class Meta:
         db_table = "issuer_commentary"
         verbose_name_plural = "Issuer Commentaries"

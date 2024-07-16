@@ -137,3 +137,8 @@ admin.site.register(SectorCommentary,SectorCommentaryAdmin)
 admin.site.register(IssuerCommentary,IssuerCommentaryAdmin)
 admin.site.register(LeadershipProfile,LeadershipProfileAdmin)
 admin.site.register(AnnualReport,AnnualReportAdmin)
+
+
+# Username: TebogoM
+# Password: SAR#tsm1991
+

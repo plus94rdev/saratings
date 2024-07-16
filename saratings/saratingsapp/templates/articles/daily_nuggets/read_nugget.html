@@ -29,16 +29,14 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
 </head>
-
 <body>
-
 
   <style>
 
-  .single-well ul li{
-    display: flex!important;
-    font-size: 16px;
-    font-family: "Open Sans", sans-serif;
+    .single-well ul li{
+      display: flex!important;
+      font-size: 16px;
+      font-family: "Open Sans", sans-serif;
     }
 
     #sar_profile{
@@ -46,13 +44,13 @@
       font-weight: bold;
       cursor:pointer;
       margin-bottom:0px!important;
-
     }
+
     .modal-dialog {
       margin-top: 20%;
     }
 
-  #profile_image{
+    #profile_image{
       height:245px;
       width:390px;
     }
@@ -62,20 +60,20 @@
     }
 
     #sar_title{
-      font-weight: bold;
-      
+      font-weight: bold;      
     }
 
-    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+    /* {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
       display:none;
-    } {% endcomment %}
+    } {% endcomment %} */
+
     .team-modal{
       cursor:pointer;
     }
 
     .footer-head h4 {
       padding-bottom:0px
-  }
+    }
 
 </style>
 
@@ -86,28 +84,23 @@
 
   {%block about_section%}
 
-
   <style type="text/css">
     
      table {
         border-collapse: collapse!important;
-    }
+     }
+
     table, th, td {
         border: 1px solid black!important;
+    }   
+
+    .single-well ul li {
+      display: block!important;
+      font-size: 16px;
+      font-family: "Open Sans", sans-serif;
+
     }
-    
-
-  .single-well ul li {
-    display: block!important;
-    font-size: 16px;
-    font-family: "Open Sans", sans-serif;
-
-  }
-
-
   </style>
-
-
 
     <!-- ======= About Section ======= -->
     <div id="about" class="about-area area-padding mt-4">
@@ -130,9 +123,9 @@
           <div class="col-md-12 col-sm-6 col-xs-12">
             <div class="well-left">
               <div class="single-well" style="font-size:18px!important">
-                <p style="font-family: "Open Sans", sans-serif!important;">
+                <p style="font-family: Open Sans, sans-serif!important;">
 
-                  {%if get_nugget.html_content%}
+                  {% if get_nugget.html_content %}
 
                       {{get_nugget.html_content|safe}}
 
@@ -281,9 +274,6 @@
 
 <script>  
 
-
-
-
       {%if False %}
 
         Swal.fire({
@@ -347,12 +337,9 @@ const replyToCommentBE = (getValue) => {
 
 }
 
-
-  </script>
+</script>
     
-    {% endblock about_section%}
-
-
+{% endblock about_section%}
 
 {%block team_section%}
 
@@ -381,9 +368,6 @@ const replyToCommentBE = (getValue) => {
 {%endblock footer_main%}
 
   </main><!-- End #main -->
-
-
-
 
 </body>
 

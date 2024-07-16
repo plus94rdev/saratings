@@ -1,56 +1,53 @@
 {% extends 'layouts/base.html'%}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 </head>
-
 <body>
-
-
   <style>
-
   .single-well ul li{
     display: flex!important;
     font-size: 16px;
     font-family: "Open Sans", sans-serif;
-    }
+  }
 
-    #sar_profile{
-      color:#3ec1d5;
-      font-weight: bold;
-      cursor:pointer;
-      margin-bottom:0px!important;
+  #sar_profile{
+    color:#3ec1d5;
+    font-weight: bold;
+    cursor:pointer;
+    margin-bottom:0px!important;
 
-    }
-    .modal-dialog {
-      margin-top: 20%;
-    }
+  }
+
+  .modal-dialog {
+    margin-top: 20%;
+  }
 
   #profile_image{
       height:245px;
       width:390px;
-    }
+  }
 
-    .single-team-member{
-      border:none;
-    }
+  .single-team-member{
+    border:none;
+  }
 
-    #sar_title{
-      font-weight: bold;
-      
-    }
+  #sar_title{
+    font-weight: bold;    
+  }
 
-    {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
-      display:none;
-    } {% endcomment %}
-    .team-modal{
-      cursor:pointer;
-    }
+  /* {% comment %} #news,#testimonials,#insights,#research,#social_media_links,#articles{
+    display:none;
+  } {% endcomment %} */
 
-    .footer-head h4 {
-      padding-bottom:0px
+  .team-modal{
+    cursor:pointer;
+  }
+
+  .footer-head h4 {
+    padding-bottom:0px
   }
 </style>
 
@@ -100,24 +97,109 @@
 
       </div>
     </div>
-  </section><!-- End Hero Section -->
-
+  </section><!-- End Hero Section -->  
   
+  <!-- ======= Ratings Publications Section ======= -->
+<main id="main" style="margin-top:60px; margin-bottom:10px" class="col-12">
+  
+  <!-- ======= Ratings Publication Item Section ======= -->
+  <div id="ratings-publication-item" class="our-team-area col-12">
+    
+   <!-- ======= Ratings Publication Section ======= -->
+  <div id="ratings-publication" class="ratings-item">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="section-headline text-center">
+                  <h2>Latest Ratings Publications</h2>
+                </div>
+          </div>
+      </div> 
+        {% for publication in get_rating_publications %}
+        <div class="publication-list">         
+          <div class="publication-item">
+              <div class="single-team-member">
+                  <div class="p-2">
+                      <div class="card">
+                          <div class="card-body" style="background-color: #0c1822;border-radius: 3px;">                      
+                              <h4 class="card-title" style="color:#ffffff"><img src="{{publication.upload_flag.url}}" style="width:60px;object-fit: cover; height: 60px;border-radius: 3px;margin-right:8px">{{publication.title}}</h4>
+                              <p class="card-text" style="color:#ffffff">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
+                              <a href="{{publication.file_link}}" target="_blank" class="card-link">View</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+       
+        
+      </div>
+      
+    </div>
+    <div style="text-align: center;margin-top:15px;">   
+      <a href="{%url 'ratingsPublications'%}" style="color:#3ec1d5; background-color: #0c1822;padding:8px 14px; border-radius: 3px; margin:10px; font-weight: 600;">See more publications</a>
+    </div>
+    <!--End Ratings Publication-->
+
+    
+    <!-- Nugget Publication Section -->
+    <div id="nugget-publication-item" class="our-team-area col-12" style="margin-top:50px">  
+    
+      <div id="nugget-publication" class="ratings-item">
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>Research</h2>
+              </div>
+            </div>
+          </div>         
+          
+          <br>
+  
+          <div class="row">
+            {% for publication in get_nugget_publications %}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="single-team-member">
+                <div class="p-2">
+                  <div class="card">                    
+                    <div class="card-body" style="background-color: #0c1822;border-radius: 3px;">  
+                      <p class="card-text" style="color:#ffffff">&nbsp;{{publication.publication_date|date:"d F Y"}}</p>
+                      <h4 class="card-title" style="color:#ffffff">{{publication.title}}</h4>                      
+                    </div>
+  
+                    <div class="card-footer" style="background-color: #0c1822;border-radius: 3px;">
+  
+  
+                      <a href="{%url 'read_nugget' publication.unique_id%}" target="_blank" class="card-link">Read</a>
+  
+  
+                    </div>
+                  </div>  
+                </div>  
+              </div>
+            </div>
+          
+            {%endfor%}
+            
+          </div>
+        </div>
+      </div>  
 
   {% endblock landing_section%}
 
   <main id="main">
   {%block about_section%}
     
-    {% endblock about_section%}
+  {% endblock about_section%} 
 
- 
-
-    {%block team_section%}
+  {%block team_section%}
   
-{% endblock team_section%}
+  {% endblock team_section%}
 
-{%block research_section%}
+  {%block research_section%}
     <!-- ======= Research Section ======= -->
     <div id="research" class="services-area area-padding">
       <div class="container">
@@ -462,15 +544,10 @@
     </div><!-- End News Section -->
   {%endblock news_section%}
 
+  {%block contact_section%}
+  
+  {%endblock contact_section%}
 
-    {%block contact_section%}
-    
-    {%endblock contact_section%}
-
-  </main><!-- End #main -->
-
-
-
+  </main>  
 </body>
-
 </html>

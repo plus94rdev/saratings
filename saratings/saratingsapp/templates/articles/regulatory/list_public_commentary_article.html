@@ -2,9 +2,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  
+
   {% block title %}
   <title>SAR|Regulatory</title>
   {% endblock title%} 
@@ -24,29 +23,14 @@
 
   header#header{
     background: #0d1822!important;
-  }
-    
-  .footer {
-    position: fixed
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-  }
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
   } 
 
   @media (max-width: 767px) {
     .row{
       width: fit-content;
     }
+  }  
 
-  }
   
   </style>
   <!-- ======= Header ======= -->
@@ -81,15 +65,15 @@
   {%endblock nav_header_not_used%}
 
 
-{%block landing_section%}
-{%endblock landing_section%}
-{%block main_section%}
+  {%block landing_section%}
+  {%endblock landing_section%}
+  {%block main_section%}
 
-{% if messages %}
-  {% for message in messages %}  
-  <p style="display:inline" id="rsvp-message"></p>
-{% endfor %}
-{% endif %}
+  {% if messages %}
+    {% for message in messages %}  
+    <p style="display:inline" id="rsvp-message"></p>
+  {% endfor %}
+  {% endif %}
 
 <main id="main" style="margin-top:16px" class="col-12">
 
@@ -118,15 +102,18 @@
                 </thead>
                 <tbody>
                   {% for article in get_regulatory_articles %}
-                  <tr>
-                   
-                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank">{{article.title}}</a></td>
+                  <tr>                   
+                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank" style="color:#0000FF ; text-decoration: none;" onmouseover="this.style.color='lightblue';" onmouseout="this.style.color='#0000FF';">{{article.title}}</a></td>
                     <td>{{article.publication_date|date:"d-m-Y"}}</td>
                     <td>{{article.submission_deadline|date:"d-m-Y"}}</td>
-                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank">Read</a></td>
+                    <td><a href="{%url 'viewCommentaryArticle' article.unique_id%}" target="_blank" style="color:#0000FF; text-decoration: none;" onmouseover="this.style.color='lightblue';" onmouseout="this.style.color='#0000FF';">Read</a></td>
+
                     {%if article.is_submission_overdue%}
+
                     <td>Submit Comments</td>
+
                     {%else%}
+
                     <td><a href="{%url 'commentCommentaryArticle' article.unique_id%}">Submit Comments</a></td>
       
                     {%endif%}
@@ -135,15 +122,12 @@
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
-
             </div>
           </div>
-
         </div>
       </div>
       <!-- End row -->
     </div>
-
   </main><!-- End #main -->
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
@@ -167,17 +151,14 @@
       background: '#f9fafb',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href =  "{% url 'publicCommentaryArticleList' %}";
-       
+        window.location.href =  "{% url 'publicCommentaryArticleList' %}";       
       }
     })
-  }
-    
+  }    
   </script>
 
 {% endblock main_section%}
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
   
 {%block data_table_js%}
 <script src="{%static 'assets/simple-datatables/simple-datatables.js' %}"></script>

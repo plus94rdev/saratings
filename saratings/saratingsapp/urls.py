@@ -19,7 +19,7 @@ urlpatterns = [
     path("about/", sar_about, name="sar_about"),
     path("mission-vision/", sar_mission, name="sar_mission"),
     path("team/", sar_team, name="sar_team"),
-    path("contact/", sar_contact, name="sar_contact"),
+    # path("contact/", sar_contact, name="sar_contact"),
     path('events/',event_homepage, name="eventsHomepage"),
     path('event-rsvp/<str:event_id>',event_rsvp, name="eventRSVP"),
     path('media-page/',media_homepage, name="mediaHomepage"),
@@ -41,12 +41,13 @@ urlpatterns = [
     path('nugget-document-upload',nugget_document_upload,name="nuggetdocumentUpload"),
     path('not-authorised',user_not_authorised,name="userNotAuthorised"),      
     path('savedoctohtmlfile',save_docx_to_html_file,name="createDocxToHtmlFile"),
+    
 ]
 
 #Append 'MEDIA_URL' and 'MEDIA_ROOT' to urlpatterns for PROD
-if IS_PROD:
-    urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+# if IS_DEV:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                               document_root=settings.MEDIA_ROOT)
     
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,34 +2,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
- 
+<head> 
   {% block title %}
   <title>SAR|Ratings</title>
   {% endblock title %}
-
 </head>
-
 <body>
+  <style>    
 
-
-  <style>
-
- 
-  .section-headline h2::after {
-    border: 1px solid #f9fafb!important;
-
-  }
+    .section-headline h2::after {
+      border: 1px solid #f9fafb!important;
+    }
 
     header#header{
       background: #0d1822!important;
     }
 
-  .single-well ul li{
-    display: flex!important;
-    font-size: 16px;
-    font-family: "Open Sans", sans-serif;
+    .single-well ul li{
+      display: flex!important;
+      font-size: 16px;
+      font-family: "Open Sans", sans-serif;
     }
 
     #sar_profile{
@@ -37,13 +29,13 @@
       font-weight: bold;
       cursor:pointer;
       margin-bottom:0px!important;
-
     }
+
     .modal-dialog {
       margin-top: 20%;
     }
 
-  #profile_image{
+    #profile_image{
       height:245px;
       width:390px;
     }
@@ -53,8 +45,7 @@
     }
 
     #sar_title{
-      font-weight: bold;
-      
+      font-weight: bold;      
     }
 
     #news,#testimonials,#insights,#research,#social_media_links,#articles{
@@ -67,165 +58,106 @@
 
     .footer-head h4 {
       padding-bottom:0px
-  }
+    }
 
-  h4.card-title {
-    color:#000000!important
-  }
-  a.card-link{
+    h4.card-title {
+      color:#000000!important
+    }   
 
-    color:
-  }
+    span#footer-text{
+      color:#29649a!important;
+    }
 
-  span#footer-text{
-    color:#29649a!important;
-  }
+    .section-headline h2 {
+      color: #f9fafb!important;
+    }
 
-  .section-headline h2 {
-    color: #f9fafb!important;
-}
+    .card-title {
+      font-size: 14px!important;
+      font-family: "Poppins", sans-serif!important;
+      color: red;
+    }
+    .poll-items{
+      display:none;
+    }
 
+    .publication-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;      
+    }
 
+    .ratings-publication-item {
+        width: 50%; 
+        gap:100px;
+        background-color: #000000;
+        color: white;
+    }
 
+    .single-team-member .card {
+        margin: 0;
+    }
+
+    .card-body {
+      background-color: #000000;
+    }
 
   </style>
+  <div class="wrapper">  
 
-  
+  {%block landing_section%}
+  {%endblock landing_section%}
 
-<style>
-  .card-title {
-    font-size: 14px!important;
-    font-family: "Poppins", sans-serif!important;
-  }
-  .poll-items{
-  display:none;
-  }
+  {%block research_section%}
+  {%endblock research_section%}
 
-  
+  {%block quotes_section%}
+  {%endblock quotes_section%}
 
-</style>
-
-
-{%block landing_section%}
-{%endblock landing_section%}
-
-
-{%block research_section%}
-{%endblock research_section%}
-
-{%block quotes_section%}
-{%endblock quotes_section%}
-
-{%block main_section%}
+  {%block main_section%}
 
   <!-- ======= Main Section ======= -->
-<main id="main" style="margin-top:100px" class="col-12">
+<main id="main" style="margin-top:100px; margin-bottom:100px" class="col-12">
   
   <!-- ======= Ratings Publication Item Section ======= -->
   <div id="ratings-publication-item" class="our-team-area col-12">
-
+    
    <!-- ======= Ratings Publication Section ======= -->
-   <div id="ratings-publication" class="ratings-item">
+  <div id="ratings-publication" class="ratings-item">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="section-headline text-center">
-            <h2>Ratings Publications</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        {% for publication in get_rating_publications %}
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <div class="single-team-member">
-            <div class="p-2">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">{{publication.title}}</h4>
-                  <p class="card-text">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
-                  <a href="{{publication.file_link}}" target="_blank" class="card-link">View</a>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="section-headline text-center">
+                  <h2>All Ratings Publications</h2>
                 </div>
-              </div>
-
-            </div>
-
           </div>
-        </div>
-        <!-- End column -->
-        {%endfor%}
+      </div> 
+        {% for publication in get_rating_publications %}
+        <div class="publication-list">         
+          <div class="publication-item">
+              <div class="single-team-member">
+                  <div class="p-2">
+                      <div class="card">
+                          <div class="card-body" style="background-color: #0c1822;border-radius: 3px;">                      
+                              <h4 class="card-title" style="color:#ffffff"><img src="{{publication.upload_flag.url}}" style="width:60px;object-fit: cover; height: 60px;border-radius: 3px;margin-right:8px">{{publication.title}}</h4>
+                              <p class="card-text" style="color:#ffffff">Publication Date:&nbsp;{{publication.publication_date|date:"d-m-Y"}}</p>
+                              <a href="{{publication.file_link}}" target="_blank" class="card-link">View</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+       
+        
       </div>
     </div>
     <!--End Ratings Publication-->
 
-  </main><!-- End #main -->
+  </main>
 
-{%endblock main_section%}
-
-
-  {%block footer_main%}
-  <style>
-
-    .footer-area-bottom{
-      position: fixed!important;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      text-align: left;
-    }
-  </style>
-  {%endblock footer_main%}
-
-
-
-  <!-- ======= Footer ======= -->
-  <footer>
-    <div class="footer-area" id="footer_document_links">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="footer-content">
-              <div class="footer-head">
-                <div class="footer-logo">
-                 
-                </div>
-                <div class="footer-icons" id="social_media_links">
-                  <ul>
-                    <li>
-                      <a href="#"><i class="bi bi-twitter"></i></a>
-                    </li>
-
-                    </li>
-                    <li>
-                      <a href="#"><i class="bi bi-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end single footer -->
-         
-
-        
-        </div>
-      </div>
-    </div>
-    <div class="footer-area-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="copyright text-center">
-              <p>
-                &copy; Copyright <strong>Sovereign Africa Ratings</strong>. All Rights Reserved
-              </p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
+  {%endblock main_section%}
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -240,6 +172,7 @@
   <script src="{% static 'assets/js/main.js'%}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
   
+</div>
 
 </body>
 

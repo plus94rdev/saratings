@@ -1,8 +1,8 @@
 from django import forms
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
+# from captcha.fields import ReCaptchaField
+# from captcha.widgets import ReCaptchaV2Invisible
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
@@ -129,7 +129,7 @@ class EventRSVPForm(forms.ModelForm):
 
 class RegulatoryArticleCommentForm(forms.ModelForm):
     
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+    # captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     
     def __init__(self, *args, **kwargs):
@@ -206,9 +206,7 @@ class NuggetDocumentUploadForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs = {
                 'class': 'form-group textinput textInputt form-control', }
-            self.label_suffix = ""
-            
-        
+            self.label_suffix = ""     
 
     class Meta:
         model = NuggetPublication
@@ -227,8 +225,7 @@ class NuggetConvertDocToHTMLForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs = {
                 'class': 'form-group textinput textInputt form-control', }
-            self.label_suffix = ""
-            
+            self.label_suffix = ""       
         
 
     class Meta:
